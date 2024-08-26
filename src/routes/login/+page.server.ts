@@ -1,23 +1,28 @@
-import Auth from '../../services/auth';
-import { redirect } from '@sveltejs/kit';
-import { getCookie } from '../../utils/getCookie';
+import { error, fail, redirect } from '@sveltejs/kit';
+import { PUBLIC_API_URL } from '$env/static/public';
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, fetch, cookies }) => {
 		const formData = await request.formData();
 		const email = formData.get('email');
 		const password = formData.get('password');
 
-		const { setCookies, json } = await Auth.login({ email, password });
+		const response = await fetch(`${PUBLIC_API_URL}/api/auth/login`, {
+			method: 'POST',
+			headers: new Headers({ 'Content-Type': 'application/json' }),
+			body: JSON.stringify({ email, password })
+		});
+
+		const json = await response.json();
+
+		// I. 에러처리
+		if (!response.ok) {
+			if (response.status === 404) return fail(404, { notRegistered: true });
+			else if (response.status === 401) return fail(404, { incorrect: true });
+			error(response.status, json.error);
+		}
 
 		if (json.message === '로그인 성공') {
-			// I. 프론트 서버에서 받은 쿠키, Client 에 다시 설정
-			setCookies.forEach(raw => {
-				const { name, value, options } = getCookie(raw);
-				console.log(name);
-				cookies.set(name, value, options);
-			});
-
 			cookies.set('isLogin', 'true', { path: '/', maxAge: 60 });
 			redirect(302, '/');
 		}

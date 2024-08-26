@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	let searchQuery = '';
-	let debounceTimeout = 0;
+	let debounceTimeout: NodeJS.Timeout;
 	const dispatch = createEventDispatcher();
 
 	async function handleInput(event: any) {

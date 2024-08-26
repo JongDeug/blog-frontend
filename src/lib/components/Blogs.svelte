@@ -2,8 +2,9 @@
 	import Title from '$lib/components/Title.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import formatDate from '../../utils/formatDate';
-	import Post from '../../services/posts';
 	import Category from '$lib/components/Category.svelte';
+	import { PUBLIC_API_URL } from '$env/static/public';
+	import { error } from '@sveltejs/kit';
 
 	export let title = '';
 	export let subtitle = '';
@@ -12,11 +13,6 @@
 	export let more = true;
 	export let search = true;
 	export let h2 = false;
-	export let count = 0;
-
-	if (count) {
-		posts = posts.slice(0, count);
-	}
 
 	let searchQuery = '';
 	let currentPosts = posts;
@@ -26,12 +22,14 @@
 	}
 
 	const updatePosts = async (search: string) => {
-		const res = await Post.getPosts({ search });
-		if (search) currentPosts = res.posts;
+		const queryString = new URLSearchParams({ search }).toString();
+		// I. 오류가 나도 브라우저에 뜸
+		const getPosts = await fetch(`${PUBLIC_API_URL}/api/posts?${queryString}`).then(res => res.json());
+		if (search) currentPosts = getPosts.posts;
 		else currentPosts = posts;
 	};
 
-	$: updatePosts(searchQuery);
+	$: searchQuery ? updatePosts(searchQuery) : '';
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">

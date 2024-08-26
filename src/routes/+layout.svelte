@@ -4,8 +4,8 @@
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import '../app.css';
 
-	export let data;
 
+	export let data;
 </script>
 
 <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
