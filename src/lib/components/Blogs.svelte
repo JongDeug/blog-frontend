@@ -1,23 +1,31 @@
 <script lang="ts">
 	import Title from '$lib/components/Title.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
-	import formatDate from '../../utils/formatDate';
+	import formatDate from '$lib/utils/formatDate';
 	import Category from '$lib/components/Category.svelte';
+	import CategoryModal from './CategoryModal.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { error } from '@sveltejs/kit';
+	import { toggleModal } from '$lib/stores/modal';
 
+	export let posts: App.Post[] = [];
+	export let categories: App.Category[] = [];
 	export let title = '';
 	export let subtitle = '';
-	export let posts: any[] = [];
-	export let categories: any[] = [];
 	export let more = true;
 	export let search = true;
 	export let h2 = false;
+	export let isLogin = false;
 
 	let searchQuery = '';
 	let currentPosts = posts;
+	let isModalOpen = false;
 
-	function handleInput(event: any) {
+	function handleModal(event: MouseEvent) {
+		event.stopPropagation();
+		isModalOpen = !isModalOpen;
+	}
+
+	function handleInput(event: CustomEvent<string>) {
 		searchQuery = event.detail; // 자식 컴포넌트에서 전달된 값
 	}
 
@@ -57,6 +65,14 @@
 								</a>
 							</div>
 						{/each}
+						{#if isLogin}
+							<div class="mr-5">
+								<button
+									class="mr-3 inline-block font-medium uppercase text-xs" on:click={toggleModal}
+								>카테고리 관리
+								</button>
+							</div>
+						{/if}
 					</div>
 				{/if}
 			</div>
@@ -107,6 +123,8 @@
 											aria-label={`Read "${post.title}"`}
 										>
 											Read more &rarr;
+
+
 										</a>
 									</div>
 								{/if}
@@ -118,3 +136,5 @@
 		</ul>
 	{/if}
 </div>
+
+<CategoryModal />

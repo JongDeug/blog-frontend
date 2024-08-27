@@ -3,7 +3,7 @@
 
 	let searchQuery = '';
 	let debounceTimeout: NodeJS.Timeout;
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ input: string }>();
 
 	async function handleInput(event: any) {
 		searchQuery = event.target.value;

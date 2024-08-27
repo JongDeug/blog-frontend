@@ -2,26 +2,10 @@
 	import EditForm from '$lib/components/comments/EditForm.svelte';
 	import CreateForm from '$lib/components/comments/CreateForm.svelte';
 
-	export let comments: ArrayLike<Comment> = [];
-
-	type Comment = {
-		id: string;
-		content: string;
-		author: {
-			id: string;
-			name: string;
-		} | null;
-		guest: {
-			id: string;
-			nickName: string;
-			email: string;
-		} | null;
-		childComments: Comment[];
-	};
+	export let comments: ArrayLike<App.Comment> = [];
 
 	let replyFormVisible = '';
 	let editFormVisible = '';
-
 
 	function showReplyForm(commentId: string) {
 		replyFormVisible = replyFormVisible === commentId ? '' : commentId;
@@ -35,15 +19,14 @@
 
 <!-- 댓글 목록 -->
 <div class="pt-6 pb-6 text-gray-700 dark:text-gray-300 border-t">
-
 	{#each comments as comment (comment.id)}
-		<div class="mb-4 p-4 bg-green-50 dark:bg-gray-700">
+		<div class="mb-4 p-4 border rounded-xl">
 			<div class="flex justify-between">
 				<p
 					class="text-lg text-gray-900 dark:text-gray-100 mb-2">{comment?.author?.name ? comment?.author?.name : comment?.guest?.nickName}</p>
 				<button
 					on:click={() => showEditForm(comment.id)}
-					class="text-sm text-blue-500 hover:underline">
+					class="text-sm text-primary-500 hover:underline">
 					수정
 				</button>
 			</div>
@@ -64,7 +47,7 @@
 									class="text-sm text-gray-900 dark:text-gray-100 mb-1">{reply?.author?.name ? reply?.author?.name : reply?.guest?.nickName}</p>
 								<button
 									on:click={() => showEditForm(reply.id)}
-									class="text-sm text-blue-500 hover:underline">
+									class="text-sm text-primary-500 hover:underline">
 									수정
 								</button>
 							</div>
@@ -82,7 +65,7 @@
 			<!-- 대댓글 작성 버튼 -->
 			<button
 				on:click={() => showReplyForm(comment.id)}
-				class="text-sm text-blue-500 hover:underline">
+				class="text-sm text-primary-500 hover:underline">
 				대댓글 달기
 			</button>
 
@@ -95,7 +78,7 @@
 </div>
 
 <!-- 새 댓글 작성 -->
-<div class="pt-6 pb-6 text-gray-700 dark:text-gray-300 border-t">
-		<h3 class="text-2xl font-semibold mb-4">댓글 작성</h3>
+<div class="p-4 text-gray-700 dark:text-gray-300 border rounded-2xl ">
+	<h3 class="text-2xl font-semibold mb-4">댓글 작성</h3>
 	<CreateForm />
 </div>

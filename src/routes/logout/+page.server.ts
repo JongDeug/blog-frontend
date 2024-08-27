@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import { PUBLIC_API_URL } from '$env/static/public';
 
 export const actions = {
-	default: async ({ cookies, fetch }) => {
+	logout: async ({ cookies, fetch }) => {
 		// I. fetch 를 직접 인자로 받아 사용해야 handleFetch 호출됨
 		const response = await fetch(`${PUBLIC_API_URL}/api/auth/logout`);
 

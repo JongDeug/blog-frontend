@@ -28,7 +28,7 @@
 				>
 			{/each}
 			{#if isLogin}
-				<form method="POST" action="/logout" class="inline">
+				<form method="POST" action="/logout?/logout" class="inline">
 					<button class="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4">Logout</button>
 				</form>
 			{:else}

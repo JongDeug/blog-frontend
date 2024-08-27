@@ -3,10 +3,11 @@
 	import Blogs from '$lib/components/Blogs.svelte';
 
 	export let data;
-	const categories = data.getCategories.categories;
-	const posts = data.getPosts.posts;
+	const { isLogin, getCategories, getPosts } = data;
+	const categories = getCategories.categories;
+	const posts = getPosts.posts;
 </script>
 
 <Head title="Blog" />
 
-<Blogs title="All Posts" {posts} {categories} />
+<Blogs title="All Posts" {posts} {categories} {isLogin} />

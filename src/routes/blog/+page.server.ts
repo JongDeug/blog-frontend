@@ -1,6 +1,8 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
-export async function load({ fetch }) {
+export async function load({ fetch, locals }) {
+	const { isLogin } = locals;
+
 	// getPosts
 	const getPosts = await fetch(`${PUBLIC_API_URL}/api/posts`)
 		.then(res => res.json());
@@ -9,5 +11,5 @@ export async function load({ fetch }) {
 	const getCategories = await fetch(`${PUBLIC_API_URL}/api/categories`)
 		.then(res => res.json());
 
-	return { getPosts, getCategories };
+	return { isLogin, getPosts, getCategories };
 }

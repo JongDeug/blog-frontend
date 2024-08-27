@@ -2,7 +2,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import { PUBLIC_API_URL } from '$env/static/public';
 
 export const actions = {
-	default: async ({ request, fetch, cookies }) => {
+	login: async ({ request, fetch, cookies }) => {
 		const formData = await request.formData();
 		const email = formData.get('email');
 		const password = formData.get('password');

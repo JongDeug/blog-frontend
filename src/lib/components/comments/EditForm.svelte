@@ -13,7 +13,7 @@
 		bind:value={content}
 		class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 		rows="2"
-		placeholder="수정할 내용을 입력하세요..."></textarea>
+		placeholder="수정할 내용을 입력하세요"></textarea>
 	<input
 		bind:value={password}
 		type="password"
@@ -21,7 +21,7 @@
 		placeholder="비밀번호" />
 	<button
 		class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-		OK
+		완료
 		<!--					on:click={() => handleEdit(comment.id, newCommentContent, password)}-->
 	</button>
 </div>

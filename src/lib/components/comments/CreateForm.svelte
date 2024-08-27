@@ -11,7 +11,7 @@
 	    			<textarea
 							class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 							rows="4"
-							placeholder="여기에 댓글을 작성하세요..."></textarea>
+							placeholder="여기에 댓글을 작성하세요"></textarea>
 	</div>
 
 	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
