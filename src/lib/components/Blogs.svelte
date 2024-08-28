@@ -5,7 +5,7 @@
 	import Category from '$lib/components/Category.svelte';
 	import CategoryModal from './CategoryModal.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { toggleModal } from '$lib/stores/modal';
+	import { toggleModal } from '$lib/stores/categoryModal';
 
 	export let posts: App.Post[] = [];
 	export let categories: App.Category[] = [];
@@ -18,12 +18,6 @@
 
 	let searchQuery = '';
 	let currentPosts = posts;
-	let isModalOpen = false;
-
-	function handleModal(event: MouseEvent) {
-		event.stopPropagation();
-		isModalOpen = !isModalOpen;
-	}
 
 	function handleInput(event: CustomEvent<string>) {
 		searchQuery = event.detail; // 자식 컴포넌트에서 전달된 값
@@ -32,7 +26,7 @@
 	const updatePosts = async (search: string) => {
 		const queryString = new URLSearchParams({ search }).toString();
 		// I. 오류가 나도 브라우저에 뜸
-		const getPosts = await fetch(`${PUBLIC_API_URL}/api/posts?${queryString}`).then(res => res.json());
+		const getPosts = await fetch(`${PUBLIC_API_URL}/posts?${queryString}`).then(res => res.json());
 		if (search) currentPosts = getPosts.posts;
 		else currentPosts = posts;
 	};
@@ -137,4 +131,4 @@
 	{/if}
 </div>
 
-<CategoryModal />
+<CategoryModal {categories}/>

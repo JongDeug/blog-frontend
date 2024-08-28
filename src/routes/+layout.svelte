@@ -4,7 +4,6 @@
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import '../app.css';
 
-
 	export let data;
 </script>
 

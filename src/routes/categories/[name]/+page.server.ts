@@ -5,7 +5,7 @@ export async function load({ params, fetch }) {
 	const queryString = new URLSearchParams({ category: name }).toString();
 
 	// getPosts
-	const getPosts = await fetch(`${PUBLIC_API_URL}/api/posts?${queryString}`)
+	const getPosts = await fetch(`${PUBLIC_API_URL}/posts?${queryString}`)
 		.then(res => res.json());
 
 	return {

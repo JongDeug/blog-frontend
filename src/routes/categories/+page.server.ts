@@ -6,7 +6,7 @@ export const actions = {
 		const formData = await request.formData();
 		const name = formData.get('name');
 
-		const response = await fetch(`${PUBLIC_API_URL}/api/categories`, {
+		const response = await fetch(`${PUBLIC_API_URL}/categories`, {
 			method: 'POST',
 			headers: new Headers({ 'Content-Type': 'application/json' }),
 			body: JSON.stringify({ name })

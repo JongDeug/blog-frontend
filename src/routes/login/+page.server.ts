@@ -2,12 +2,12 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import { PUBLIC_API_URL } from '$env/static/public';
 
 export const actions = {
-	login: async ({ request, fetch, cookies }) => {
+	default: async ({ request, fetch, cookies }) => {
 		const formData = await request.formData();
 		const email = formData.get('email');
 		const password = formData.get('password');
 
-		const response = await fetch(`${PUBLIC_API_URL}/api/auth/login`, {
+		const response = await fetch(`${PUBLIC_API_URL}/auth/login`, {
 			method: 'POST',
 			headers: new Headers({ 'Content-Type': 'application/json' }),
 			body: JSON.stringify({ email, password })
@@ -24,7 +24,7 @@ export const actions = {
 
 		if (json.message === '로그인 성공') {
 			cookies.set('isLogin', 'true', { path: '/', maxAge: 60 });
-			redirect(302, '/');
+			redirect(302, '/blog');
 		}
 	}
 };

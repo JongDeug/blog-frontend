@@ -4,7 +4,7 @@ import { PUBLIC_API_URL } from '$env/static/public';
 export const actions = {
 	logout: async ({ cookies, fetch }) => {
 		// I. fetch 를 직접 인자로 받아 사용해야 handleFetch 호출됨
-		const response = await fetch(`${PUBLIC_API_URL}/api/auth/logout`);
+		const response = await fetch(`${PUBLIC_API_URL}/auth/logout`);
 
 		// I. 에러처리 없이 그냥 로그아웃. 백엔드에서 Redis 사용해서 고쳐보자
 		cookies.delete('isLogin', { path: '/' });

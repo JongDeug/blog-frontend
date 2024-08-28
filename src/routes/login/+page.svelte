@@ -12,7 +12,7 @@
 	<div class="w-full max-w-sm p-8 border-2 rounded">
 		<h2 class="text-2xl font-bold text-center mb-6">로그인</h2>
 
-		<form method="POST" action="?/login" class="space-y-4">
+		<form method="POST" action="/login" class="space-y-4">
 			<div>
 				<label for="email" class="block text-sm font-medium">이메일</label>
 				<input
