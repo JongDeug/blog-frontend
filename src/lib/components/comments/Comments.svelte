@@ -2,7 +2,7 @@
 	import EditForm from '$lib/components/comments/EditForm.svelte';
 	import CreateForm from '$lib/components/comments/CreateForm.svelte';
 
-	export let comments: ArrayLike<App.Comment> = [];
+	export let comments: ArrayLike<CommentType> = [];
 
 	let replyFormVisible = '';
 	let editFormVisible = '';

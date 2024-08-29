@@ -3,7 +3,7 @@
 	import { isModalOpen, toggleModal } from '$lib/stores/categoryModal';
 	import { createCategory, deleteCategory, updateCategory } from '$lib/csr-api-request/category';
 
-	export let categories: App.Category[];
+	export let categories: CategoryType[];
 	let nameCreate = '';
 	let nameUpdate = '';
 	let selectedDelete = '';

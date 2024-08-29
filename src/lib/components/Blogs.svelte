@@ -7,8 +7,8 @@
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { toggleModal } from '$lib/stores/categoryModal';
 
-	export let posts: App.Post[] = [];
-	export let categories: App.Category[] = [];
+	export let posts: PostType[] = [];
+	export let categories: CategoryType[] = [];
 	export let title = '';
 	export let subtitle = '';
 	export let more = true;
@@ -72,12 +72,15 @@
 			</div>
 		</div>
 	</div>
+
 	{#if !currentPosts.length}
-		<div class="py-12">
-			No post found.
+		<div class="py-6">
+			<p class="text-right"><a href="/blog/post" class="font-semibold hover:font-extrabold">게시글 작성</a></p>
+			<p>No post found.</p>
 		</div>
 	{:else}
 		<ul>
+			<li class="text-right pt-6 pr-3"><a href="/blog/post" class="font-semibold hover:font-extrabold">게시글 작성</a></li>
 			{#each currentPosts as post}
 				<li class="py-12">
 					<article>
@@ -117,8 +120,6 @@
 											aria-label={`Read "${post.title}"`}
 										>
 											Read more &rarr;
-
-
 										</a>
 									</div>
 								{/if}
@@ -131,4 +132,4 @@
 	{/if}
 </div>
 
-<CategoryModal {categories}/>
+<CategoryModal categories={categories} />

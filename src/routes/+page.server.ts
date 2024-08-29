@@ -1,5 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch }) {
 	// I. getPosts (3개만 보여줌)
 	const queryString = new URLSearchParams({ limit: '3' }).toString();
