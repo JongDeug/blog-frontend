@@ -37,6 +37,6 @@
 			{/if}
 		</div>
 		<ThemeSwitch />
-		<MobileMenu />
+		<MobileMenu {isLogin}/>
 	</div>
 </header>

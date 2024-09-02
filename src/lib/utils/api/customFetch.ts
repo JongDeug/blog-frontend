@@ -20,6 +20,6 @@ export const customFetch = async (input: Request) => {
 
 		return response;
 	} catch (err) {
-		return null;
+		return err;
 	}
 };

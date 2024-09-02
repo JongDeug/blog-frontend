@@ -1,13 +1,31 @@
-<script>
+<script lang="ts">
 	import { config } from '$lib/config';
 	import Author from '$lib/components/Author.svelte';
 	import Comments from '$lib/components/comments/Comments.svelte';
+	import { deletePost, postLike } from '$lib/utils/api/request/post';
 
-	export let post;
+	export let post: PostType;
+	export let isLogin;
 
-	function handleLike() {
+	const handleLike = async (postId: string, tryToLike: boolean) => {
+		try {
+			const guestLikeId = localStorage.getItem('guestLikeId');
+			await postLike({ postId, tryToLike, guestLikeId });
+		} catch (err) {
+			alert(`${err}`);
+		}
+	};
 
-	}
+
+	const handleDelete = async (id: string) => {
+		try {
+			const userConfirm = confirm('게시글을 정말 삭제하시겠습니까?');
+
+			if (userConfirm) await deletePost(id);
+		} catch (err) {
+			alert(`${err}`);
+		}
+	};
 
 </script>
 
@@ -15,11 +33,11 @@
 	<article>
 		<div class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
 			<header class="pt-6 xl:pb-6">
-				{#if post.image}
+				{#if post?.images.length}
 					<div class=" w-full pb-6">
 						<img
 							alt={post.title}
-							src={post.image}
+							src={post.images[0].url}
 							class="object-cover object-center w-full h-auto"
 						/>
 					</div>
@@ -76,6 +94,17 @@
 					<div
 						class="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y"
 					>
+						{#if isLogin}
+							<div class="py-4 flex justify-around">
+								<button on:click={() => handleDelete(post.id)} class="font-semibold hover:font-extrabold text-red-600">
+									게시글 삭제
+								</button>
+								<a href="/blog/form/{post.id}" class="font-semibold hover:font-extrabold ">게시글 수정</a>
+							</div>
+							<!--							<p class="py-4">></p>-->
+							<!--							<p class="py-4"></p>-->
+
+						{/if}
 						{#if post.tags.length}
 							<div class="py-4 xl:py-8">
 								<h2 class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
@@ -83,7 +112,8 @@
 								</h2>
 								<div class="flex flex-wrap">
 									{#each post.tags as tag}
-										<span class="mr-3 font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
+										<span
+											class="mr-3 font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
 											{tag}
 										</span>
 									{/each}
@@ -100,7 +130,7 @@
 										<div
 											class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 										>
-											<a href={`/blog/${post.prev.slug}`}>{post.prev.title}</a>
+											<a href={`/blog/${post.prev}`}>이전 게시글 이동</a>
 										</div>
 									</div>
 								{/if}
@@ -112,7 +142,7 @@
 										<div
 											class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 										>
-											<a href={`/blog/${post.next.slug}`}>{post.next.title}</a>
+											<a href={`/blog/${post.next}`}>다음 게시글 이동</a>
 										</div>
 									</div>
 								{/if}
@@ -124,15 +154,15 @@
 							href="/blog"
 							class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 						>
-							&larr; Back to the blog
+							&larr; 블로그로 돌아가기
 						</a>
 					</div>
 					<div class="py-4 xl:py-8 sticky top-0">
-						<button on:click={handleLike} class="border shadow-md px-4 py-2 rounded-3xl">
+						<button on:click={() => handleLike(post.id, !post.isLiked)} class="border shadow-md px-4 py-2 rounded-3xl">
 							{#if post.isLiked}
-								<span>&#x2764; Liked {post.postLikeCount}</span>
+								<span>&#x2764; 좋아요 {post.postLikeCount}</span>
 							{:else}
-								<span>&#x2661; Like {post.postLikeCount}</span>
+								<span>&#x2661; 좋아요 {post.postLikeCount}</span>
 							{/if}
 						</button>
 					</div>

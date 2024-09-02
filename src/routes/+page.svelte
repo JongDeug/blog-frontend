@@ -3,7 +3,8 @@
 	import Blogs from '$lib/components/Blogs.svelte';
 
 	export let data;
-	const posts: any[] = data.getPosts.posts;
+	const { isLogin, getPosts } = data;
+	const posts = getPosts.posts;
 </script>
 
 <Head />
@@ -22,4 +23,4 @@
 	</p>
 </div>
 
-<Blogs title="Latest Posts" h2 {posts} search={false} />
+<Blogs title="Latest Posts" h2 {posts} search={false} {isLogin} />

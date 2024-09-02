@@ -3,6 +3,6 @@ export function handleError({ error, status }) {
 	console.error('Error occurred:', error);
 
 	// I. error.svelte 로 넘어감
-	if (status === 404) return { message: 'Page Not Found' };
-	return { message: (error as Error).message };
+	if (status === 404) return { status, message: 'Page Not Found' };
+	return { status, message: (error as Error).message };
 }

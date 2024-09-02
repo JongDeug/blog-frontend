@@ -1,13 +1,14 @@
 <!-- CategoryModal.svelte -->
 <script lang="ts">
 	import { isModalOpen, toggleModal } from '$lib/stores/categoryModal';
-	import { createCategory, deleteCategory, updateCategory } from '$lib/csr-api-request/category';
+	import { createCategory, deleteCategory, updateCategory } from '$lib/utils/api/request/category';
+	import { error } from '@sveltejs/kit';
 
 	export let categories: CategoryType[];
-	let nameCreate = '';
-	let nameUpdate = '';
-	let selectedDelete = '';
-	let selectedUpdate = '';
+	let bindNameCreate = '';
+	let bindNameUpdate = '';
+	let bindSelectedNameDelete = '';
+	let bindSelectedNameUpdate = '';
 
 	function handleBackgroundClick(event: MouseEvent) {
 		if (event.target === event.currentTarget) {
@@ -20,7 +21,6 @@
 			toggleModal();
 		}
 	}
-
 </script>
 
 {#if $isModalOpen}
@@ -36,36 +36,38 @@
 
 			<div class="mb-4">
 				<label for="create" class="block text-sm font-medium mb-2">카테고리 추가</label>
-				<input id="create" type="text" bind:value={nameCreate} placeholder="새 카테고리 이름"
+				<input id="create" type="text" bind:value={bindNameCreate} placeholder="새 카테고리 이름"
 							 class="w-full border rounded px-3 py-2 mb-2">
 				<button
 					class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-					on:click={() => createCategory(nameCreate)}
+					on:click={() => createCategory(bindNameCreate)}
 				>추가
 				</button>
 			</div>
 
 			<div class="mb-4">
 				<label for="update" class="block text-sm font-medium mb-2">카테고리 수정</label>
-				<select id="update" bind:value={selectedUpdate} class="w-full border rounded px-3 py-2 mb-2">
+				<select id="update" bind:value={bindSelectedNameDelete} class="w-full border rounded px-3 py-2 mb-2">
+					<option value="" disabled selected>카테고리를 선택하세요</option>
 					{#each categories as category}
 						<option value={category.name}>{category.name}</option>
 					{/each}
 				</select>
-				<input type="text" bind:value={nameUpdate} placeholder="새 이름 입력" class="w-full border rounded px-3 py-2 mb-2">
-				<button on:click={() => updateCategory(selectedUpdate, nameUpdate)}
+				<input type="text" bind:value={bindNameUpdate} placeholder="새 이름 입력" class="w-full border rounded px-3 py-2 mb-2">
+				<button on:click={() => updateCategory(bindSelectedNameDelete, bindNameUpdate)}
 								class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">수정
 				</button>
 			</div>
 
 			<div class="mb-4">
 				<label for="delete" class="block text-sm font-medium mb-2">카테고리 삭제</label>
-				<select id="delete" bind:value={selectedDelete} class="w-full border rounded px-3 py-2 mb-2">
+				<select id="delete" bind:value={bindSelectedNameUpdate} class="w-full border rounded px-3 py-2 mb-2">
+					<option value="" disabled selected>카테고리를 선택하세요</option>
 					{#each categories as category}
 						<option value={category.name}>{category.name}</option>
 					{/each}
 				</select>
-				<button on:click={() => deleteCategory(selectedDelete)}
+				<button on:click={() => deleteCategory(bindSelectedNameUpdate)}
 								class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">삭제
 				</button>
 			</div>

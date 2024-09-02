@@ -1,9 +1,9 @@
 <script>
-	// import { slug } from 'github-slugger';
+	// import { [slug] } from 'github-slugger';
 
 	export let text = '';
 	export let size = 'text-sm';
-	// export let url = slug(text);
+	// export let url = [slug](text);
 </script>
 
 <a

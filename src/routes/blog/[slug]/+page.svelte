@@ -4,8 +4,9 @@
 
 	export let data;
 	const post = data.getPost.post;
+	const isLogin = data.isLogin;
 </script>
 
-<Head title={post.title} />
+<Head title={post?.title} />
 
-<Blog {post} />
+<Blog {post} {isLogin} />

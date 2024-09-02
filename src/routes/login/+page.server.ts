@@ -18,14 +18,13 @@ export const actions = {
 		// I. 에러처리
 		if (!response.ok) {
 			if (response.status === 404) return fail(404, { notRegistered: true });
-			else if (response.status === 401) return fail(404, { incorrect: true });
+			else if (response.status === 401) return fail(401, { incorrect: true });
 			error(response.status, json.error);
 		}
 
 		if (json.message === '로그인 성공') {
-			cookies.set('isLogin', 'true', { path: '/', maxAge: 60 });
+			cookies.set('isLogin', 'true', { path: '/' });
 			redirect(302, '/blog');
 		}
 	}
 };
-

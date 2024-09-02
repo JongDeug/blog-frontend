@@ -78,7 +78,9 @@
 </div>
 
 <!-- 새 댓글 작성 -->
-<div class="p-4 text-gray-700 dark:text-gray-300 border rounded-2xl ">
-	<h3 class="text-2xl font-semibold mb-4">댓글 작성</h3>
-	<CreateForm />
-</div>
+<!--<div class="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">-->
+	<div class="p-4 text-gray-700 dark:text-gray-300 rounded-lg shadow-lg">
+		<h3 class="text-2xl font-semibold mb-4">댓글 작성</h3>
+		<CreateForm />
+	</div>
+<!--</div>-->

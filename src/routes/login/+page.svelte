@@ -21,19 +21,19 @@
 					name="email"
 					required
 					placeholder="user@example.com"
-					class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
 				/>
 			</div>
 
 			<div>
-				<label for="password" class="block text-sm font-medium">비밀번호</label>
+				<label for="pwd" class="block text-sm font-medium">비밀번호</label>
 				<input
-					id="password"
+					id="pwd"
 					type="password"
 					name="password"
 					required
 					placeholder="******"
-					class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
 				/>
 			</div>
 

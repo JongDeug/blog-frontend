@@ -44,7 +44,11 @@ export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
 	);
 
 	// I. 토큰 만료 시
-	if (response.status === 401 && request.url !== `${PUBLIC_API_URL}/auth/logout`) {
+	if (
+		response.status === 401 &&
+		request.url !== `${PUBLIC_API_URL}/auth/logout` &&
+		request.url !== `${PUBLIC_API_URL}/auth/login`
+	) {
 		const refreshResponse = await fetch(`${PUBLIC_API_URL}/auth/refresh`);
 		// I. 예상한 에러
 		if (!refreshResponse.ok) {

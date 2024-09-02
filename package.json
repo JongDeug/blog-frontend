@@ -39,15 +39,14 @@
 		"@editorjs/header": "^2.8.7",
 		"@editorjs/image": "^2.9.3",
 		"@editorjs/inline-code": "^1.5.1",
-		"@editorjs/link": "^2.6.2",
-		"@editorjs/list": "^1.10.0",
 		"@editorjs/marker": "^1.4.0",
 		"@editorjs/nested-list": "^1.4.3",
+		"@editorjs/paragraph": "^2.11.6",
 		"@editorjs/quote": "^2.7.2",
 		"@editorjs/table": "^2.4.1",
 		"@editorjs/warning": "^1.4.0",
-		"dotenv": "^16.4.5",
-		"editorjs-header-with-anchor": "^2.6.0",
+		"editorjs-data-parser": "^2.1.1",
+		"editorjs-parser": "^1.5.3",
 		"set-cookie-parser": "^2.7.0"
 	}
 }

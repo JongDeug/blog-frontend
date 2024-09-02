@@ -9,7 +9,7 @@
 <div class="mt-4">
 	<div class="mb-4">
 	    			<textarea
-							class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+							class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
 							rows="4"
 							placeholder="여기에 댓글을 작성하세요"></textarea>
 	</div>
@@ -18,13 +18,13 @@
 		<input
 			bind:value={nickName}
 			type="text"
-			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
 			placeholder="닉네임" />
 
 		<input
 			bind:value={email}
 			type="email"
-			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
 			placeholder="이메일(댓글 알림)" />
 	</div>
 
@@ -32,7 +32,7 @@
 		<input
 			bind:value={password}
 			type="password"
-			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+			class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
 			placeholder="비밀번호(수정 및 삭제 시 사용)" />
 	</div>
 

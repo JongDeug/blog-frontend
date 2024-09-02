@@ -1,6 +1,7 @@
 <script>
 	import { navLinks } from '$lib/config';
 
+	export let isLogin;
 	let isOpen = false;
 
 	function toggleDarkMode() {
@@ -72,6 +73,19 @@
 					</a>
 				</div>
 			{/each}
+			{#if isLogin}
+				<div class="px-12 py-4">
+					<form method="POST" action="/logout?/logout" class="inline">
+						<button class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100">Logout</button>
+					</form>
+				</div>
+			{:else}
+				<div class="px-12 py-4">
+					<a href="/login" on:click={toggleDarkMode} class="text-2xl font-bold tracking-widest text-gray-900
+					dark:text-gray-100"
+					>Login</a>
+				</div>
+			{/if}
 		</nav>
 	</div>
 </div>

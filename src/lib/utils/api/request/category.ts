@@ -1,6 +1,7 @@
-import { customFetch } from '$lib/utils/customFetch';
+import { customFetch } from '$lib/utils/api/customFetch';
 import { PUBLIC_API_URL } from '$env/static/public';
 import { alertError } from '$lib/utils/alertError';
+import { error } from '@sveltejs/kit';
 
 // I. store 예시
 // import { writable } from 'svelte/store';
@@ -51,7 +52,8 @@ export const createCategory = async (name: string) => {
 
 		window.location.reload();
 	} catch (err) {
-		return null;
+		// cateogory 는 모달
+		alert(`${err}`);
 	}
 };
 
@@ -74,18 +76,19 @@ export const updateCategory = async (target: string, name: string) => {
 
 		window.location.reload();
 	} catch (err) {
-		return null;
+		// cateogory 는 모달
+		alert(`${err}`);
 	}
 };
 
 export const deleteCategory = async (name: string) => {
 	try {
 		const request = new Request(`${PUBLIC_API_URL}/categories/${name}`, {
-			method: 'DELETE',
+			method: 'DELETE'
 		});
 
 		const response = await customFetch(request);
-		if (!response) return;
+		if (!response) return null;
 
 		// I. 예상한 에러
 		if (!response.ok) {
@@ -95,6 +98,7 @@ export const deleteCategory = async (name: string) => {
 
 		window.location.reload();
 	} catch (err) {
-		return null;
+		// cateogory 는 모달
+		alert(`${err}`);
 	}
 };
