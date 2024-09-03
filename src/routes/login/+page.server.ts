@@ -22,9 +22,10 @@ export const actions = {
 			error(response.status, json.error);
 		}
 
-		if (json.message === '로그인 성공') {
-			cookies.set('isLogin', 'true', { path: '/' });
-			redirect(302, '/blog');
-		}
+		// I. 로그인 성공 시
+		const { username, role } = json;
+		cookies.set('info', JSON.stringify({ username, role }), { path: '/' });
+		cookies.set('isLogin', JSON.stringify(true), { path: '/' });
+		redirect(302, '/blog');
 	}
 };

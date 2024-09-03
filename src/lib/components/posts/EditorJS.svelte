@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { PUBLIC_API_URL } from '$env/static/public';
 	import EditorJS from '@editorjs/editorjs';
 	import Header from '@editorjs/header';
 	import Table from '@editorjs/table';
@@ -79,7 +78,7 @@
 </script>
 
 <slot />
-<div id="editorjs" class="prose" /> <!--lg:prose-xl 로 조정 가능-->
+<div id="editorjs" class="prose dark:prose-dark" /> <!--lg:prose-xl 로 조정 가능-->
 <div class="flex justify-end">
 	<button type="submit" on:click={handleClick} class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">확인
 	</button>

@@ -78,9 +78,9 @@
 	};
 </script>
 
-<div class="max-w-2xl mx-auto mt-8 p-6 rounded-lg shadow-lg dark:border">
+<div class="max-w-2xl mx-auto mt-8 p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
 	<div>
-		<h1 class="text-4xl">{title}</h1>
+		<h1 class="text-4xl text-gray-900 dark:text-white mb-6">{title}</h1>
 
 		<EditorJS data={content} on:submit={onSubmit}>
 			<!-- Draft 체크 박스 -->
@@ -89,34 +89,35 @@
 					type="checkbox"
 					id="draft"
 					bind:checked={bindDraft}
-					class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200"
+					class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200 dark:bg-gray-700"
 				/>
-				<label for="draft" class="ml-2 text-sm font-medium text-gray-700">Draft</label>
+				<label for="draft" class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Draft</label>
 			</div>
 
 			<!-- 게시글 요약 입력 -->
 			<div class="mb-4">
-				<label for="summary" class="block text-sm font-medium text-gray-700 mb-1">요약</label>
+				<label for="summary" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">요약</label>
 				<textarea
 					bind:value={bindSummary}
 					placeholder="게시글 요약 내용을 작성해주세요"
 					id="summary"
-					class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200" />
+					class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+				/>
 			</div>
 
 			<!-- 태그 입력 -->
 			<div class="mb-4">
-				<label for="tags" class="block text-sm font-medium text-gray-700 mb-1">태그</label>
+				<label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">태그</label>
 				<input type="text" id="tags" bind:value={bindTags}
-							 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
+							 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
 							 placeholder="태그를 입력하세요 (쉼표로 구분)" />
 			</div>
 
 			<!-- 카테고리 선택 -->
 			<div class="mb-4">
-				<label for="category" class="block text-sm font-medium text-gray-700 mb-1">카테고리</label>
+				<label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">카테고리</label>
 				<select id="category" bind:value={bindCategory}
-								class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200">
+								class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
 					<option value="" disabled selected>카테고리를 선택하세요</option>
 					{#each categories as category}
 						<option value={category.name}>{category.name}</option>
@@ -125,19 +126,19 @@
 			</div>
 
 			<div class="flex mb-4 gap-2">
-				<div>
+				<div class="w-1/2">
 					<!-- 이전 게시글 링크 -->
-					<label for="previous-post" class="block text-sm font-medium text-gray-700 mb-1">이전 게시글 링크</label>
+					<label for="previous-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">이전 게시글 링크</label>
 					<input id="previous-post" bind:value={bindPrev}
-								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
+								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
 								 placeholder="이전 게시글 Id를 입력하세요" />
 				</div>
 
-				<div>
+				<div class="w-1/2">
 					<!-- 다음 게시글 링크 -->
-					<label for="next-post" class="block text-sm font-medium text-gray-700 mb-1">다음 게시글 링크</label>
+					<label for="next-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">다음 게시글 링크</label>
 					<input id="next-post" bind:value={bindNext}
-								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-200"
+								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
 								 placeholder="다음 게시글 Id를 입력하세요" />
 				</div>
 			</div>

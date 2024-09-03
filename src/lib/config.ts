@@ -28,28 +28,14 @@ export const config = {
 			date: '2024-08-24',
 			draft: false,
 			description: '블로그 프로젝트',
-			href: 'https://www.bustle.com/p/piperchat-from-silicon-valley-has-real-inspirations-that-you-can-use-today-52313',
+			href: 'https://github.com/JongDeug/blog-backend',
 			image: 'icon.png'
 		}
 	]
 };
 
-export const user = {
-	name: 'admin',
-	// avatar value can be removed for image
-	avatar: '/logo.png',
-	// twitter value can be removed for no link to twitter
-	twitter: 'https://twitter.com/piedpiperplc'
-};
-
 export const navLinks = [
 	{ href: '/about', title: 'About' },
 	{ href: '/projects', title: 'Projects' },
-	{ href: '/blog', title: 'Blog' },
+	{ href: '/blog', title: 'Blog' }
 ];
-
-export const openGraph = {
-	enabled: true,
-	width: 1200,
-	height: 630
-};

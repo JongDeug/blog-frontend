@@ -3,10 +3,10 @@
 	import Blog from '$lib/components/Blog.svelte';
 
 	export let data;
-	const post = data.getPost.post;
-	const isLogin = data.isLogin;
+	const { isLogin, getPost, info } = data;
+	const post = getPost.post;
 </script>
 
 <Head title={post?.title} />
 
-<Blog {post} {isLogin} />
+<Blog {post} {isLogin} {info} />

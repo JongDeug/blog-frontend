@@ -2,7 +2,7 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import { alertError } from '$lib/utils/alertError';
 
 // I. API 요청 => 토큰 만료 시 => Refresh Token 으로 재발급 => API 재요청
-export const customFetch = async (input: Request) => {
+export const customFetch = async (input: Request): Promise<Response | null> => {
 	try {
 		const cloneRequest = input.clone();
 		let response = await fetch(input);
@@ -20,6 +20,6 @@ export const customFetch = async (input: Request) => {
 
 		return response;
 	} catch (err) {
-		return err;
+		throw err as Error; // throw 해야됨. return X
 	}
 };

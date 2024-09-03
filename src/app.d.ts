@@ -8,6 +8,11 @@ declare global {
 
 		interface Locals {
 			isLogin: boolean;
+			info?: {
+				username: string;
+				role: number;
+			}
+			guestLikeId: string | undefined;
 		}
 
 		// interface PageData {}

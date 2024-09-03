@@ -4,8 +4,13 @@ import type { CookieSerializeOptions } from 'cookie';
 import { PUBLIC_API_URL } from '$env/static/public';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const isLogin = event.cookies.get('isLogin');
-	event.locals.isLogin = !!isLogin;
+	const cookieIsLogin = event.cookies.get('isLogin');
+	const cookieInfo = event.cookies.get('info');
+	const guestLikeId = event.cookies.get('guestLikeId');
+	event.locals.isLogin = cookieIsLogin ? JSON.parse(cookieIsLogin) : false;
+	event.locals.info = cookieInfo ? JSON.parse(cookieInfo) : undefined;
+	event.locals.guestLikeId = guestLikeId === 'null' ? undefined : guestLikeId;
+
 	return resolve(event);
 };
 

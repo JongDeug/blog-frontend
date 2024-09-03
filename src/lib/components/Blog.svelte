@@ -3,19 +3,26 @@
 	import Author from '$lib/components/Author.svelte';
 	import Comments from '$lib/components/comments/Comments.svelte';
 	import { deletePost, postLike } from '$lib/utils/api/request/post';
+	import { getCookie } from '$lib/utils/cookie';
 
 	export let post: PostType;
 	export let isLogin;
+	export let info;
 
 	const handleLike = async (postId: string, tryToLike: boolean) => {
 		try {
-			const guestLikeId = localStorage.getItem('guestLikeId');
-			await postLike({ postId, tryToLike, guestLikeId });
+			// I. 쿠키에서 값을 가져옴
+			let guestLikeId = getCookie('guestLikeId');
+			guestLikeId = guestLikeId === 'null' ? undefined : guestLikeId;
+			const response = await postLike({ postId, tryToLike, guestLikeId });
+			if (response) {
+				post.isLiked = !post.isLiked; // 좋아요 하트 변경
+				post.isLiked ? post.postLikeCount++ : post.postLikeCount--; // 좋아요 수 변경
+			}
 		} catch (err) {
 			alert(`${err}`);
 		}
 	};
-
 
 	const handleDelete = async (id: string) => {
 		try {
@@ -101,9 +108,6 @@
 								</button>
 								<a href="/blog/form/{post.id}" class="font-semibold hover:font-extrabold ">게시글 수정</a>
 							</div>
-							<!--							<p class="py-4">></p>-->
-							<!--							<p class="py-4"></p>-->
-
 						{/if}
 						{#if post.tags.length}
 							<div class="py-4 xl:py-8">
@@ -158,11 +162,12 @@
 						</a>
 					</div>
 					<div class="py-4 xl:py-8 sticky top-0">
-						<button on:click={() => handleLike(post.id, !post.isLiked)} class="border shadow-md px-4 py-2 rounded-3xl">
+						<button on:click={() => handleLike(post.id, !post.isLiked)}
+										class="flex items-center space-x-5 px-5 py-3 border border-gray-300 rounded-full shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 							{#if post.isLiked}
-								<span>&#x2764; 좋아요 {post.postLikeCount}</span>
+								<span>&#x1F49C; 좋아요 {post.postLikeCount}</span>
 							{:else}
-								<span>&#x2661; 좋아요 {post.postLikeCount}</span>
+								<span>&#x1F90D; 좋아요 {post.postLikeCount}</span>
 							{/if}
 						</button>
 					</div>
@@ -171,6 +176,6 @@
 		</div>
 	</article>
 
-	<Comments comments={post.comments} />
+	<Comments comments={post.comments} {isLogin} postId={post.id} {info} />
 </div>
 

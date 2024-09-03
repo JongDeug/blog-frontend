@@ -4,15 +4,18 @@ import edjsParser from 'editorjs-parser';
 
 export async function load({ params, fetch, locals }) {
 	const { slug } = params;
-	const { isLogin } = locals;
+	const { isLogin, guestLikeId, info } = locals;
 
 	// getPost
-	// const guestLikeId = event.localStorage.get('guestLikeId');
-	// const queryString = new URLSearchParams({ guestLikeId }).toString();
-	// console.log(queryString);
-	const getPost = await fetch(`${PUBLIC_API_URL}/posts/${slug}`).then((res) =>
-		res.json()
-	);
+	let getPost;
+	if (guestLikeId) {
+		const queryString = new URLSearchParams({ guestLikeId }).toString();
+		getPost = await fetch(`${PUBLIC_API_URL}/posts/${slug}?${queryString}`).then((res) =>
+			res.json()
+		);
+	} else {
+		getPost = await fetch(`${PUBLIC_API_URL}/posts/${slug}`).then((res) => res.json());
+	}
 
 	// convert editorjs data to html
 	if (getPost?.post?.content) {
@@ -23,6 +26,8 @@ export async function load({ params, fetch, locals }) {
 
 	return {
 		isLogin,
+		guestLikeId,
+		info,
 		getPost
 	};
 }

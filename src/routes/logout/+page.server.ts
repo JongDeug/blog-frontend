@@ -8,6 +8,7 @@ export const actions = {
 
 		// I. 에러처리 없이 그냥 로그아웃. 백엔드에서 Redis 사용해서 고쳐보자
 		cookies.delete('isLogin', { path: '/' });
+		cookies.delete('info', { path: '/' });
 		cookies.set('refreshToken', 'null', { path: '/' });
 		cookies.set('accessToken', 'null', { path: '/' });
 		redirect(302, '/');

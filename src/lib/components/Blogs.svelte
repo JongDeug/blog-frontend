@@ -5,10 +5,10 @@
 	import Category from '$lib/components/Category.svelte';
 	import CategoryModal from './CategoryModal.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { toggleModal } from '$lib/stores/categoryModal';
+	import { toggleModal } from '$lib/utils/stores/modal';
 
 	export let posts: PostType[];
-	export let categories: CategoryType[];
+	export let categories: CategoryType[] = [];
 	export let title = '';
 	export let subtitle = '';
 	export let more = true;

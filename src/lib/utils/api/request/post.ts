@@ -19,7 +19,7 @@ export const createPost = async (data: {}) => {
 
 		window.location.href = `${PUBLIC_URL}/blog/${json.id}`;
 	} catch (err) {
-		return err;
+		throw err;
 	}
 };
 
@@ -40,7 +40,7 @@ export const updatePost = async (id: string, data: {}) => {
 
 		window.location.href = `${PUBLIC_URL}/blog/${id}`;
 	} catch (err) {
-		return err;
+		throw err;
 	}
 };
 
@@ -57,7 +57,7 @@ export const deletePost = async (id: string) => {
 
 		window.location.href = `${PUBLIC_URL}/blog`;
 	} catch (err) {
-		return err;
+		throw err;
 	}
 };
 
@@ -76,10 +76,12 @@ export const postLike = async (data: {}) => {
 		// I. 예상한 에러
 		if (!response.ok) return alertError(response.status, json.error);
 
-		// I. 받은 guestLikeId 이거 영구적으로 가지고 있어야 함.
-		localStorage.setItem('guestLikeId', json.guestLikeId);
+		// I. 받은 guestLikeId 1년 쿠키 저장
+		const age = 365 * 24 * 60 * 60 * 60;
+		document.cookie = `guestLikeId=${json.guestLikeId}; path=/; max-age=${age};`;
+		return true;
 	} catch (err) {
-		return err;
+		throw err;
 	}
 };
 
@@ -103,6 +105,6 @@ export const uploadImage = async (file: File) => {
 
 		return json;
 	} catch (err) {
-		return err;
+		throw err;
 	}
 };
