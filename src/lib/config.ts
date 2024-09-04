@@ -2,26 +2,18 @@ export const config = {
 	title: 'Jongdeug (un)official blog',
 	author: 'Kim Jong Hwan',
 	headerTitle: 'Jongdeug',
-	description: 'Jongdeug (un)official blog, created with Sveltekit and Tailwind.css',
+	description: 'Jongdeug (un)official blog, created with Sveltekit',
 	language: 'ko-KR',
-	theme: 'dark', // system, dark or light
+	theme: 'light', // system, dark or light
 	siteUrl: 'https://pied-piper-blog.netlify.app',
 	siteRepo: 'https://github.com/akiarostami/sveltekit-tailwind-blog-starter',
 	siteLogo: '/icon.png',
-	// image: '/img/avatar.png',
+	image: '/img/avatar.png',
 	email: 'jongdeug2021@gmail.com',
 	github: 'https://github.com/JongDeug',
 	linkedin: 'https://www.linkedin.com/company/pied-piper-plc/',
 	locale: 'ko-KR',
 	primaryColor: '#06a261',
-
-	// supports buttondown, convertkit, emailoctopus, klaviyo, mailchimp, revue
-	// use false or null to disable newsletter
-	// check .env.example for settings needed values for each service
-	newsletter: 'mailchimp',
-
-	multiuser: true,
-
 	projects: [
 		{
 			title: 'Jongdeug Blog',

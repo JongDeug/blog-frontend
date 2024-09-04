@@ -2,7 +2,7 @@
 	import SocialIcon from '$lib/components/SocialIcon.svelte';
 
 	export let author = '김종환';
-	export let avatar = '/tt.jpg';
+	export let avatar = '/avatar.jpg';
 	export let github = 'JongDeug';
 </script>
 

@@ -66,7 +66,6 @@
 			autofocus: true,
 			placeholder: '내용을 입력해주세요!',
 			tools,
-			// readOnly: true, // 나중에 써먹자
 			data
 		});
 	});

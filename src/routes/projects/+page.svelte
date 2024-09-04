@@ -5,12 +5,11 @@
 	import { config } from '$lib/config';
 
 	const projects = config.projects;
-
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
 	<div class="space-y-2 pt-6 pb-8 md:space-y-5">
-		<Title title="Projects" subtitle="제대로된 프로젝트 목록" />
+		<Title title="Projects" subtitle="프로젝트 목록" />
 	</div>
 	<div class="container py-12">
 		<div class="-m-4 flex flex-wrap">

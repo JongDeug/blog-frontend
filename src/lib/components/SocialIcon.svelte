@@ -1,7 +1,6 @@
 <script>
 	import IconMail from '$lib/icons/mail.svelte';
 	import IconGithub from '$lib/icons/github.svelte';
-	import IconLinkedin from '$lib/icons/linkedin.svelte';
 
 	export let url = '';
 	export let icon = '';
@@ -13,7 +12,6 @@
 	const options = [
 		{ caption: 'mail', component: IconMail },
 		{ caption: 'github', component: IconGithub },
-		{ caption: 'linkedin', component: IconLinkedin },
 	];
 
 	let svg = options.find((option) => option.caption === icon)?.component;
