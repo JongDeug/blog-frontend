@@ -18,6 +18,7 @@
 
 	let searchQuery: string | null = null;
 	let currentPosts = posts;
+	let draft = false;
 
 	function handleInput(event: CustomEvent<string>) {
 		searchQuery = event.detail; // 자식 컴포넌트에서 전달된 값
@@ -25,13 +26,19 @@
 
 	const searchPosts = async (search: string) => {
 		const queryString = new URLSearchParams({ search }).toString();
-		// I. 오류가 나도 브라우저에 뜸
 		const getPosts = await fetch(`${PUBLIC_API_URL}/posts?${queryString}`).then(res => res.json());
 		if (search) currentPosts = getPosts.posts;
 		else currentPosts = posts;
 	};
 
+	const draftPosts = async (value: boolean) => {
+		const queryString = new URLSearchParams({ draft: value.toString() }).toString();
+		const getPosts = await fetch(`${PUBLIC_API_URL}/posts?${queryString}`).then(res => res.json());
+		currentPosts = getPosts.posts;
+	};
+
 	$: searchQuery !== null ? searchPosts(searchQuery) : '';
+	$: draft ? draftPosts(draft) : currentPosts = posts;
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -62,7 +69,7 @@
 						{#if isLogin}
 							<div class="mr-5">
 								<button
-									class="mr-3 inline-block font-medium uppercase text-xs" on:click={toggleModal}
+									class="mr-3 inline-block font-medium uppercase text-xs" on:click={() => toggleModal()}
 								>카테고리 관리
 								</button>
 							</div>
@@ -72,7 +79,7 @@
 					{#if isLogin && search}
 						<div class="mr-5">
 							<button
-								class="mr-3 inline-block font-medium uppercase text-xs" on:click={toggleModal}
+								class="mr-3 inline-block font-medium uppercase text-xs" on:click={() => toggleModal()}
 							>카테고리 관리
 							</button>
 						</div>
@@ -86,14 +93,34 @@
 	{#if !currentPosts.length}
 		<div class="py-6">
 			{#if isLogin}
-				<p class="text-right"><a href="/blog/form" class="font-semibold hover:font-extrabold">게시글 작성</a></p>
+				<p class="text-right">
+					<a href="/blog/form" class="font-semibold hover:font-extrabold mr-2">게시글 작성</a>
+					<span>|</span>
+					<input
+						type="checkbox"
+						id="draft"
+						bind:checked={draft}
+						class="ml-2 form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200 dark:bg-gray-700"
+					/>
+					<label for="draft" class="font-medium">Draft</label>
+				</p>
 			{/if}
 			<p>No post found.</p>
 		</div>
 	{:else}
 		<ul>
 			{#if isLogin}
-				<li class="text-right pt-6 pr-3"><a href="/blog/form" class="font-semibold hover:font-extrabold">게시글 작성</a></li>
+				<li class="text-right pt-6 pr-3">
+					<a href="/blog/form" class="font-semibold hover:font-extrabold mr-2">게시글 작성</a>
+					<span>|</span>
+					<input
+						type="checkbox"
+						id="draft"
+						bind:checked={draft}
+						class="ml-2 form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200 dark:bg-gray-700"
+					/>
+					<label for="draft" class="font-medium">Draft</label>
+				</li>
 			{/if}
 			{#each currentPosts as post}
 				<li class="py-12">

@@ -7,8 +7,6 @@ export const load = async ({ url: { pathname }, locals, cookies }) => {
 			path: '/',
 			maxAge: 365 * 24 * 60 * 60,
 			httpOnly: false,
-			secure: false,
-			sameSite: 'none'
 		});
 	}
 

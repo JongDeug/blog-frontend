@@ -43,7 +43,7 @@
 			bind:value={email}
 			type="email"
 			class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
-			placeholder="이메일(댓글 알림)" />
+			placeholder="이메일(알림 용도로 사용합니다)" />
 	</div>
 
 	<div class="mb-4">
@@ -51,7 +51,7 @@
 			bind:value={password}
 			type="password"
 			class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
-			placeholder="비밀번호(수정 및 삭제 시 사용)" />
+			placeholder="비밀번호(수정 및 삭제 시 사용합니다)" />
 	</div>
 
 	<button
