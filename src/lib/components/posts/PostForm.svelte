@@ -128,7 +128,8 @@
 			<div class="flex mb-4 gap-2">
 				<div class="w-1/2">
 					<!-- 이전 게시글 링크 -->
-					<label for="previous-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">이전 게시글 링크</label>
+					<label for="previous-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">이전 게시글
+						링크</label>
 					<input id="previous-post" bind:value={bindPrev}
 								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
 								 placeholder="이전 게시글 Id를 입력하세요" />
@@ -136,7 +137,8 @@
 
 				<div class="w-1/2">
 					<!-- 다음 게시글 링크 -->
-					<label for="next-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">다음 게시글 링크</label>
+					<label for="next-post" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">다음 게시글
+						링크</label>
 					<input id="next-post" bind:value={bindNext}
 								 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
 								 placeholder="다음 게시글 Id를 입력하세요" />

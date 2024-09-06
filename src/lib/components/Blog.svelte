@@ -4,6 +4,7 @@
 	import Comments from '$lib/components/comments/Comments.svelte';
 	import { deletePost, postLike } from '$lib/utils/api/request/post';
 	import { getCookie } from '$lib/utils/cookie';
+	import EditorJS from '$lib/components/posts/EditorJS.svelte';
 
 	export let post: PostType;
 	export let isLogin;
@@ -45,7 +46,7 @@
 						<img
 							alt={post.title}
 							src={post.images[0].url}
-							class="object-cover object-center w-full h-auto"
+							class="object-contain w-full h-96"
 						/>
 					</div>
 				{/if}
@@ -93,9 +94,7 @@
 				<div
 					class="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0"
 				>
-					<div class="prose max-w-none pt-10 pb-8 dark:prose-dark">
-						{@html post.content}
-					</div>
+					<EditorJS read={true} data={post.content} />
 				</div>
 				<footer class="">
 					<div

@@ -91,7 +91,7 @@
 	</div>
 
 	{#if !currentPosts.length}
-		<div class="py-6">
+		<div class="py-6 pr-3">
 			{#if isLogin}
 				<p class="text-right">
 					<a href="/blog/form" class="font-semibold hover:font-extrabold mr-2">게시글 작성</a>
@@ -102,7 +102,6 @@
 						bind:checked={draft}
 						class="ml-2 form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200 dark:bg-gray-700"
 					/>
-					<label for="draft" class="font-medium">Draft</label>
 				</p>
 			{/if}
 			<p>No post found.</p>
@@ -119,7 +118,6 @@
 						bind:checked={draft}
 						class="ml-2 form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out bg-gray-200 dark:bg-gray-700"
 					/>
-					<label for="draft" class="font-medium">Draft</label>
 				</li>
 			{/if}
 			{#each currentPosts as post}
