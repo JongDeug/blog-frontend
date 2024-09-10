@@ -1,7 +1,5 @@
 import type { PageLoad } from './$types';
 import { PUBLIC_API_URL } from '$env/static/public';
-// @ts-ignore
-import edjsParser from 'editorjs-parser';
 import { config } from '$lib/config';
 
 export const ssr = false;

@@ -17,7 +17,7 @@
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === 'Enter') {
 			toggleModal();
 		}
 	};
@@ -33,7 +33,9 @@
 	>
 		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-[90%] sm:max-w-md">
 			<h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">댓글 삭제 확인</h2>
-			<p class="mb-4 text-gray-600 dark:text-gray-300">댓글을 삭제하려면 비밀번호를 입력해주세요.</p>
+			<p class="mb-4 text-gray-600 dark:text-gray-300">
+				댓글을 삭제하려면 비밀번호를 입력해주세요.
+			</p>
 
 			<input
 				type="password"
@@ -59,3 +61,4 @@
 		</div>
 	</div>
 {/if}
+
