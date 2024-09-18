@@ -28,21 +28,21 @@
 
 ## 📌 UI 
 
-로그인
+### 로그인
 ![로그인](https://github.com/JongDeug/blog-frontend/blob/main/public/login.png)
 
-게시글 조회
+### 게시글 조회
 ![게시글 조회](https://github.com/JongDeug/blog-frontend/blob/main/public/read.png)
 
-게시글 생성
+### 게시글 생성
 ![게시글 생성](https://github.com/JongDeug/blog-frontend/blob/main/public/create.png)
 
-게시글 수정
+### 게시글 수정
 ![게시글 수정](https://github.com/JongDeug/blog-frontend/blob/main/public/update.png)
 
-댓글 관리
+### 댓글 관리
 ![댓글 관리](https://github.com/JongDeug/blog-frontend/blob/main/public/comment.png)
 
-카테고리 관리
+### 카테고리 관리
 ![카테고리 관리](https://github.com/JongDeug/blog-frontend/blob/main/public/category.png)
 
