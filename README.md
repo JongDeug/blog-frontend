@@ -1,38 +1,23 @@
-# create-svelte
+# 🌐 blog-frontend
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## 📌 프로젝트 소개
 
-## Creating a project
+개인 블로그 운영(브랜딩)을 위한 백엔드 서버입니다. (2024.06 ~ .)
 
-If you're seeing this, you've probably already done this step. Congrats!
+### 프로젝트를 진행하게된 계기
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+학부에서 다양한 주제로 여러 팀 프로젝트를 진행했지만, 지금까지 유지 보수 및 운영하고 있는 프로젝트가 없었습니다.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+단순히 설계와 구현에만 집중하고 있다는 사실을 깨닫고, 전반적인 개발 과정을 모두 경험하면서, 지속적으로 운영 및 유지 보수할 수 있는 프로젝트가 필요했습니다.
 
-## Developing
+### 프로젝트를 통한 목표
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. 실제 서비스 운영에서 겪을 수 있는 다양한 문제를 직접 해결하고 개선할 수 있도록 한다.
+2. 지속적으로 코드 품질을 개선할 수 있도록 한다.
+3. 위와 같은 활동을 통해 자연스럽게 포트폴리오 강화를 할 수 있도록 한다.
+4. 개인 브랜딩을 통해 개인적 성장을 도모할 수 있도록 한다.
 
-```bash
-npm run dev
+## 📌 기술 스택
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white)
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
