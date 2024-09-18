@@ -2,7 +2,7 @@
 
 ## 📌 프로젝트 소개
 
-개인 블로그 운영(브랜딩)을 위한 백엔드 서버입니다. (2024.06 ~ .)
+개인 블로그 운영(브랜딩)을 위한 프론트엔드 서버입니다. (2024.06 ~ .)
 
 ### 프로젝트를 진행하게된 계기
 
@@ -20,4 +20,12 @@
 ## 📌 기술 스택
 
 ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white)
+![Editor.js](https://img.shields.io/badge/Editor.js-000000?style=for-the-badge&logo=editor.js&logoColor=white)
+
+## 📌 배포 사이트
+
+- https://jongdeug.port0.org/
+
+## 📌 UI 
+
 
