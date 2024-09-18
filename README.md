@@ -30,4 +30,4 @@
 
 로그인
 
-![로그인](https://github.com/JongDeug/blog-frontend/blob/public/login.png)
+![로그인](https://github.com/JongDeug/blog-frontend/blob/main/public/login.png)
