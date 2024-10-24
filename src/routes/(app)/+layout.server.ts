@@ -6,7 +6,7 @@ export const load = async ({ url: { pathname }, locals, cookies }) => {
 		cookies.set('guestLikeId', guestLikeId, {
 			path: '/',
 			maxAge: 365 * 24 * 60 * 60,
-			httpOnly: false,
+			httpOnly: false
 		});
 	}
 
