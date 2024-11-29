@@ -46,17 +46,19 @@
 
 <div class="max-w-4xl mx-auto p-6 font-sans">
 	<header class="mb-10">
+		<div>
+			<h1 class="text-4xl font-bold text-gray-800 mb-2 highlight">{name}</h1>
+			<p class="text-xl font-bold text-gray-600 mb-2">{profession}</p>
+		</div>
 		<div class="flex justify-between items-center gap-10">
-			<div class="p-2">
-				<h1 class="text-4xl font-bold text-gray-800 mb-2 highlight">{name}</h1>
-				<p class="text-xl font-bold text-gray-600 mb-2">{profession}</p>
+			<div>
 				<img src="/icon.png" alt="" class="rounded-3xl" width="300" height="300" />
 			</div>
 			<table class="w-full max-w-4xl mx-auto">
 				<tbody>
 					{#each links as link}
 						<tr class="border-b-2 border-gray-200">
-							<td class="p-3 text-xl font-bold">{link.name}</td>
+							<td class="p-2 text-lg font-semibold">{link.name}</td>
 							{#if link.isLink && link.isEmail}
 								<td align="center">
 									<a class="text-blue-600 hover:underline" href="mailto:{link.url}">{link.url}</a>
