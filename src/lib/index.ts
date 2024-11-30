@@ -13,6 +13,7 @@ export { default as SearchBox } from './components/SearchBox.svelte';
 export { default as CategoryModal } from './components/CategoryModal.svelte';
 export { default as Category } from './components/Category.svelte';
 export { default as Home } from './components/Home.svelte';
+export { default as Card } from './components/Card.svelte';
 
 export { default as IconMail } from './icons/Mail.svelte';
 export { default as IconGithub } from './icons/Github.svelte';

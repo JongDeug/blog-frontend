@@ -2,8 +2,10 @@
 	import { Footer, Header } from '$lib';
 	import { fly } from 'svelte/transition';
 	import '../../app.css';
+	import type { PageData } from './$types';
+	import type { Snippet } from 'svelte';
 
-	let { children, data } = $props(); // { slot, export let data }
+	let { children, data }: { children: Snippet; data: PageData } = $props(); // { slot, export let data }
 </script>
 
 <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">

@@ -8,7 +8,7 @@
 	const { isLogin, posts } = data;
 </script>
 
-<Head title="Main" />
+<Head title="Home" />
 
 <div class="pt-12">
 	<Title title="꾸벅" />
