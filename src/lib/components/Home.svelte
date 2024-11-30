@@ -1,29 +1,17 @@
 <script lang="ts">
-	import { Title, formatDate } from '$lib';
+	import { formatDate } from '$lib';
 
-	let {
-		posts,
-		isLogin,
-		title,
-		h2
-	}: { posts: Post[]; isLogin: boolean; title: string; h2: boolean } = $props();
+	let { initPosts, isLogin }: { initPosts: Post[]; isLogin: boolean } = $props();
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
-	<div class="space-y-2 pb-8 pt-6 md:space-y-5">
-		<div class="grid gap-4 lg:grid-cols-2">
-			<div>
-				<Title {title} {h2} />
-			</div>
-		</div>
-	</div>
+	<div class="space-y-2 pb-8 pt-2 md:space-y-5"></div>
 
-	{#if !posts.length}
+	{#if !initPosts.length}
 		<div class="py-6 pr-3">
 			{#if isLogin}
 				<p class="text-right">
 					<a href="/blog/form" class="mr-2 font-semibold hover:font-extrabold">게시글 작성</a>
-					<span>|</span>
 				</p>
 			{/if}
 			<p>No post found.</p>
@@ -33,10 +21,9 @@
 			{#if isLogin}
 				<li class="pr-3 pt-6 text-right">
 					<a href="/blog/form" class="mr-2 font-semibold hover:font-extrabold">게시글 작성</a>
-					<span>|</span>
 				</li>
 			{/if}
-			{#each posts as post}
+			{#each initPosts as post}
 				<li class="py-12">
 					<article>
 						<div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -84,15 +71,6 @@
 					</article>
 				</li>
 			{/each}
-		</ul>
-	{/if}
-
-	{#if isLogin}
-		<ul>
-			<li class="pr-3 pt-6 text-right">
-				<a href="/blog/form" class="mr-2 font-semibold hover:font-extrabold">게시글 작성</a>
-				<span>|</span>
-			</li>
 		</ul>
 	{/if}
 </div>

@@ -1,4 +1,7 @@
-interface CategoryType {
+interface Category {
+	id: number;
 	name: string;
-	count: number;
+	_count: {
+		posts: number;
+	};
 }

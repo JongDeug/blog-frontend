@@ -5,7 +5,7 @@
 	// [isLogin]: layout.server.ts => layout.ts => layout.svelte => page.svelte
 	// [posts]: page.ts => page.svelte
 	const { data }: { data: PageData } = $props();
-	const { isLogin, posts } = data;
+	const { isLogin, initPosts } = data;
 </script>
 
 <Head title="Home" />
@@ -17,4 +17,4 @@
 	</p>
 </div>
 
-<Home title="Latest Posts" h2 {isLogin} {posts} />
+<Home {isLogin} {initPosts} />

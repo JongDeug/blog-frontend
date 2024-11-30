@@ -9,7 +9,6 @@ declare global {
 			guestId: string;
 		}
 
-		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
 	}
