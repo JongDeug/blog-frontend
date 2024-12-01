@@ -1,10 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
-export async function login(request: Request) {
-	const formData = await request.formData();
-	const email = formData.get('email');
-	const password = formData.get('password');
-
+export async function login(email?: string, password?: string) {
 	return fetch(`${PUBLIC_API_URL}/auth/login`, {
 		method: 'POST',
 		headers: new Headers({

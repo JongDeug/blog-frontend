@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import { config, navLinks } from '$lib';
 	// import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
 	// import MobileMenu from '$lib/components/MobileMenu.svelte';
@@ -32,7 +33,11 @@
 					<button class="p-1 font-medium text-gray-900 sm:p-4 dark:text-gray-100">Logout</button>
 				</form>
 			{:else}
-				<a href="/login" class="p-1 font-medium text-gray-900 sm:p-4 dark:text-gray-100">Login</a>
+				<!-- 로그인 -->
+				<a
+					href="/login?redirectTo={$page.url.pathname}"
+					class="p-1 font-medium text-gray-900 sm:p-4 dark:text-gray-100">Login</a
+				>
 			{/if}
 		</div>
 		<!-- <ThemeSwitch /> -->

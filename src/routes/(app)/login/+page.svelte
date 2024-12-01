@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 
 	const { form } = $props();
 
 	if (browser) {
 		if (form?.message) alert(`${form.message}`);
 	}
+
+	const redirectTo = $page.url.searchParams.get('redirectTo');
 </script>
 
 <div class="flex items-center justify-center p-4">
@@ -42,6 +45,7 @@
 			</div>
 
 			<div>
+				<input type="hidden" name="redirectTo" value={redirectTo} />
 				<button
 					type="submit"
 					class="w-full rounded-md bg-blue-600 px-4 py-3 font-bold text-white shadow-sm transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
