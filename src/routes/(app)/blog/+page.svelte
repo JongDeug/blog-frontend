@@ -6,4 +6,4 @@
 </script>
 
 <Head title="Blog" />
-<Blog title="All Posts" {initPosts} {initCategories} {isLogin} />
+<Blog title="All Posts" {initPosts} {initCategories} {isLogin} searchBox />

@@ -13,6 +13,7 @@ export { default as SearchBox } from './components/SearchBox.svelte';
 export { default as CategoryModal } from './components/CategoryModal.svelte';
 export { default as Home } from './components/Home.svelte';
 export { default as Card } from './components/Card.svelte';
+export { default as Posts } from './components/Posts.svelte';
 
 export { default as IconMail } from './icons/Mail.svelte';
 export { default as IconGithub } from './icons/Github.svelte';
@@ -22,3 +23,4 @@ export { default as formatDate } from './utils/formatDate';
 export * as Auth from './utils/fetch/auth';
 export * as Post from './utils/fetch/post';
 export * as Category from './utils/fetch/category';
+export * as Tag from './utils/fetch/tag';
