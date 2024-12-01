@@ -10,7 +10,11 @@ export const config = {
 	siteLogo: '/icon.png',
 	image: '/img/avatar.png',
 	email: 'jongdeug2021@gmail.com',
-	github: 'https://github.com/JongDeug',
+	github: {
+		url: 'https://github.com/JongDeug',
+		avatar: '/avatar.jpg',
+		name: 'JongDeug'
+	},
 	linkedin: 'https://www.linkedin.com/company/pied-piper-plc/',
 	locale: 'ko-KR',
 	primaryColor: '#06a261',

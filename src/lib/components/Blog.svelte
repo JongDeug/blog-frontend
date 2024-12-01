@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Title, formatDate, SearchBox, Category, CategoryModal, Post } from '$lib';
+	import { Title, SearchBox, CategoryModal, PostFetch } from '$lib';
 	import { toggleModal } from '$lib/utils/stores/modal';
 	import Posts from './Posts.svelte';
 
@@ -23,7 +23,7 @@
 	// delay 안되네, debounce 나중에 찾아보기
 	// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 	async function searchPosts() {
-		const getPosts = await Post.getPosts({ search });
+		const getPosts = await PostFetch.getPosts({ search });
 		posts = getPosts.posts;
 	}
 
@@ -75,9 +75,9 @@
 							</div>
 						{/each}
 						{#if isLogin}
-							<div class="mr-5">
+							<div class="mr-5 mt-3">
 								<button
-									class="mr-3 inline-block text-sm font-medium text-rose-500 hover:font-extrabold"
+									class="mr-3 inline-block rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
 									onclick={() => toggleModal()}
 									>카테고리 관리
 								</button>

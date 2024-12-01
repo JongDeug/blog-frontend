@@ -8,7 +8,9 @@
 	<div class="py-6 pr-3">
 		{#if isLogin}
 			<p class="text-right">
-				<a href="/blog/form" class="mr-2 text-sm font-medium text-rose-500 hover:font-extrabold"
+				<a
+					href="/blog/form"
+					class="mr-2 rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
 					>게시글 작성</a
 				>
 			</p>
@@ -19,7 +21,9 @@
 	<ul>
 		{#if isLogin}
 			<li class="pr-3 pt-6 text-right">
-				<a href="/blog/form" class="mr-2 text-sm font-medium text-rose-500 hover:font-extrabold"
+				<a
+					href="/blog/form"
+					class="mr-2 rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
 					>게시글 작성</a
 				>
 			</li>

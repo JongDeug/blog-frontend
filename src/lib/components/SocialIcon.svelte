@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { IconGithub, IconMail } from '$lib';
-	let { url = '', icon = '', popup = true } = $props();
+
+	const { url = '', icon = '', popup = true, children } = $props();
 </script>
 
 {#if url}
@@ -16,5 +17,6 @@
 		{:else}
 			<IconMail />
 		{/if}
+		{@render children?.()}
 	</a>
 {/if}
