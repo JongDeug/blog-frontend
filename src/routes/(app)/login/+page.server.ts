@@ -1,18 +1,16 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
-import { Auth } from '$lib';
+import { AuthFetch } from '$lib';
 
 export const load: PageServerLoad = async () => {};
 
 export const actions = {
-	login: async ({ request, cookies }) => {
+	login: async ({ request, cookies, fetch }) => {
 		const formData = await request.formData();
-		const email = formData.get('email')?.toString();
-		const password = formData.get('password')?.toString();
 		const redirectTo = formData.get('redirectTo')?.toString() || '/';
 
-		const response = await Auth.login(email?.toString(), password?.toString());
+		const response = await AuthFetch.login(fetch, formData);
 
 		// 에러
 		if (!response.ok) {

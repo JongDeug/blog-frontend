@@ -1,4 +1,4 @@
-<!-- 예상 가능한 에러들을 잡아줌 -->
+<!-- Expected Error 잡아줌 -->
 
 <script>
 	import { page } from '$app/stores';

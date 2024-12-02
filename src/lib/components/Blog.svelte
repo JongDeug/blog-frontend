@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Title, SearchBox, CategoryModal, PostFetch } from '$lib';
+	import { Title, SearchBox, CategoryModal, PostFetch, delay } from '$lib';
 	import { toggleModal } from '$lib/utils/stores/modal';
 	import Posts from './Posts.svelte';
 
@@ -20,8 +20,6 @@
 	let search = $state('');
 	let posts = $state(initPosts);
 
-	// delay 안되네, debounce 나중에 찾아보기
-	// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 	async function searchPosts() {
 		const getPosts = await PostFetch.getPosts({ search });
 		posts = getPosts.posts;
@@ -29,7 +27,10 @@
 
 	$effect(() => {
 		// '' 가 아닐 때
-		if (search) searchPosts();
+		if (search) {
+			// delay 적용 해야함
+			searchPosts();
+		}
 	});
 
 	// let draft = false;

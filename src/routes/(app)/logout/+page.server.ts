@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
-import { Auth } from '$lib';
+import { AuthFetch } from '$lib';
 
 export const load: PageServerLoad = async () => {};
 
@@ -9,11 +9,10 @@ export const load: PageServerLoad = async () => {};
 // access token이 SvelteKit 서버에 담겨 있음
 
 export const actions = {
-	logout: async ({ cookies }) => {
-		await Auth.logout();
+	logout: async ({ cookies, fetch }) => {
+		await AuthFetch.logout(fetch);
 
 		cookies.delete('isLogin', { path: '/' });
-		// cookies.delete('info', { path: '/' });
 		redirect(302, '/');
 	}
 } satisfies Actions;

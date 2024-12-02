@@ -1,13 +1,15 @@
-// import type { HandleClientError } from '@sveltejs/kit';
+import type { HandleClientError } from '@sveltejs/kit';
+import { error as throwError } from '@sveltejs/kit';
 
-// export const handleError: HandleClientError = ({ error, status }) => {
-// 	// I. error.svelte 로 넘어감
-// 	// console.log(error, status);
-// 	// if (status === 404) return { status, message: 'Page Not Found' };
-// 	// return { status, message: (error as Error).message };
+export const handleError: HandleClientError = ({ error, status }) => {
+	console.error('[Hooks Client] : ', error);
 
-// 	return {
-// 		message: 'Whoops!',
-// 		errorId: 100
-// 	};
-// };
+	if (status === 404) {
+		return throwError(status, '음');
+	}
+
+	return {
+		message: 'Whoops!',
+		status
+	};
+};

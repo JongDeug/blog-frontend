@@ -3,23 +3,33 @@ import { PUBLIC_API_URL } from '$env/static/public';
 export const getPosts = (query?: GetPostsQuery) => {
 	if (query) {
 		const queryString = new URLSearchParams({ ...transformValuesToString(query) }).toString();
-		return fetch(`${PUBLIC_API_URL}/post?${queryString}`)
-			.then((res) => res.json())
-			.catch((err) => console.log(err));
+		return fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 	}
 	return fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
 };
 
-export const getPost = (
-	fetch: {
-		(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
-		(input: string | URL | globalThis.Request, init?: RequestInit): Promise<Response>;
-	},
-	id: string
-) => {
+export const getPost = (fetch: Fetch, id: string) => {
 	return fetch(`${PUBLIC_API_URL}/post/${id}`, { credentials: 'include' }).then((res) =>
 		res.json()
 	);
+};
+
+export const createPost = async (fetch: Fetch, data: Object) => {
+	return fetch(`${PUBLIC_API_URL}/post`, {
+		method: 'POST',
+		headers: new Headers({ 'Content-Type': 'application/json' }),
+		credentials: 'include',
+		body: JSON.stringify({ ...data })
+	});
+};
+
+export const updatePost = async (fetch: Fetch, postId: string, data: Object) => {
+	return fetch(`${PUBLIC_API_URL}/post/${postId}`, {
+		method: 'PATCH',
+		headers: new Headers({ 'Content-Type': 'application/json' }),
+		credentials: 'include',
+		body: JSON.stringify({ ...data })
+	});
 };
 
 const transformValuesToString = (obj: Object) => {

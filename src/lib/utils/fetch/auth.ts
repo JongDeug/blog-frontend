@@ -1,16 +1,23 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
-export function login(email?: string, password?: string) {
+export const login = (fetch: Fetch, formData: FormData) => {
+	const email = formData.get('email');
+	const password = formData.get('password');
+
 	return fetch(`${PUBLIC_API_URL}/auth/login`, {
 		method: 'POST',
 		headers: new Headers({
 			'Content-Type': 'application/json',
 			Authorization: `Basic ${Buffer.from(`${email}:${password}`).toString('base64')}`
 		}),
-		body: undefined
+		body: null
 	});
-}
+};
 
-export function logout() {
-	return fetch(`${PUBLIC_API_URL}/auth/logout`);
-}
+export const logout = (fetch: Fetch) => {
+	return fetch(`${PUBLIC_API_URL}/auth/logout`, { credentials: 'include' });
+};
+
+export const refresh = (fetch: Fetch) => {
+	return fetch(`${PUBLIC_API_URL}/auth/token/refresh`, { credentials: 'include' });
+};

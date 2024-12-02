@@ -86,11 +86,12 @@
 					</dd>
 				</dl>
 				<div
-					class="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700"
+					class="prose divide-y divide-gray-200 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700"
 				>
 					<!-- <EditorJS read={true} data={post.content} /> -->
 					<!-- <ToastUI /> -->
-					<Viewer content={initPost.content} />
+					<!-- <Viewer content={initPost.content} /> -->
+					{@html initPost.content}
 				</div>
 				<div
 					class="divide-gray-200 text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700"
@@ -110,11 +111,12 @@
 							<h2 class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Tags</h2>
 							<div class="flex flex-wrap">
 								{#each initPost.tags as tag}
-									<span
+									<a
+										href="/tag/{tag.id}"
 										class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
 									>
 										{tag.name}
-									</span>
+									</a>
 								{/each}
 							</div>
 						</div>
