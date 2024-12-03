@@ -8,7 +8,6 @@ import {
 	type HandleServerError
 } from '@sveltejs/kit';
 import { v4 as uuidv4 } from 'uuid';
-import formatDate from './lib/utils/formatDate';
 
 // event : 브라우저 요청
 export const handle: Handle = async ({ event, resolve }) => {
@@ -46,6 +45,7 @@ export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
 
 		if (!res.ok) {
 			const data = await res.json();
+			console.log(data);
 			throwError(data.statusCode, data.message);
 		}
 
@@ -56,9 +56,11 @@ export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
 		let reRequest: Request;
 		// 이미지
 		if (request.url === `${PUBLIC_API_URL}/common/image`) {
-			reRequest = await createMultipartRequest(cloneRequest);
+			reRequest = await createRequestMultipartFormData(cloneRequest);
+		} else if (request.method === 'DELETE' || request.method === 'GET') {
+			reRequest = createRequest(cloneRequest);
 		} else {
-			reRequest = await createJsonRequest(cloneRequest);
+			reRequest = await createRequestForJson(cloneRequest);
 		}
 
 		response = await fetch(reRequest);
@@ -83,7 +85,7 @@ export const handleError: HandleServerError = ({ status, error }) => {
 	};
 };
 
-const createJsonRequest = async (request: Request) => {
+const createRequestForJson = async (request: Request) => {
 	const json = await request.json();
 
 	return new Request(request.url, {
@@ -93,7 +95,13 @@ const createJsonRequest = async (request: Request) => {
 	});
 };
 
-const createMultipartRequest = async (request: Request) => {
+const createRequest = (request: Request) => {
+	return new Request(request.url, {
+		method: request.method
+	});
+};
+
+const createRequestMultipartFormData = async (request: Request) => {
 	const formData = await request.formData();
 	return new Request(request.url, {
 		method: request.method,

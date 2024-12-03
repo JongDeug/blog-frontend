@@ -1,14 +1,23 @@
-<!-- CategoryModal.svelte -->
-<!-- <script lang="ts">
-	import { isModalOpen, toggleModal } from '$lib/utils/stores/modal';
-	import { createCategory, deleteCategory, updateCategory } from '$lib/utils/api/request/category';
+<script lang="ts">
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
-	export let categories: CategoryType[];
+	const { initCategories, toggleModal }: { initCategories: Category[]; toggleModal: Function } =
+		$props();
 
-	let bindNameCreate = '';
-	let bindNameUpdate = '';
-	let bindSelectedNameDelete = '';
-	let bindSelectedNameUpdate = '';
+	const confirmAndSubmitDelete: SubmitFunction = ({ cancel }) => {
+		if (confirm('정말로 삭제하시겠습니까?')) {
+			return async ({ result, update }) => {
+				if (result.type === 'redirect') {
+					//  일단 keep, update 써봤는데 안됨
+					window.location.reload();
+				} else if (result.type === 'failure') {
+					alert(`${result?.data?.message}`);
+				}
+			};
+		}
+		cancel();
+	};
 
 	const handleBackgroundClick = (event: MouseEvent) => {
 		if (event.target === event.currentTarget) {
@@ -23,66 +32,96 @@
 	};
 </script>
 
-{#if $isModalOpen.value}
+<div
+	class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-0"
+	onclick={handleBackgroundClick}
+	onkeydown={handleKeyDown}
+	role="button"
+	tabindex="0"
+>
 	<div
-		class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4 sm:p-0"
-		on:click={handleBackgroundClick}
-		on:keydown={handleKeyDown}
-		role="button"
-		tabindex="0"
+		class="w-full max-w-[90%] rounded-lg border bg-white p-4 shadow-lg sm:max-w-md sm:p-6 dark:bg-gray-800"
 	>
-		<div class="rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-[90%] sm:max-w-md border bg-white dark:bg-gray-800">
-			<h2 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">카테고리 관리</h2>
+		<h2 class="mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">카테고리 관리</h2>
 
-			<div class="mb-3 sm:mb-4">
-				<label for="create" class="block text-sm font-medium mb-1 sm:mb-2">카테고리 추가</label>
-				<input id="create" type="text" bind:value={bindNameCreate} placeholder="새 카테고리 이름"
-							 class="w-full border rounded px-2 py-1 sm:px-3 sm:py-2 mb-2 text-gray-700 text-sm sm:text-base">
-				<button
-					class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-					on:click={() => createCategory(bindNameCreate)}
+		<form method="POST" action="/blog?/createCategory" class="mb-3 sm:mb-4">
+			<label for="newCategory" class="mb-1 block text-sm font-medium sm:mb-2">카테고리 추가</label>
+			<input
+				id="newCategory"
+				name="newCategory"
+				type="text"
+				placeholder="새 카테고리 이름"
+				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+			/>
+			<button
+				type="submit"
+				class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>추가
-				</button>
-			</div>
+			</button>
+		</form>
 
-			<div class="mb-3 sm:mb-4">
-				<label for="update" class="block text-sm font-medium mb-1 sm:mb-2">카테고리 수정</label>
-				<select id="update" bind:value={bindSelectedNameDelete}
-								class="w-full border rounded px-2 py-1 sm:px-3 sm:py-2 mb-2 text-sm sm:text-base text-gray-700">
-					<option value="" disabled selected>카테고리를 선택하세요</option>
-					{#each categories as category}
-						<option value={category.name}>{category.name}</option>
-					{/each}
-				</select>
-				<input type="text" bind:value={bindNameUpdate} placeholder="새 이름 입력"
-							 class="w-full border rounded px-2 py-1 sm:px-3 sm:py-2 mb-2 text-sm sm:text-base text-gray-700">
-				<button on:click={() => updateCategory(bindSelectedNameDelete, bindNameUpdate)}
-								class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
-					수정
-				</button>
-			</div>
+		<form class="mb-3 sm:mb-4" method="POST" action="/blog?/updateCategory">
+			<label for="targetCategory" class="mb-1 block text-sm font-medium sm:mb-2"
+				>카테고리 수정</label
+			>
+			<select
+				id="targetCategory"
+				name="targetCategory"
+				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+			>
+				<option value="" disabled selected>카테고리를 선택하세요</option>
+				{#each initCategories as category}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</select>
+			<input
+				name="newCategory"
+				type="text"
+				placeholder="새 이름 입력"
+				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+			/>
+			<button
+				type="submit"
+				class="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+			>
+				수정
+			</button>
+		</form>
 
-			<div class="mb-3 sm:mb-4">
-				<label for="delete" class="block text-sm font-medium mb-1 sm:mb-2">카테고리 삭제</label>
-				<select id="delete" bind:value={bindSelectedNameUpdate}
-								class="w-full border rounded px-2 py-1 sm:px-3 sm:py-2 mb-2 text-sm sm:text-base text-gray-700">
-					<option value="" disabled selected>카테고리를 선택하세요</option>
-					{#each categories as category}
-						<option value={category.name}>{category.name}</option>
-					{/each}
-				</select>
-				<button on:click={() => deleteCategory(bindSelectedNameUpdate)}
-								class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-					삭제
-				</button>
-			</div>
+		<form
+			class="mb-3 sm:mb-4"
+			method="POST"
+			action="/blog?/deleteCategory"
+			use:enhance={confirmAndSubmitDelete}
+		>
+			<label for="targetCategory" class="mb-1 block text-sm font-medium sm:mb-2"
+				>카테고리 삭제</label
+			>
+			<select
+				id="targetCategory"
+				name="targetCategory"
+				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+			>
+				<option value="" disabled selected>카테고리를 선택하세요</option>
+				{#each initCategories as category}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</select>
+			<button
+				type="submit"
+				class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+			>
+				삭제
+			</button>
+		</form>
 
-			<div class="text-right">
-				<button on:click={() => toggleModal()}
-								class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
-					닫기
-				</button>
-			</div>
+		<div class="text-right">
+			<button
+				onclick={() => toggleModal()}
+				class="rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+			>
+				닫기
+			</button>
 		</div>
 	</div>
-{/if} -->
+</div>

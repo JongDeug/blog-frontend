@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Title, SearchBox, CategoryModal, PostFetch, delay } from '$lib';
-	import { toggleModal } from '$lib/utils/stores/modal';
-	import Posts from './Posts.svelte';
+	import { PUBLIC_API_URL } from '$env/static/public';
+	import { Title, SearchBox, CategoryModal, Posts } from '$lib';
 
 	let {
 		initPosts = [],
@@ -19,11 +18,17 @@
 
 	let search = $state('');
 	let posts = $state(initPosts);
+	let isModalOpen = $state(false);
 
-	async function searchPosts() {
-		const getPosts = await PostFetch.getPosts({ search });
+	const searchPosts = async () => {
+		const queryString = new URLSearchParams({ search }).toString();
+		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		posts = getPosts.posts;
-	}
+	};
+
+	const toggleModal = () => {
+		isModalOpen = !isModalOpen;
+	};
 
 	$effect(() => {
 		// '' 가 아닐 때
@@ -32,18 +37,6 @@
 			searchPosts();
 		}
 	});
-
-	// let draft = false;
-
-	// const draftPosts = async (value: boolean) => {
-	// 	const queryString = new URLSearchParams({ draft: value.toString() }).toString();
-	// 	const getPosts = await fetch(`${PUBLIC_API_URL}/posts?${queryString}`).then((res) =>
-	// 		res.json()
-	// 	);
-	// 	currentPosts = getPosts.posts;
-	// };
-
-	// $: draft ? draftPosts(draft) : (currentPosts = posts);
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -93,4 +86,6 @@
 	<Posts {posts} {isLogin} />
 </div>
 
-<!-- <CategoryModal {categories} /> -->
+{#if isModalOpen}
+	<CategoryModal {initCategories} {toggleModal} />
+{/if}
