@@ -12,7 +12,7 @@ export const actions = {
 					?.toString()
 					.split(',')
 					.map((tag) => tag.trim())
-			: null;
+			: undefined;
 		// 이미지 일단 Keep
 
 		const jsonData: any = {};
@@ -50,7 +50,7 @@ export const actions = {
 					?.toString()
 					.split(',')
 					.map((tag) => tag.trim())
-			: null;
+			: undefined;
 		formData.delete('postId');
 		// 이미지 일단 Keep
 

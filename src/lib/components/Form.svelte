@@ -51,6 +51,8 @@
 	<form method="POST" action={method === 'POST' ? '/blog/form?/create' : '/blog/form?/update'}>
 		<h1 class="mb-6 text-3xl text-gray-900 dark:text-white">{title}</h1>
 
+		<input type="hidden" name="postId" value={postId} />
+
 		<!-- 임시 저장 체크 박스 -->
 		<div class="mb-4 flex items-center justify-end">
 			<input
@@ -164,7 +166,6 @@
 			>
 			<ToastUI bind:this={toastRef} content={bindContent} />
 			<input type="hidden" name="content" value={bindContent} />
-			<input type="hidden" name="postId" value={postId} />
 			<div class="mt-5 flex justify-end">
 				<!-- 버튼 클릭 시 편집기에 있는 내용을 content에 채워 form 요청 -->
 				<button

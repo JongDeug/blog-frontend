@@ -51,7 +51,6 @@
 
 					// 에러
 					if (!response.ok) {
-						console.log('그렇다는데');
 						return alert(`${data.message}`);
 					}
 

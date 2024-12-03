@@ -1,9 +1,6 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import type { PageServerLoad } from './$types';
 import { AuthFetch } from '$lib';
-
-export const load: PageServerLoad = async () => {};
 
 export const actions = {
 	login: async ({ request, cookies, fetch }) => {

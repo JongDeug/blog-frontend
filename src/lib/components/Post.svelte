@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { PUBLIC_API_URL } from '$env/static/public';
 	import { Author, config, formatDate, ToastUI } from '$lib';
 	import Viewer from './Viewer.svelte';
 	// import Comments from '$lib/components/comments/Comments.svelte';
@@ -31,6 +33,21 @@
 	// 		alert(`${err}`);
 	// 	}
 	// };
+
+	const deletePost = async () => {
+		const isConfirm = confirm('게시글을 정말 삭제하시겠습니까?');
+
+		if (isConfirm) {
+			const response = await fetch(`/blog/${initPost.id}`, { method: 'DELETE' });
+			const data = await response.json();
+
+			if (!response.ok) {
+				return alert(`${data.message}`);
+			}
+
+			goto('/blog');
+		}
+	};
 </script>
 
 <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
@@ -98,7 +115,7 @@
 				>
 					{#if isLogin}
 						<div class="flex justify-around py-4">
-							<button onclick={() => {}} class="font-semibold text-red-600 hover:font-extrabold">
+							<button onclick={deletePost} class="font-semibold text-red-600 hover:font-extrabold">
 								게시글 삭제
 							</button>
 							<a href="/blog/form/{initPost.id}" class="font-semibold hover:font-extrabold"

@@ -1,6 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 
-export const getPosts = (query?: GetPostsQuery) => {
+export const getPosts = (fetch: Fetch, query?: GetPostsQuery) => {
 	if (query) {
 		const queryString = new URLSearchParams({ ...transformValuesToString(query) }).toString();
 		return fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
@@ -29,6 +29,13 @@ export const updatePost = async (fetch: Fetch, postId: string, data: Object) => 
 		headers: new Headers({ 'Content-Type': 'application/json' }),
 		credentials: 'include',
 		body: JSON.stringify({ ...data })
+	});
+};
+
+export const deletePost = async (fetch: Fetch, postId: string) => {
+	return fetch(`${PUBLIC_API_URL}/post/${postId}`, {
+		method: 'DELETE',
+		credentials: 'include'
 	});
 };
 

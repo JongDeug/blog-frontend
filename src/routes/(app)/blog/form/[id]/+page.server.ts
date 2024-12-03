@@ -6,7 +6,7 @@ export let ssr = false;
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	const getPost = await PostFetch.getPost(fetch, params.id);
 
-	const getCategories = await CategoryFetch.getCategories();
+	const getCategories = await CategoryFetch.getCategories(fetch);
 
 	return {
 		initPost: getPost,
