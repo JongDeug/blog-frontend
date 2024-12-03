@@ -69,7 +69,7 @@
 									class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 									aria-label={`Read "${post.title}"`}
 								>
-									Read more &rarr;
+									더보기 &rarr;
 								</a>
 							</div>
 						</div>

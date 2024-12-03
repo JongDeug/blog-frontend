@@ -118,8 +118,9 @@
 							<button onclick={deletePost} class="font-semibold text-red-600 hover:font-extrabold">
 								게시글 삭제
 							</button>
-							<a href="/blog/form/{initPost.id}" class="font-semibold hover:font-extrabold"
-								>게시글 수정</a
+							<a
+								href="/blog/form/{initPost.id}"
+								class="font-semibold text-blue-600 hover:font-extrabold">게시글 수정</a
 							>
 						</div>
 					{/if}

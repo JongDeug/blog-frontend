@@ -1,5 +1,5 @@
 // Reexport your entry components here
-export { config, navLinks } from './config';
+export { config, navLinks } from './utils/config';
 
 export { default as Footer } from './components/layouts/Footer.svelte';
 export { default as Header } from './components/layouts/Header.svelte';
@@ -17,6 +17,8 @@ export { default as Post } from './components/Post.svelte';
 export { default as Author } from './components/Author.svelte';
 export { default as ToastUI } from './components/ToastUI.svelte';
 export { default as Form } from './components/Form.svelte';
+export { default as ThemeSwitch } from './components/ThemeSwitch.svelte';
+export { default as MobileMenu } from './components/MobileMenu.svelte';
 
 export { default as IconMail } from './icons/Mail.svelte';
 export { default as IconGithub } from './icons/Github.svelte';
@@ -24,6 +26,7 @@ export { default as IconGithub } from './icons/Github.svelte';
 export { default as formatDate } from './utils/formatDate';
 export { default as delay } from './utils/delay';
 export { default as saveJwtInCookie } from './utils/saveJwtInCookie';
+export * as Theme from './utils/theme';
 
 export * as AuthFetch from './utils/fetch/auth';
 export * as PostFetch from './utils/fetch/post';

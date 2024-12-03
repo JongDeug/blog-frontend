@@ -1,8 +1,5 @@
 <script>
-	import { config } from '$lib';
-	import SocialIcon from '$lib/components/SocialIcon.svelte';
-
-	let year = new Date().getFullYear();
+	import { config, SocialIcon } from '$lib';
 </script>
 
 <footer>
@@ -12,7 +9,7 @@
 			<SocialIcon icon="github" url="{config.github}," />
 		</div>
 		<div class="mb-4 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-			<a href="/">{config.title}</a> &nbsp; • &nbsp; © {year}
+			<a href="/">{config.title}</a> &nbsp; • &nbsp; © {new Date().getFullYear()}
 			{config.author} &nbsp; • &nbsp; <a href="/rss.xml">RSS Feed</a>
 		</div>
 	</div>

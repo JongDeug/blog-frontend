@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Footer, Header } from '$lib';
 	import { fly } from 'svelte/transition';
-	import '../../app.css';
 	import type { PageData } from './$types';
 	import type { Snippet } from 'svelte';
+	import '../../app.css';
 
 	let { children, data }: { children: Snippet; data: PageData } = $props(); // { slot, export let data }
 </script>

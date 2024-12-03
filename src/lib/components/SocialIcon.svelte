@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { IconGithub, IconMail } from '$lib';
+	import type { Snippet } from 'svelte';
 
-	const { url = '', icon = '', popup = true, children } = $props();
+	const {
+		url = '',
+		icon = '',
+		popup = true,
+		children
+	}: { url: string; icon: string; popup?: boolean; children?: Snippet } = $props();
 </script>
 
 {#if url}

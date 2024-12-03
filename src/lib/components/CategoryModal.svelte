@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { fade } from 'svelte/transition';
 
 	const { initCategories, toggleModal }: { initCategories: Category[]; toggleModal: Function } =
 		$props();
@@ -33,6 +34,7 @@
 </script>
 
 <div
+	transition:fade={{ duration: 100 }}
 	class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-0"
 	onclick={handleBackgroundClick}
 	onkeydown={handleKeyDown}
@@ -55,7 +57,7 @@
 			/>
 			<button
 				type="submit"
-				class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="rounded-md border border-blue-500 px-2 py-1 text-sm font-medium text-blue-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>추가
 			</button>
 		</form>
@@ -78,11 +80,11 @@
 				name="newCategory"
 				type="text"
 				placeholder="새 이름 입력"
-				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+				class="mb-2 w-full rounded border px-3 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
 			/>
 			<button
 				type="submit"
-				class="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+				class="rounded-md border border-green-500 px-2 py-1 text-sm font-medium text-green-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-green-500"
 			>
 				수정
 			</button>
@@ -100,7 +102,7 @@
 			<select
 				id="targetCategory"
 				name="targetCategory"
-				class="mb-2 w-full rounded border px-2 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
+				class="mb-2 w-full rounded border px-3 py-1 text-sm text-gray-700 sm:px-3 sm:py-2 sm:text-base"
 			>
 				<option value="" disabled selected>카테고리를 선택하세요</option>
 				{#each initCategories as category}
@@ -109,7 +111,7 @@
 			</select>
 			<button
 				type="submit"
-				class="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+				class="rounded-md border border-red-500 px-3 py-1 text-sm font-medium text-red-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-red-500"
 			>
 				삭제
 			</button>

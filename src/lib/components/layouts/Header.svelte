@@ -1,8 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { config, navLinks } from '$lib';
-	// import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
-	// import MobileMenu from '$lib/components/MobileMenu.svelte';
+	import { config, navLinks, ThemeSwitch, MobileMenu } from '$lib';
 
 	const { isLogin } = $props();
 </script>
@@ -40,7 +38,7 @@
 				>
 			{/if}
 		</div>
-		<!-- <ThemeSwitch /> -->
-		<!-- <MobileMenu {isLogin}/> -->
+		<ThemeSwitch />
+		<MobileMenu {isLogin} />
 	</div>
 </header>

@@ -1,7 +1,5 @@
 <script>
-	import { Title, Card, Head } from '$lib';
-
-	import { config } from '$lib/config';
+	import { Title, Card, Head, config } from '$lib';
 
 	const projects = config.projects;
 </script>
@@ -13,7 +11,7 @@
 		<Title title="Projects" subtitle="프로젝트 목록" />
 	</div>
 	<div class="container py-12">
-		<div class="-m-4 flex flex-wrap">
+		<div class=".m-4 flex flex-wrap">
 			{#if !projects.length}
 				No project found.
 			{:else}
