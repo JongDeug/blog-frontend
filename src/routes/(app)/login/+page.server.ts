@@ -8,16 +8,15 @@ export const actions = {
 		const redirectTo = formData.get('redirectTo')?.toString() || '/';
 
 		const response = await AuthFetch.login(fetch, formData);
+		const data = await response.json();
 
 		// 에러
 		if (!response.ok) {
-			const data = await response.json();
 			return fail(data.statusCode, { message: data.message });
 		}
 		// 성공
 		else {
-			// const { username, role } = json;
-			// cookies.set('info', JSON.stringify({ username, role }), { path: '/' });
+			cookies.set('loginInfo', JSON.stringify({ name: data.name, role: data.role }), { path: '/' });
 			cookies.set('isLogin', JSON.stringify(true), { path: '/' });
 			redirect(302, redirectTo);
 		}

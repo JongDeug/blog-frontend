@@ -13,6 +13,7 @@ export const actions = {
 		await AuthFetch.logout(fetch);
 
 		cookies.delete('isLogin', { path: '/' });
+		cookies.delete('loginInfo', { path: '/' });
 		redirect(302, '/');
 	}
 } satisfies Actions;

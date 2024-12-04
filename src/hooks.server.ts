@@ -11,9 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 // event : 브라우저 요청
 export const handle: Handle = async ({ event, resolve }) => {
-	// 로그인 유무
+	// 로그인
 	const isLogin = event.cookies.get('isLogin');
 	event.locals.isLogin = isLogin ? JSON.parse(isLogin) : false;
+	const loginInfo = event.cookies.get('loginInfo');
+	event.locals.loginInfo = loginInfo ? JSON.parse(loginInfo) : null;
 
 	// 게스트 uuid 발급, 기간 무제한
 	let guestId = event.cookies.get('guestId');

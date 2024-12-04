@@ -1,14 +1,23 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { PUBLIC_API_URL } from '$env/static/public';
-	import { Author, config, formatDate, ToastUI } from '$lib';
+	import { Author, config, formatDate, ToastUI, Comments } from '$lib';
 	import Viewer from './Viewer.svelte';
 	// import Comments from '$lib/components/comments/Comments.svelte';
 	// import { deletePost, postLike } from '$lib/utils/api/request/post';
 	// import { getCookie } from '$lib/utils/cookie';
 	// import EditorJS from '$lib/components/posts/EditorJS.svelte';
 
-	let { initPost, isLogin }: { initPost: Post; isLogin: boolean } = $props();
+	let {
+		initPost,
+		isLogin,
+		loginInfo,
+		guestId
+	}: {
+		initPost: Post;
+		isLogin: boolean;
+		guestId: string;
+		loginInfo: { name: string; role: string } | null;
+	} = $props();
 
 	// const handleLike = async (postId: string, tryToLike: boolean) => {
 	// 	try {
@@ -120,7 +129,7 @@
 							</button>
 							<a
 								href="/blog/form/{initPost.id}"
-								class="font-semibold text-blue-600 hover:font-extrabold">게시글 수정</a
+								class="font-semibold text-sky-600 hover:font-extrabold">게시글 수정</a
 							>
 						</div>
 					{/if}
@@ -180,5 +189,5 @@
 		</div>
 	</article>
 
-	<!-- <Comments comments={post.comments} {isLogin} postId={post.id} {info} /> -->
+	<Comments comments={initPost.comments} {loginInfo} {isLogin} {guestId} />
 </div>

@@ -1,19 +1,31 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
 
 	const { initCategories, toggleModal }: { initCategories: Category[]; toggleModal: Function } =
 		$props();
+	console.log($page.data);
+
+	// 지렸다
+	$effect(() => {
+		if ($page.form) {
+			alert(`${$page.form?.message}`);
+			invalidateAll();
+		}
+	});
 
 	const confirmAndSubmitDelete: SubmitFunction = ({ cancel }) => {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			return async ({ result, update }) => {
+			return async ({ result }) => {
 				if (result.type === 'redirect') {
 					//  일단 keep, update 써봤는데 안됨
 					window.location.reload();
 				} else if (result.type === 'failure') {
-					alert(`${result?.data?.message}`);
+					// alert(`${result?.data?.message}`);
+					await applyAction(result);
 				}
 			};
 		}
@@ -57,7 +69,7 @@
 			/>
 			<button
 				type="submit"
-				class="rounded-md border border-blue-500 px-2 py-1 text-sm font-medium text-blue-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="rounded-md border border-blue-500 px-3 py-1 text-sm font-medium text-blue-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>추가
 			</button>
 		</form>
@@ -84,7 +96,7 @@
 			/>
 			<button
 				type="submit"
-				class="rounded-md border border-green-500 px-2 py-1 text-sm font-medium text-green-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-green-500"
+				class="rounded-md border border-green-500 px-3 py-1 text-sm font-medium text-green-500 hover:font-extrabold focus:outline-none focus:ring-2 focus:ring-green-500"
 			>
 				수정
 			</button>

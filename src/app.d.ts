@@ -8,6 +8,7 @@ declare global {
 		}
 
 		interface Locals {
+			loginInfo: { name: string; role: string } | null;
 			isLogin: boolean;
 			guestId: string;
 		}

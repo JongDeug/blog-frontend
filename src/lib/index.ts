@@ -19,6 +19,8 @@ export { default as ToastUI } from './components/ToastUI.svelte';
 export { default as Form } from './components/Form.svelte';
 export { default as ThemeSwitch } from './components/ThemeSwitch.svelte';
 export { default as MobileMenu } from './components/MobileMenu.svelte';
+export { default as Comments } from './components/Comments.svelte';
+export { default as CommentForm } from './components/CommentForm.svelte';
 
 export { default as IconMail } from './icons/Mail.svelte';
 export { default as IconGithub } from './icons/Github.svelte';
@@ -33,3 +35,4 @@ export * as PostFetch from './utils/fetch/post';
 export * as CategoryFetch from './utils/fetch/category';
 export * as TagFetch from './utils/fetch/tag';
 export * as CommonFetch from './utils/fetch/common';
+export * as CommentFetch from './utils/fetch/comment';
