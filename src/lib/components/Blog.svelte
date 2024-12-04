@@ -1,19 +1,20 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { Title, SearchBox, CategoryModal, Posts } from '$lib';
+	import { Title, SearchBox, CategoryModal, Posts, config } from '$lib';
 
 	let {
 		initPosts = [],
 		initCategories = [],
-		isLogin,
 		title,
-		searchBox = false
+		searchBox = false,
+		isHome = false
 	}: {
 		initPosts: Post[];
 		initCategories?: Category[];
-		isLogin: boolean;
-		title: string;
+		title?: string;
 		searchBox?: boolean;
+		isHome?: boolean;
 	} = $props();
 
 	let search = $state('');
@@ -41,10 +42,18 @@
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
 	<div class="space-y-2 pb-8 pt-6 md:space-y-5">
+		{#if isHome}
+			<Title title="꾸벅" />
+			<p class="prose-xl text-xl text-gray-800 dark:text-gray-400">
+				{@html config.intro}
+			</p>
+		{/if}
 		<div class="grid gap-4 lg:grid-cols-2">
-			<div>
-				<Title {title} h2={false} />
-			</div>
+			{#if !isHome}
+				<div>
+					<Title {title} h2={false} />
+				</div>
+			{/if}
 			<div class:border-l-2={searchBox} class="pl-4">
 				{#if searchBox}
 					<SearchBox bind:value={search} />
@@ -68,7 +77,7 @@
 								</a>
 							</div>
 						{/each}
-						{#if isLogin}
+						{#if $page.data.isLogin}
 							<div class="mr-5 mt-3">
 								<button
 									class="mr-3 inline-block rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
@@ -83,7 +92,7 @@
 		</div>
 	</div>
 
-	<Posts {posts} {isLogin} />
+	<Posts {initPosts} />
 </div>
 
 {#if isModalOpen}

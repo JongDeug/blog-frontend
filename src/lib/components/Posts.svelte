@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { formatDate } from '$lib';
 
-	const { posts, isLogin } = $props();
+	const { initPosts } = $props();
 </script>
 
-{#if posts.length === 0}
+{#if initPosts.length === 0}
 	<div class="py-6 pr-3">
-		{#if isLogin}
+		{#if $page.data.isLogin}
 			<p class="text-right">
 				<a
 					href="/blog/form"
@@ -19,7 +20,7 @@
 	</div>
 {:else}
 	<ul>
-		{#if isLogin}
+		{#if $page.data.isLogin}
 			<li class="pr-3 pt-6 text-right">
 				<a
 					href="/blog/form"
@@ -28,7 +29,7 @@
 				>
 			</li>
 		{/if}
-		{#each posts as post}
+		{#each initPosts as post}
 			<li class="py-12">
 				<article>
 					<div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">

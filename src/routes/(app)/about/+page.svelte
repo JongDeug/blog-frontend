@@ -13,7 +13,7 @@
 			<img src={config.siteLogo} alt="logo" class="h-64 w-64 rounded" />
 			<div class="flex space-x-2 pt-4">
 				<SocialIcon icon="mail" url={`mailto:${config.email}`} />
-				<SocialIcon icon="github" url={config.github} />
+				<SocialIcon icon="github" url={config.github.url} />
 			</div>
 		</div>
 		<div class="dark:prose-dark prose max-w-none pb-8 pt-8 xl:col-span-2">

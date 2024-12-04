@@ -20,5 +20,13 @@ export const actions = {
 			cookies.set('isLogin', JSON.stringify(true), { path: '/' });
 			redirect(302, redirectTo);
 		}
+	},
+
+	logout: async ({ cookies, fetch }) => {
+		await AuthFetch.logout(fetch);
+
+		cookies.delete('isLogin', { path: '/' });
+		cookies.delete('loginInfo', { path: '/' });
+		redirect(302, '/');
 	}
 } satisfies Actions;

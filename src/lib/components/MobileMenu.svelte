@@ -1,7 +1,6 @@
 <script>
+	import { page } from '$app/stores';
 	import { navLinks } from '$lib/utils/config';
-
-	let { isLogin } = $props();
 
 	let isOpen = $state(false);
 
@@ -74,7 +73,7 @@
 					</a>
 				</div>
 			{/each}
-			{#if isLogin}
+			{#if $page.data.isLogin}
 				<div class="px-12 py-4">
 					<form method="POST" action="/logout?/logout" class="inline">
 						<button class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"

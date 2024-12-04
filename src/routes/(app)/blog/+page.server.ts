@@ -1,6 +1,7 @@
 import { CategoryFetch } from '$lib';
 import { fail, redirect } from '@sveltejs/kit';
 
+// 카테고리 관리가 /blog에 붙어있음
 export const actions = {
 	createCategory: async ({ fetch, request }) => {
 		const formData = await request.formData();

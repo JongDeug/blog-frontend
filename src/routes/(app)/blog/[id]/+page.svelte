@@ -3,7 +3,7 @@
 	import { Head, Post } from '$lib';
 
 	const { data, form } = $props();
-	const { initPost, loginInfo, isLogin, guestId } = data;
+	const { initPost } = data;
 
 	if (browser) {
 		if (form?.message) alert(`${form.message}`);
@@ -12,4 +12,4 @@
 
 <Head title={initPost.title} />
 
-<Post {initPost} {isLogin} {loginInfo} {guestId} />
+<Post {initPost} />

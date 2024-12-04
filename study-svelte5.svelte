@@ -1,4 +1,8 @@
 <script lang="ts">
+	// [isLogin]: layout.server.ts => layout.ts => layout.svelte => page.svelte
+	// [posts]: page.ts => page.svelte
+	// const { data }: { data: PageData } = $props();
+
 	let count = $state(1);
 	let hi = $derived(count * 10); // 얘는 call by reference 동작
 	// let hi = count * 10; // 얘는 call by value 동작

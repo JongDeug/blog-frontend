@@ -14,6 +14,17 @@ export const load: PageServerLoad = async ({ params, fetch, cookies }) => {
 };
 
 export const actions = {
+	deletePost: async ({ fetch, params }) => {
+		const response = await PostFetch.deletePost(fetch, params.id);
+
+		if (!response.ok) {
+			const data = await response.json();
+			return fail(data.statusCode, { message: data.message });
+		}
+
+		redirect(302, '/blog/');
+	},
+
 	createCommentByUser: async ({ fetch, request, params }) => {
 		const formData = await request.formData();
 

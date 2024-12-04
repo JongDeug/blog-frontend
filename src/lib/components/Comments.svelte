@@ -1,26 +1,21 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import { CommentForm } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	// import PwdModal from '$lib/components/PwdModal.svelte';
 
 	let {
-		comments,
-		loginInfo,
-		isLogin,
-		guestId
+		initComments
 	}: {
-		comments: Comment[];
-		loginInfo: { name: string; role: string } | null;
-		isLogin: boolean;
-		guestId: string;
+		initComments: Comment[];
 	} = $props();
 
 	let formId = $state();
-	// export let comments: ArrayLike<CommentType> = [];
-	// export let isLogin;
-	// export let info;
-	// export let postId;
+
+	const showForm = (commentId: number, method: string) => {
+		// Id가 같으면 닫고, 다르면 여는 동작
+		formId = formId === `${commentId}:${method}` ? '' : `${commentId}:${method}`;
+	};
 
 	const confirmAndDeleteCommentByUser: SubmitFunction = ({ cancel }) => {
 		if (!confirm('정말로 삭제하시겠습니까?')) {
@@ -55,16 +50,11 @@
 			}
 		};
 	};
-
-	const showForm = (commentId: number, method: string) => {
-		// Id가 같으면 닫고, 다르면 여는 동작
-		formId = formId === `${commentId}:${method}` ? '' : `${commentId}:${method}`;
-	};
 </script>
 
 <!-- 댓글 목록 -->
 <div class="border-t pb-6 pt-6 text-gray-700 dark:text-gray-300">
-	{#each comments as comment (comment.id)}
+	{#each initComments as comment (comment.id)}
 		<div class="mb-4 rounded-xl border p-4">
 			<div class="flex justify-between">
 				<p
@@ -74,9 +64,9 @@
 					{comment.author?.name ? comment.author?.name : comment.guest?.nickName}
 				</p>
 				<!-- 관리자면 모두 || 유저이면서 작성자면 || 게스트이면서 guestId가 같으면 -->
-				{#if loginInfo?.role === 'ADMIN' || (isLogin && loginInfo?.name === comment.author?.name) || (!isLogin && guestId === comment.guest?.guestId)}
+				{#if $page.data.loginInfo?.role === 'ADMIN' || ($page.data.isLogin && $page.data.loginInfo?.name === comment.author?.name) || (!$page.data.isLogin && $page.data.guestId === comment.guest?.guestId)}
 					<div>
-						{#if isLogin}
+						{#if $page.data.isLogin}
 							<form
 								method="POST"
 								action="?/deleteCommentByUser"
@@ -111,7 +101,7 @@
 
 			<!-- 댓글 수정 -->
 			{#if formId === `${comment.id}:update`}
-				<CommentForm {isLogin} commentId={comment.id} method="PATCH" content={comment.content} />
+				<CommentForm commentId={comment.id} method="PATCH" content={comment.content} />
 			{/if}
 
 			<!-- 대댓글 목록 -->
@@ -124,9 +114,9 @@
 									{reply.author?.name ? reply.author?.name : reply.guest?.nickName}
 								</p>
 								<!-- 관리자면 모두 || 유저이면서 작성자면 || 게스트이면서 guestId가 같으면 -->
-								{#if loginInfo?.role === 'ADMIN' || (isLogin && loginInfo?.name === comment.author?.name) || (!isLogin && guestId === comment.guest?.guestId)}
+								{#if $page.data.loginInfo?.role === 'ADMIN' || ($page.data.isLogin && $page.data.loginInfo?.name === comment.author?.name) || (!$page.data.isLogin && $page.data.guestId === comment.guest?.guestId)}
 									<div>
-										{#if isLogin}
+										{#if $page.data.isLogin}
 											<form
 												method="POST"
 												action="?/deleteCommentByUser"
@@ -165,12 +155,7 @@
 
 							<!-- 대댓글 수정 -->
 							{#if formId === `${reply.id}:update`}
-								<CommentForm
-									{isLogin}
-									commentId={reply.id}
-									method="PATCH"
-									content={reply.content}
-								/>
+								<CommentForm commentId={reply.id} method="PATCH" content={reply.content} />
 							{/if}
 						</div>
 					{/each}
@@ -183,11 +168,11 @@
 				class="text-primary-500 text-sm hover:underline">대댓글 달기</button
 			>
 			{#if formId === `${comment.id}:create`}
-				<CommentForm {isLogin} parentCommentId={comment.id} method="POST" />
+				<CommentForm parentCommentId={comment.id} method="POST" />
 			{/if}
 		</div>
 	{/each}
 </div>
 
 <!-- 댓글 작성 -->
-<CommentForm {isLogin} method="POST" />
+<CommentForm method="POST" />

@@ -7,7 +7,6 @@
 
 	const { initCategories, toggleModal }: { initCategories: Category[]; toggleModal: Function } =
 		$props();
-	console.log($page.data);
 
 	// 지렸다
 	$effect(() => {

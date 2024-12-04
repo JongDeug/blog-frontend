@@ -1,24 +1,30 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let {
-		isLogin,
 		commentId,
 		parentCommentId,
 		method,
 		content
 	}: {
-		isLogin: boolean;
-		commentId: string;
+		commentId?: number;
 		parentCommentId?: number;
 		method: 'POST' | 'PATCH';
 		content?: string;
 	} = $props();
+
+	const test: SubmitFunction = async () => {
+		return ({ result, update }) => {
+			if (result.type === 'redirect') {
+				window.location.reload();
+			}
+		};
+	};
 </script>
 
-{#if isLogin}
+{#if $page.data.isLogin}
 	<!-- 회원 댓글 생성, 수정 -->
 	<form
 		method="POST"
@@ -97,7 +103,7 @@
 	</form>
 {:else}
 	<!-- 게스트 댓글 수정 -->
-	<form method="POST" action="?/updateCommentByGuest" class="my-4">
+	<form method="POST" action="?/updateCommentByGuest" class="my-4" use:enhance={test}>
 		<input type="hidden" name="commentId" value={commentId} />
 		<div class="mb-4">
 			<textarea

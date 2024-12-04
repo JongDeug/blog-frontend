@@ -1,22 +1,16 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { Author, config, formatDate, ToastUI, Comments } from '$lib';
+	import { page } from '$app/stores';
+	import { Author, config, formatDate, Comments } from '$lib';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	// Viewer를 할지 그냥 HTML로 할지 고민
 	import Viewer from './Viewer.svelte';
-	// import Comments from '$lib/components/comments/Comments.svelte';
-	// import { deletePost, postLike } from '$lib/utils/api/request/post';
-	// import { getCookie } from '$lib/utils/cookie';
-	// import EditorJS from '$lib/components/posts/EditorJS.svelte';
 
 	let {
-		initPost,
-		isLogin,
-		loginInfo,
-		guestId
+		initPost
 	}: {
 		initPost: Post;
-		isLogin: boolean;
-		guestId: string;
-		loginInfo: { name: string; role: string } | null;
 	} = $props();
 
 	// const handleLike = async (postId: string, tryToLike: boolean) => {
@@ -34,28 +28,18 @@
 	// 	}
 	// };
 
-	// const handleDelete = async (id: string) => {
-	// 	try {
-	// 		const userConfirm = confirm('게시글을 정말 삭제하시겠습니까?');
-	// 		if (userConfirm) await deletePost(id);
-	// 	} catch (err) {
-	// 		alert(`${err}`);
-	// 	}
-	// };
-
-	const deletePost = async () => {
-		const isConfirm = confirm('게시글을 정말 삭제하시겠습니까?');
-
-		if (isConfirm) {
-			const response = await fetch(`/blog/${initPost.id}`, { method: 'DELETE' });
-			const data = await response.json();
-
-			if (!response.ok) {
-				return alert(`${data.message}`);
-			}
-
-			goto('/blog');
+	const confirmAndDeletePost: SubmitFunction = async ({ cancel }) => {
+		if (!confirm('정말로 삭제하시겠습니까?')) {
+			return cancel();
 		}
+
+		return ({ result }) => {
+			if (result.type === 'redirect') {
+				goto(result.location);
+			} else if (result.type === 'failure') {
+				alert(`${result?.data?.message}`);
+			}
+		};
 	};
 </script>
 
@@ -111,9 +95,7 @@
 						</ul>
 					</dd>
 				</dl>
-				<div
-					class="prose divide-y divide-gray-200 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700"
-				>
+				<div class="prose p-10 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
 					<!-- <EditorJS read={true} data={post.content} /> -->
 					<!-- <ToastUI /> -->
 					<!-- <Viewer content={initPost.content} /> -->
@@ -122,11 +104,13 @@
 				<div
 					class="divide-gray-200 text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700"
 				>
-					{#if isLogin}
+					{#if $page.data.isLogin}
 						<div class="flex justify-around py-4">
-							<button onclick={deletePost} class="font-semibold text-red-600 hover:font-extrabold">
-								게시글 삭제
-							</button>
+							<form method="POST" action="?/deletePost" use:enhance={confirmAndDeletePost}>
+								<button type="submit" class="font-semibold text-red-600 hover:font-extrabold">
+									게시글 삭제
+								</button>
+							</form>
 							<a
 								href="/blog/form/{initPost.id}"
 								class="font-semibold text-sky-600 hover:font-extrabold">게시글 수정</a
@@ -172,22 +156,22 @@
 							{/if}
 						</div>
 					{/if}
-				</div>
-				<div class="sticky top-0 py-4 xl:py-8">
-					<button
-						onclick={() => {}}
-						class="flex transform items-center space-x-5 rounded-full border border-gray-300 px-5 py-3 shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-					>
-						{#if initPost.isLiked}
-							<span>&#x1F49C; 좋아요 {initPost.postLikeCount}</span>
-						{:else}
-							<span>&#x1F90D; 좋아요 {initPost.postLikeCount}</span>
-						{/if}
-					</button>
+					<div class="sticky top-0 py-4 xl:py-8">
+						<button
+							onclick={() => {}}
+							class="flex transform items-center space-x-5 rounded-full border border-gray-300 px-5 py-3 shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+						>
+							{#if initPost.isLiked}
+								<span>&#x1F49C; 좋아요 {initPost._count.postLikes}</span>
+							{:else}
+								<span>&#x1F90D; 좋아요 {initPost._count.postLikes}</span>
+							{/if}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</article>
 
-	<Comments comments={initPost.comments} {loginInfo} {isLogin} {guestId} />
+	<Comments initComments={initPost.comments} />
 </div>

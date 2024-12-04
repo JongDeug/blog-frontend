@@ -1,5 +1,4 @@
 <!-- Expected Error 잡아줌 -->
-
 <script>
 	import { page } from '$app/stores';
 </script>

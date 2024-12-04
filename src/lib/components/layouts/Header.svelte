@@ -1,8 +1,6 @@
 <script>
 	import { page } from '$app/stores';
 	import { config, navLinks, ThemeSwitch, MobileMenu } from '$lib';
-
-	const { isLogin } = $props();
 </script>
 
 <header class="flex items-center justify-between py-10">
@@ -25,20 +23,20 @@
 					>{link.title}</a
 				>
 			{/each}
-			{#if isLogin}
+			{#if $page.data.isLogin}
 				<!-- 로그아웃 -->
-				<form method="POST" action="/logout?/logout" class="inline">
+				<form method="POST" action="/auth?/logout" class="inline">
 					<button class="p-1 font-medium text-gray-900 sm:p-4 dark:text-gray-100">Logout</button>
 				</form>
 			{:else}
 				<!-- 로그인 -->
 				<a
-					href="/login?redirectTo={$page.url.pathname}"
+					href="/auth?redirectTo={$page.url.pathname}"
 					class="p-1 font-medium text-gray-900 sm:p-4 dark:text-gray-100">Login</a
 				>
 			{/if}
 		</div>
 		<ThemeSwitch />
-		<MobileMenu {isLogin} />
+		<MobileMenu />
 	</div>
 </header>

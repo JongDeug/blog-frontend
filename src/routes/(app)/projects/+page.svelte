@@ -1,7 +1,5 @@
 <script>
 	import { Title, Card, Head, config } from '$lib';
-
-	const projects = config.projects;
 </script>
 
 <Head title="Projects" />
@@ -12,10 +10,10 @@
 	</div>
 	<div class="container py-12">
 		<div class=".m-4 flex flex-wrap">
-			{#if !projects.length}
+			{#if !config.projects.length}
 				No project found.
 			{:else}
-				{#each projects as project}
+				{#each config.projects as project}
 					<Card card={project} />
 				{/each}
 			{/if}

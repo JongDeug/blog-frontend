@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CommonFetch, delay } from '$lib';
+	import { delay } from '$lib';
 	import '@toast-ui/editor/dist/toastui-editor.css';
 	// colorSyntax
 	import 'tui-color-picker/dist/tui-color-picker.css';
@@ -43,7 +43,7 @@
 					const formData = new FormData();
 					formData.append('image', blob);
 
-					const response = await fetch(`/blog/form/upload`, {
+					const response = await fetch(`/blog/form/image`, {
 						method: 'POST',
 						body: formData
 					});

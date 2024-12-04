@@ -11,7 +11,7 @@ interface Post {
 	categoryId: number;
 	category: Category;
 	isLiked: boolean;
-	postLikeCount: number;
+	_count: { postLikes: number };
 	tags: Tag[];
 	images: { id: string; url: string }[];
 	comments: Comment[];

@@ -1,57 +1,50 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import { ToastUI } from '$lib';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const {
 		title,
 		method,
 		initPost,
-		initCategories,
-		postId,
-		form
+		initCategories
 	}: {
 		title: string;
 		method: 'PATCH' | 'POST';
 		initPost?: Post;
 		initCategories: Category[];
-		postId?: string;
-		form: any;
 	} = $props();
 
-	let toastRef: any;
-	let bindTitle = $state(initPost?.title ?? '');
-	let bindDraft = $state(initPost?.draft ?? true);
-	let bindCategory = $state(initPost?.category.name ?? '');
-	let bindTags = $state(initPost?.tags.map((x: Tag) => x.name).join(',') ?? '');
-	let bindPrevId = $state(initPost?.prevId ?? '');
-	let bindNextId = $state(initPost?.nextId ?? '');
-	let bindSummary = $state(initPost?.summary ?? '');
-	let bindContent = $state(initPost?.content ?? '');
+	let toastEditorRef: any;
 
-	if (browser) {
-		if (form?.message) alert(`${form.message}`);
-	}
+	// 게시글 수정에 필요
+	let postTitle = $state(initPost?.title ?? '');
+	let draft = $state(initPost?.draft ?? true);
+	let category = $state(initPost?.category.name ?? '');
+	let tags = $state(initPost?.tags.map((x: Tag) => x.name).join(',') ?? '');
+	let prevId = $state(initPost?.prevId ?? '');
+	let nextId = $state(initPost?.nextId ?? '');
+	let summary = $state(initPost?.summary ?? '');
+	let content = $state(initPost?.content ?? '');
 
-	// 실패 시 그대로 저장
-	if (form) {
-		bindTitle = form.title;
-		bindDraft = form.draft;
-		bindCategory = form.category;
-		bindTags = form.tags;
-		bindPrevId = form.prevId;
-		bindNextId = form.nextId;
-		bindSummary = form.summary;
-		bindContent = form.content;
-	}
+	const postForm: SubmitFunction = () => {
+		return ({ result, update }) => {
+			if (result.type === 'redirect') {
+				goto(result.location);
+			} else if (result.type === 'failure') {
+				alert(`${result.data?.message}`);
+			}
+			update({ reset: false });
+		};
+	};
 </script>
 
 <div
 	class="mx-auto mt-8 max-w-3xl rounded-lg bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800"
 >
-	<form method="POST" action={method === 'POST' ? '/blog/form?/create' : '/blog/form?/update'}>
+	<form method="POST" action={method === 'POST' ? '?/create' : '?/update'} use:enhance={postForm}>
 		<h1 class="mb-6 text-3xl text-gray-900 dark:text-white">{title}</h1>
-
-		<input type="hidden" name="postId" value={postId} />
 
 		<!-- 임시 저장 체크 박스 -->
 		<div class="mb-4 flex items-center justify-end">
@@ -59,7 +52,7 @@
 				type="checkbox"
 				id="draft"
 				name="draft"
-				bind:checked={bindDraft}
+				bind:checked={draft}
 				class="form-checkbox h-5 w-5 bg-gray-200 text-blue-600 transition duration-150 ease-in-out dark:bg-gray-700"
 			/>
 			<label for="draft" class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -76,7 +69,7 @@
 				type="text"
 				id="title"
 				name="title"
-				bind:value={bindTitle}
+				bind:value={postTitle}
 				class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				placeholder="게시글 제목을 입력하세요"
 			/>
@@ -90,7 +83,7 @@
 			<select
 				id="category"
 				name="category"
-				bind:value={bindCategory}
+				bind:value={category}
 				class="block w-64 rounded border bg-gray-100 px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200"
 			>
 				<option value="" disabled selected>카테고리를 선택하세요</option>
@@ -109,7 +102,7 @@
 				type="text"
 				id="tags"
 				name="tags"
-				bind:value={bindTags}
+				bind:value={tags}
 				class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				placeholder="태그를 입력하세요 (쉼표로 구분)"
 			/>
@@ -124,7 +117,7 @@
 				<input
 					id="prevId"
 					name="prevId"
-					bind:value={bindPrevId}
+					bind:value={prevId}
 					class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 					placeholder="이전 게시글 Id를 입력하세요"
 				/>
@@ -138,7 +131,7 @@
 				<input
 					id="nextId"
 					name="nextId"
-					bind:value={bindNextId}
+					bind:value={nextId}
 					class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 					placeholder="다음 게시글 Id를 입력하세요"
 				/>
@@ -153,7 +146,7 @@
 			<textarea
 				id="summary"
 				name="summary"
-				bind:value={bindSummary}
+				bind:value={summary}
 				placeholder="게시글 요약 내용을 작성해주세요"
 				class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 			></textarea>
@@ -164,13 +157,13 @@
 			<label for="editor" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
 				>문서 편집</label
 			>
-			<ToastUI bind:this={toastRef} content={bindContent} />
-			<input type="hidden" name="content" value={bindContent} />
+			<ToastUI bind:this={toastEditorRef} {content} />
+			<input type="hidden" name="content" value={content} />
 			<div class="mt-5 flex justify-end">
 				<!-- 버튼 클릭 시 편집기에 있는 내용을 content에 채워 form 요청 -->
 				<button
 					onclick={() => {
-						bindContent = toastRef.getContent();
+						content = toastEditorRef.getContent();
 					}}
 					type="submit"
 					class="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
