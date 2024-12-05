@@ -23,7 +23,8 @@ export const actions = {
 					.split(',')
 					.map((tag) => tag.trim())
 			: undefined;
-		// 이미지 일단 Keep
+		const jsonImages = formData.get('images')?.toString() ?? JSON.stringify([]);
+		const images = JSON.parse(jsonImages);
 
 		const jsonData: any = {};
 		formData.forEach((value, key) => {
@@ -33,17 +34,13 @@ export const actions = {
 		const response = await PostFetch.createPost(fetch, {
 			...jsonData,
 			draft,
-			tags
+			tags,
+			images
 		});
 		const data = await response.json();
 
 		if (!response.ok) {
-			return fail(data.statusCode, {
-				message: data.message,
-				...jsonData,
-				draft,
-				tags
-			});
+			return fail(data.statusCode, { message: data.message });
 		}
 
 		redirect(302, `/blog/${data}`);

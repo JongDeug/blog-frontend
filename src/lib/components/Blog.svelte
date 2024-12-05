@@ -18,6 +18,7 @@
 	} = $props();
 
 	let search = $state('');
+	let sortOption = $state('newest');
 	let posts = $state(initPosts);
 	let isModalOpen = $state(false);
 
@@ -27,16 +28,39 @@
 		posts = getPosts.posts;
 	};
 
+	const sortPosts = async () => {
+		let getPosts;
+		if (sortOption === 'oldest') {
+			const order = ['createdAt_asc'];
+			const queryString = new URLSearchParams();
+			order.map((x) => queryString.append('order[]', x));
+			queryString.append('take', '50');
+
+			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+		} else if (sortOption === 'newest') {
+			const order = ['createdAt_desc'];
+			const queryString = new URLSearchParams();
+			order.map((x) => queryString.append('order[]', x));
+			queryString.append('take', '50');
+
+			getPosts = await fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
+		}
+
+		posts = getPosts.posts;
+	};
+
 	const toggleModal = () => {
 		isModalOpen = !isModalOpen;
 	};
 
 	$effect(() => {
 		// '' 가 아닐 때
-		if (search) {
-			// delay 적용 해야함
-			searchPosts();
-		}
+		// delay 적용 해야함
+		searchPosts();
+	});
+
+	$effect(() => {
+		sortPosts();
 	});
 </script>
 
@@ -55,10 +79,6 @@
 				</div>
 			{/if}
 			<div class:border-l-2={searchBox} class="pl-4">
-				{#if searchBox}
-					<SearchBox bind:value={search} />
-				{/if}
-
 				{#if initCategories.length}
 					<div class="flex flex-wrap">
 						{#each $page.data.initCategories as category}
@@ -77,22 +97,26 @@
 								</a>
 							</div>
 						{/each}
-						{#if $page.data.isLogin}
-							<div class="mr-5 mt-3">
-								<button
-									class="mr-3 inline-block rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
-									onclick={() => toggleModal()}
-									>카테고리 관리
-								</button>
-							</div>
-						{/if}
 					</div>
+					{#if $page.data.isLogin}
+						<div class="my-4">
+							<button
+								class="mr-3 inline-block rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
+								onclick={() => toggleModal()}
+								>카테고리 관리
+							</button>
+						</div>
+					{/if}
+				{/if}
+
+				{#if searchBox}
+					<SearchBox bind:value={search} />
 				{/if}
 			</div>
 		</div>
 	</div>
 
-	<Posts {initPosts} />
+	<Posts bind:initPosts={posts} bind:sortOption {isHome} />
 </div>
 
 {#if isModalOpen}

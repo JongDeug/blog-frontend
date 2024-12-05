@@ -62,10 +62,9 @@
 		});
 	});
 
-	export function getContent() {
+	export const getContent = () => {
 		return editor.getHTML();
-		// return editor.getMarkdown();
-	}
+	};
 </script>
 
 <div id="editor"></div>

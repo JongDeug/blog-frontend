@@ -1,13 +1,9 @@
 import { CommentFetch, PostFetch } from '$lib';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	const getPost = await PostFetch.getPost(fetch, params.id);
-
-	if (getPost?.statusCode) {
-		error(getPost.statusCode, { message: getPost.message });
-	}
 
 	return { initPost: getPost };
 };
@@ -48,7 +44,7 @@ export const actions = {
 		return { success: true };
 	},
 
-	updateCommentByUser: async ({ fetch, request, params }) => {
+	updateCommentByUser: async ({ fetch, request }) => {
 		const formData = await request.formData();
 
 		const response = await CommentFetch.updateByUser(fetch, formData);
@@ -61,7 +57,7 @@ export const actions = {
 		return { success: true };
 	},
 
-	deleteCommentByUser: async ({ fetch, request, params }) => {
+	deleteCommentByUser: async ({ fetch, request }) => {
 		const formData = await request.formData();
 
 		const response = await CommentFetch.deleteByUser(fetch, formData);
@@ -87,7 +83,7 @@ export const actions = {
 		return { success: true };
 	},
 
-	updateCommentByGuest: async ({ request, fetch, params }) => {
+	updateCommentByGuest: async ({ request, fetch }) => {
 		const formData = await request.formData();
 
 		const response = await CommentFetch.updateByGuest(fetch, formData);
@@ -100,7 +96,7 @@ export const actions = {
 		return { success: true };
 	},
 
-	deleteCommentByGuest: async ({ fetch, request, params }) => {
+	deleteCommentByGuest: async ({ fetch, request }) => {
 		const formData = await request.formData();
 
 		const response = await CommentFetch.deleteByGuest(fetch, formData);

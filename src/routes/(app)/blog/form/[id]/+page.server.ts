@@ -27,8 +27,8 @@ export const actions = {
 					.split(',')
 					.map((tag) => tag.trim())
 			: undefined;
-		formData.delete('postId');
-		// 이미지 일단 Keep
+		const jsonImages = formData.get('images')?.toString() ?? JSON.stringify([]);
+		const images = JSON.parse(jsonImages);
 
 		const jsonData: any = {};
 		formData.forEach((value, key) => {
@@ -38,7 +38,8 @@ export const actions = {
 		const response = await PostFetch.updatePost(fetch, params.id, {
 			...jsonData,
 			draft,
-			tags
+			tags,
+			images
 		});
 
 		if (!response.ok) {

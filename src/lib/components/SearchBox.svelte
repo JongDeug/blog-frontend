@@ -2,7 +2,7 @@
 	let { value = $bindable() } = $props();
 </script>
 
-<div class="relative mb-2">
+<div class="relative mb-2 mt-2">
 	<input
 		bind:value
 		id="search"

@@ -27,6 +27,8 @@ export { default as IconGithub } from './icons/Github.svelte';
 export { default as formatDate } from './utils/formatDate';
 export { default as delay } from './utils/delay';
 export { default as saveJwtInCookie } from './utils/saveJwtInCookie';
+export { default as extractImageFilename } from './utils/extractImageFilename';
+
 export * as Theme from './utils/theme';
 
 export * as AuthFetch from './utils/fetch/auth';

@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { ToastUI } from '$lib';
+	import extractImageFileName from '$lib/utils/extractImageFilename';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const {
@@ -27,6 +28,7 @@
 	let nextId = $state(initPost?.nextId ?? '');
 	let summary = $state(initPost?.summary ?? '');
 	let content = $state(initPost?.content ?? '');
+	let images = $state();
 
 	const createOrUpdatePost: SubmitFunction = () => {
 		return ({ result, update }) => {
@@ -167,11 +169,13 @@
 			>
 			<ToastUI bind:this={toastEditorRef} {content} />
 			<input type="hidden" name="content" value={content} />
+			<input type="hidden" name="images" value={JSON.stringify(images)} />
 			<div class="mt-5 flex justify-end">
 				<!-- 버튼 클릭 시 편집기에 있는 내용을 content에 채워 form 요청 -->
 				<button
 					onclick={() => {
 						content = toastEditorRef.getContent();
+						images = extractImageFileName(content);
 					}}
 					type="submit"
 					class="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"

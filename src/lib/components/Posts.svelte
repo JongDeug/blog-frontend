@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { formatDate } from '$lib';
 
-	const { initPosts } = $props();
+	let { initPosts = $bindable(), sortOption = $bindable(), isHome } = $props();
 </script>
 
 {#if initPosts.length === 0}
@@ -21,14 +21,47 @@
 {:else}
 	<ul>
 		{#if $page.data.isLogin}
-			<li class="pr-3 pt-6 text-right">
-				<a
-					href="/blog/form"
-					class="mr-2 rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
-					>게시글 작성</a
-				>
-			</li>
+			<div class="flex items-center justify-between pt-3">
+				<li class="block">
+					<a
+						href="/blog/form"
+						class="mr-2 rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
+						>게시글 작성</a
+					>
+				</li>
+				<li>
+					<select
+						id="sort"
+						name="sort"
+						bind:value={sortOption}
+						class="rounded-md border bg-gray-100 px-6 py-2 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+					>
+						<option value="newest">최신순</option>
+						<option value="oldest">오래된순</option>
+						<option value="popular">인기순</option>
+					</select>
+				</li>
+			</div>
+		{:else}
+			<div class="flex items-center justify-between pt-3">
+				{#if !isHome}
+					<li></li>
+					<li>
+						<select
+							id="sort"
+							name="sort"
+							bind:value={sortOption}
+							class="rounded-md border bg-gray-100 px-8 py-2 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+						>
+							<option value="newest">최신순</option>
+							<option value="oldest">오래된순</option>
+							<option value="popular">인기순</option>
+						</select>
+					</li>
+				{/if}
+			</div>
 		{/if}
+
 		{#each initPosts as post}
 			<li class="py-12">
 				<article>
