@@ -15,10 +15,12 @@
 		content?: string;
 	} = $props();
 
-	const test: SubmitFunction = async () => {
+	const createOrUpdateComment: SubmitFunction = async () => {
 		return ({ result, update }) => {
-			if (result.type === 'redirect') {
-				window.location.reload();
+			if (result.type === 'success') {
+				update();
+			} else if (result.type === 'failure') {
+				alert(`${result.data?.message}`);
 			}
 		};
 	};
@@ -29,6 +31,7 @@
 	<form
 		method="POST"
 		action={method === 'POST' ? '?/createCommentByUser' : '?/updateCommentByUser'}
+		use:enhance={createOrUpdateComment}
 		class="mt-4"
 	>
 		<input type="hidden" name="parentCommentId" value={parentCommentId} />
@@ -40,6 +43,7 @@
 				name="content"
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				rows="3"
+				required
 				placeholder="여기에 댓글을 작성하세요"
 			></textarea>
 		</div>
@@ -55,12 +59,18 @@
 	</form>
 {:else if method === 'POST'}
 	<!-- 게스트 댓글 생성 -->
-	<form method="POST" action="?/createCommentByGuest" class="mt-4">
+	<form
+		method="POST"
+		action="?/createCommentByGuest"
+		class="mt-4"
+		use:enhance={createOrUpdateComment}
+	>
 		<input type="hidden" name="parentCommentId" value={parentCommentId} />
 
 		<div class="mb-4">
 			<textarea
 				name="content"
+				required
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				rows="3"
 				placeholder="여기에 댓글을 작성하세요"
@@ -71,6 +81,7 @@
 			<input
 				name="nickName"
 				type="text"
+				required
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				placeholder="닉네임"
 			/>
@@ -78,6 +89,7 @@
 			<input
 				name="email"
 				type="email"
+				required
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				placeholder="이메일(알림 용도)"
 			/>
@@ -87,6 +99,7 @@
 			<input
 				name="password"
 				type="password"
+				required
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				placeholder="비밀번호(수정 및 삭제)"
 			/>
@@ -103,12 +116,18 @@
 	</form>
 {:else}
 	<!-- 게스트 댓글 수정 -->
-	<form method="POST" action="?/updateCommentByGuest" class="my-4" use:enhance={test}>
+	<form
+		method="POST"
+		action="?/updateCommentByGuest"
+		class="my-4"
+		use:enhance={createOrUpdateComment}
+	>
 		<input type="hidden" name="commentId" value={commentId} />
 		<div class="mb-4">
 			<textarea
 				bind:value={content}
 				name="content"
+				required
 				class="w-full rounded-lg border bg-gray-50 p-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				rows="3"
 			></textarea>

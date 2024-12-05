@@ -1,5 +1,15 @@
 import { PostFetch } from '$lib';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { CategoryFetch } from '$lib';
+import type { PageServerLoad } from '../$types';
+
+export const load: PageServerLoad = async ({ fetch }) => {
+	const getCategories = await CategoryFetch.getCategories(fetch);
+
+	return {
+		initCategories: getCategories
+	};
+};
 
 export const actions = {
 	createPost: async ({ fetch, request }) => {
@@ -27,7 +37,6 @@ export const actions = {
 		});
 		const data = await response.json();
 
-		// 에러
 		if (!response.ok) {
 			return fail(data.statusCode, {
 				message: data.message,
@@ -39,4 +48,4 @@ export const actions = {
 
 		redirect(302, `/blog/${data}`);
 	}
-};
+} satisfies Actions;

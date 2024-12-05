@@ -28,14 +28,14 @@
 	let summary = $state(initPost?.summary ?? '');
 	let content = $state(initPost?.content ?? '');
 
-	const postForm: SubmitFunction = () => {
+	const createOrUpdatePost: SubmitFunction = () => {
 		return ({ result, update }) => {
 			if (result.type === 'redirect') {
 				goto(result.location);
 			} else if (result.type === 'failure') {
+				update({ reset: false });
 				alert(`${result.data?.message}`);
 			}
-			update({ reset: false });
 		};
 	};
 </script>
@@ -46,7 +46,7 @@
 	<form
 		method="POST"
 		action={method === 'POST' ? '?/createPost' : '?/updatePost'}
-		use:enhance={postForm}
+		use:enhance={createOrUpdatePost}
 	>
 		<h1 class="mb-6 text-3xl text-gray-900 dark:text-white">{title}</h1>
 
@@ -80,21 +80,25 @@
 		</div>
 
 		<!-- 카테고리 선택 -->
-		<div class="relative mb-4">
-			<label for="category" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-				>카테고리</label
-			>
-			<select
-				id="category"
-				name="category"
-				bind:value={category}
-				class="block w-64 rounded border bg-gray-100 px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200"
-			>
-				<option value="" disabled selected>카테고리를 선택하세요</option>
+		<div class=" mb-4">
+			<label for="category" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+				카테고리
+			</label>
+			<div class="relative">
+				<input
+					id="category"
+					list="categories"
+					name="category"
+					bind:value={category}
+					placeholder="카테고리를 입력하거나 선택하세요"
+					class="block rounded border bg-gray-100 px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200"
+				/>
+			</div>
+			<datalist id="categories">
 				{#each initCategories as category}
 					<option value={category.name}>{category.name}</option>
 				{/each}
-			</select>
+			</datalist>
 		</div>
 
 		<!-- 태그 입력 -->

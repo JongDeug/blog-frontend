@@ -21,7 +21,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, '/blog/');
+		return { success: true };
 	},
 
 	postLike: async ({ fetch, params }) => {
@@ -31,6 +31,8 @@ export const actions = {
 		if (!response.ok) {
 			return fail(data.statusCode, { message: data.message });
 		}
+
+		return { success: true };
 	},
 
 	createCommentByUser: async ({ fetch, request, params }) => {
@@ -43,7 +45,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	},
 
 	updateCommentByUser: async ({ fetch, request, params }) => {
@@ -56,7 +58,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	},
 
 	deleteCommentByUser: async ({ fetch, request, params }) => {
@@ -69,7 +71,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	},
 
 	createCommentByGuest: async ({ fetch, request, params }) => {
@@ -82,7 +84,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	},
 
 	updateCommentByGuest: async ({ request, fetch, params }) => {
@@ -95,7 +97,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	},
 
 	deleteCommentByGuest: async ({ fetch, request, params }) => {
@@ -108,6 +110,6 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, `/blog/${params.id}`);
+		return { success: true };
 	}
 };

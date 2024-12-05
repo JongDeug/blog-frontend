@@ -5,34 +5,34 @@
 	import { Author, config, formatDate, Comments } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	// Viewer를 할지 그냥 HTML로 할지 고민
-	import Viewer from './Viewer.svelte';
+	// import Viewer from './Viewer.svelte';
 
-	let {
+	const {
 		initPost
 	}: {
 		initPost: Post;
 	} = $props();
 
-	const confirmAndDeletePost: SubmitFunction = async ({ cancel }) => {
-		if (!confirm('정말로 삭제하시겠습니까?')) {
-			return cancel();
+	const deletePost: SubmitFunction = async ({ cancel }) => {
+		if (confirm('정말로 삭제하시겠습니까?')) {
+			return ({ result }) => {
+				if (result.type === 'success') {
+					goto('/blog');
+				} else if (result.type === 'failure') {
+					alert(`${result.data?.message}`);
+				}
+			};
 		}
-
-		return ({ result }) => {
-			if (result.type === 'redirect') {
-				goto(result.location);
-			} else if (result.type === 'failure') {
-				alert(`${result?.data?.message}`);
-			}
-		};
+		cancel();
 	};
 
 	const postLike: SubmitFunction = () => {
 		return ({ result, update }) => {
-			if (result.type === 'failure') {
-				alert(`${result?.data?.message}`);
+			if (result.type === 'success') {
+				update();
+			} else if (result.type === 'failure') {
+				alert(`${result.data?.message}`);
 			}
-			update();
 		};
 	};
 </script>
@@ -42,7 +42,7 @@
 		<div class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
 			<header class="pt-6 xl:pb-6">
 				{#if initPost?.images.length}
-					<div class=" w-full pb-6">
+					<div class="w-full pb-6">
 						<img
 							alt={initPost.title}
 							src={initPost.images[0].url}
@@ -53,7 +53,7 @@
 				<div class="space-y-1 text-center">
 					<div>
 						<h1
-							class="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-3xl sm:leading-10 md:text-4xl dark:text-gray-100"
+							class="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-3xl sm:leading-10 md:text-5xl dark:text-gray-100"
 						>
 							{initPost.title}
 						</h1>
@@ -90,8 +90,6 @@
 					</dd>
 				</dl>
 				<div class="prose p-10 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
-					<!-- <EditorJS read={true} data={post.content} /> -->
-					<!-- <ToastUI /> -->
 					<!-- <Viewer content={initPost.content} /> -->
 					{@html initPost.content}
 				</div>
@@ -100,7 +98,7 @@
 				>
 					{#if $page.data.isLogin}
 						<div class="flex justify-around py-4">
-							<form method="POST" action="?/deletePost" use:enhance={confirmAndDeletePost}>
+							<form method="POST" action="?/deletePost" use:enhance={deletePost}>
 								<button type="submit" class="font-semibold text-red-600 hover:font-extrabold">
 									게시글 삭제
 								</button>
@@ -172,5 +170,5 @@
 		</div>
 	</article>
 
-	<Comments initComments={initPost.comments} />
+	<Comments />
 </div>

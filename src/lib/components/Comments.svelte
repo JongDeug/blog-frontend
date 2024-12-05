@@ -1,36 +1,31 @@
 <script lang="ts">
-	import { applyAction, enhance } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { CommentForm } from '$lib';
+	import { update } from '$lib/utils/fetch/category';
 	import type { SubmitFunction } from '@sveltejs/kit';
-
-	let {
-		initComments
-	}: {
-		initComments: Comment[];
-	} = $props();
 
 	let formId = $state();
 
+	// formId가 같으면 닫고, 다르면 여는 동작
 	const showForm = (commentId: number, method: string) => {
-		// Id가 같으면 닫고, 다르면 여는 동작
 		formId = formId === `${commentId}:${method}` ? '' : `${commentId}:${method}`;
 	};
 
-	const confirmAndDeleteCommentByUser: SubmitFunction = ({ cancel }) => {
-		if (!confirm('정말로 삭제하시겠습니까?')) {
-			cancel();
+	const deleteCommentByUser: SubmitFunction = ({ cancel }) => {
+		if (confirm('정말로 삭제하시겠습니까?')) {
+			return async ({ result, update }) => {
+				if (result.type === 'success') {
+					update();
+				} else if (result.type === 'failure') {
+					alert(`${result.data?.message}`);
+				}
+			};
 		}
-		return async ({ result }) => {
-			if (result.type === 'redirect') {
-				window.location.reload();
-			} else if (result.type === 'failure') {
-				alert(`${result.data?.message}`);
-			}
-		};
+		cancel();
 	};
 
-	const confirmAndDeleteCommentByGuest: SubmitFunction = async ({ formData, action }) => {
+	const deleteCommentByGuest: SubmitFunction = async ({ formData }) => {
 		const input = prompt('비밀번호를 입력해주세요');
 		const password = input?.trim();
 
@@ -39,12 +34,12 @@
 			return;
 		}
 
-		// 그냥 덭 붙이기
+		// 붙이면 알아서 넘겨짐
 		formData.append('password', password);
 
-		return async ({ result }) => {
-			if (result.type === 'redirect') {
-				window.location.reload();
+		return async ({ result, update }) => {
+			if (result.type === 'success') {
+				update();
 			} else if (result.type === 'failure') {
 				alert(`${result.data?.message}`);
 			}
@@ -54,7 +49,7 @@
 
 <!-- 댓글 목록 -->
 <div class="border-t pb-6 pt-6 text-gray-700 dark:text-gray-300">
-	{#each initComments as comment (comment.id)}
+	{#each $page.data.initPost.comments as comment (comment.id)}
 		<div class="mb-4 rounded-xl border p-4">
 			<div class="flex justify-between">
 				<p
@@ -71,7 +66,7 @@
 								method="POST"
 								action="?/deleteCommentByUser"
 								class="inline"
-								use:enhance={confirmAndDeleteCommentByUser}
+								use:enhance={deleteCommentByUser}
 							>
 								<input type="hidden" name="commentId" value={comment.id} />
 								<button type="submit" class="text-sm text-red-500 hover:underline"> 삭제 </button>
@@ -81,7 +76,7 @@
 								method="POST"
 								action="?/deleteCommentByGuest"
 								class="inline"
-								use:enhance={confirmAndDeleteCommentByGuest}
+								use:enhance={deleteCommentByGuest}
 							>
 								<input type="hidden" name="commentId" value={comment.id} />
 								<button type="submit" class="text-sm text-red-500 hover:underline"> 삭제 </button>
@@ -121,7 +116,7 @@
 												method="POST"
 												action="?/deleteCommentByUser"
 												class="inline"
-												use:enhance={confirmAndDeleteCommentByUser}
+												use:enhance={deleteCommentByUser}
 											>
 												<input type="hidden" name="commentId" value={reply.id} />
 												<button type="submit" class="text-sm text-red-500 hover:underline">
@@ -133,7 +128,7 @@
 												method="POST"
 												action="?/deleteCommentByGuest"
 												class="inline"
-												use:enhance={confirmAndDeleteCommentByGuest}
+												use:enhance={deleteCommentByGuest}
 											>
 												<input type="hidden" name="commentId" value={reply.id} />
 												<button type="submit" class="text-sm text-red-500 hover:underline">
