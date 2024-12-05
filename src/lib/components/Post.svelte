@@ -13,21 +13,6 @@
 		initPost: Post;
 	} = $props();
 
-	// const handleLike = async (postId: string, tryToLike: boolean) => {
-	// 	try {
-	// 		// I. 쿠키에서 값을 가져옴
-	// 		let guestLikeId = getCookie('guestLikeId');
-	// 		guestLikeId = guestLikeId === 'null' ? undefined : guestLikeId;
-	// 		const response = await postLike({ postId, tryToLike, guestLikeId });
-	// 		if (response) {
-	// 			post.isLiked = !post.isLiked; // 좋아요 하트 변경
-	// 			post.isLiked ? post.postLikeCount++ : post.postLikeCount--; // 좋아요 수 변경
-	// 		}
-	// 	} catch (err) {
-	// 		alert(`${err}`);
-	// 	}
-	// };
-
 	const confirmAndDeletePost: SubmitFunction = async ({ cancel }) => {
 		if (!confirm('정말로 삭제하시겠습니까?')) {
 			return cancel();
@@ -39,6 +24,15 @@
 			} else if (result.type === 'failure') {
 				alert(`${result?.data?.message}`);
 			}
+		};
+	};
+
+	const postLike: SubmitFunction = () => {
+		return ({ result, update }) => {
+			if (result.type === 'failure') {
+				alert(`${result?.data?.message}`);
+			}
+			update();
 		};
 	};
 </script>
@@ -156,18 +150,23 @@
 							{/if}
 						</div>
 					{/if}
-					<div class="sticky top-0 py-4 xl:py-8">
+					<form
+						method="POST"
+						action="?/postLike"
+						class="sticky top-0 py-4 xl:py-8"
+						use:enhance={postLike}
+					>
 						<button
-							onclick={() => {}}
 							class="flex transform items-center space-x-5 rounded-full border border-gray-300 px-5 py-3 shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+							type="submit"
 						>
-							{#if initPost.isLiked}
-								<span>&#x1F49C; 좋아요 {initPost._count.postLikes}</span>
+							{#if $page.data.initPost.isLiked}
+								<span>&#x1F49C; 좋아요 {$page.data.initPost._count.postLikes}</span>
 							{:else}
-								<span>&#x1F90D; 좋아요 {initPost._count.postLikes}</span>
+								<span>&#x1F90D; 좋아요 {$page.data.initPost._count.postLikes}</span>
 							{/if}
 						</button>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>

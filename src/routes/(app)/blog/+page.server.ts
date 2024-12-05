@@ -13,7 +13,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, '/blog');
+		return { success: true };
 	},
 
 	updateCategory: async ({ fetch, request }) => {
@@ -26,7 +26,7 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, '/blog');
+		return { success: true };
 	},
 
 	deleteCategory: async ({ fetch, request }) => {
@@ -39,6 +39,6 @@ export const actions = {
 			return fail(data.statusCode, { message: data.message });
 		}
 
-		redirect(302, '/blog');
+		return { success: true };
 	}
 };

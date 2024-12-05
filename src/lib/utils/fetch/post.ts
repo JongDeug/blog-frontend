@@ -39,6 +39,10 @@ export const deletePost = async (fetch: Fetch, postId: string) => {
 	});
 };
 
+export const postLike = async (fetch: Fetch, postId: string) => {
+	return fetch(`${PUBLIC_API_URL}/post/like/${postId}`, { credentials: 'include' });
+};
+
 const transformValuesToString = (obj: Object) => {
 	return Object.entries(obj).reduce(
 		(acc: { [key: string]: string }, [key, value]) => {

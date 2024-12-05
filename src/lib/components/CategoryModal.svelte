@@ -1,54 +1,48 @@
 <script lang="ts">
-	import { applyAction, enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
 
 	const { initCategories, toggleModal }: { initCategories: Category[]; toggleModal: Function } =
 		$props();
 
-	// 지렸다
-	$effect(() => {
-		if ($page.form) {
-			alert(`${$page.form?.message}`);
-			invalidateAll();
-		}
-	});
-
-	const confirmAndSubmitDelete: SubmitFunction = ({ cancel }) => {
+	const deleteCategory: SubmitFunction = ({ cancel }) => {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			return async ({ result }) => {
-				if (result.type === 'redirect') {
-					//  일단 keep, update 써봤는데 안됨
-					window.location.reload();
+			return async ({ result, update }) => {
+				if (result.type === 'success') {
+					toggleModal();
+					update();
 				} else if (result.type === 'failure') {
-					// alert(`${result?.data?.message}`);
-					await applyAction(result);
+					alert(`${result?.data?.message}`);
 				}
 			};
 		}
 		cancel();
 	};
 
-	const handleBackgroundClick = (event: MouseEvent) => {
-		if (event.target === event.currentTarget) {
-			toggleModal();
-		}
-	};
-
-	const handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			toggleModal();
-		}
+	const createOrUpdateCategory: SubmitFunction = () => {
+		return ({ result, update }) => {
+			if (result.type === 'success') {
+				toggleModal();
+				update();
+			} else if (result.type === 'failure') {
+				alert(`${result?.data?.message}`);
+			}
+		};
 	};
 </script>
 
 <div
 	transition:fade={{ duration: 100 }}
 	class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-0"
-	onclick={handleBackgroundClick}
-	onkeydown={handleKeyDown}
+	onclick={(event: MouseEvent) => {
+		if (event.target === event.currentTarget) {
+			toggleModal();
+		}
+	}}
+	onkeydown={(event: KeyboardEvent) => {
+		if (event.key === 'Enter') toggleModal();
+	}}
 	role="button"
 	tabindex="0"
 >
@@ -57,7 +51,12 @@
 	>
 		<h2 class="mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">카테고리 관리</h2>
 
-		<form method="POST" action="/blog?/createCategory" class="mb-3 sm:mb-4">
+		<form
+			method="POST"
+			action="/blog?/createCategory"
+			class="mb-3 sm:mb-4"
+			use:enhance={createOrUpdateCategory}
+		>
 			<label for="newCategory" class="mb-1 block text-sm font-medium sm:mb-2">카테고리 추가</label>
 			<input
 				id="newCategory"
@@ -73,7 +72,12 @@
 			</button>
 		</form>
 
-		<form class="mb-3 sm:mb-4" method="POST" action="/blog?/updateCategory">
+		<form
+			class="mb-3 sm:mb-4"
+			method="POST"
+			action="/blog?/updateCategory"
+			use:enhance={createOrUpdateCategory}
+		>
 			<label for="targetCategory" class="mb-1 block text-sm font-medium sm:mb-2"
 				>카테고리 수정</label
 			>
@@ -105,7 +109,7 @@
 			class="mb-3 sm:mb-4"
 			method="POST"
 			action="/blog?/deleteCategory"
-			use:enhance={confirmAndSubmitDelete}
+			use:enhance={deleteCategory}
 		>
 			<label for="targetCategory" class="mb-1 block text-sm font-medium sm:mb-2"
 				>카테고리 삭제</label

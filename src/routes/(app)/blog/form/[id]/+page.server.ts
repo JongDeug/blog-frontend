@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 };
 
 export const actions = {
-	update: async ({ fetch, request, params }) => {
+	updatePost: async ({ fetch, request, params }) => {
 		const formData = await request.formData();
 		const draft = formData.get('draft') ? true : false;
 		const tags = formData.get('tags')

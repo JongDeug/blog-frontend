@@ -61,7 +61,7 @@
 
 				{#if initCategories.length}
 					<div class="flex flex-wrap">
-						{#each initCategories as category}
+						{#each $page.data.initCategories as category}
 							<div class="mr-5">
 								<a
 									href={`/category/${category.id}`}

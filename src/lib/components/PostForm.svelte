@@ -43,7 +43,11 @@
 <div
 	class="mx-auto mt-8 max-w-3xl rounded-lg bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800"
 >
-	<form method="POST" action={method === 'POST' ? '?/create' : '?/update'} use:enhance={postForm}>
+	<form
+		method="POST"
+		action={method === 'POST' ? '?/createPost' : '?/updatePost'}
+		use:enhance={postForm}
+	>
 		<h1 class="mb-6 text-3xl text-gray-900 dark:text-white">{title}</h1>
 
 		<!-- 임시 저장 체크 박스 -->

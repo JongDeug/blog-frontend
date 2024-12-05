@@ -11,5 +11,4 @@
 </script>
 
 <Head title={initPost.title} />
-
 <Post {initPost} />

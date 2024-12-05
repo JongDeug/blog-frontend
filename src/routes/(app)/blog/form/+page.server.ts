@@ -2,7 +2,7 @@ import { PostFetch } from '$lib';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	create: async ({ fetch, request }) => {
+	createPost: async ({ fetch, request }) => {
 		const formData = await request.formData();
 		formData.delete('postId');
 		const draft = formData.get('draft') ? true : false;

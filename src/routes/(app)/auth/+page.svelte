@@ -1,14 +1,22 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-
-	const { form } = $props();
-
-	if (browser) {
-		if (form?.message) alert(`${form.message}`);
-	}
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const redirectTo = $page.url.searchParams.get('redirectTo');
+
+	const login: SubmitFunction = ({ formData }) => {
+		formData.append('redirectTo', redirectTo ?? '/');
+
+		return async ({ result }) => {
+			if (result.type === 'redirect') {
+				goto(redirectTo ?? result.location);
+			} else if (result.type === 'failure') {
+				alert(`${result.data?.message}`);
+			}
+		};
+	};
 </script>
 
 <div class="flex items-center justify-center p-4">
@@ -16,7 +24,7 @@
 		<h2 class="mb-6 text-center text-2xl font-bold text-gray-800 dark:text-white">로그인</h2>
 
 		<!-- 로그인 -->
-		<form method="POST" action="?/login" class="space-y-4">
+		<form method="POST" action="?/login" class="space-y-4" use:enhance={login}>
 			<div>
 				<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300"
 					>이메일</label
@@ -39,13 +47,13 @@
 					id="pwd"
 					type="password"
 					name="password"
+					required
 					placeholder="******"
 					class="mt-1 block w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-gray-800 placeholder-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
 				/>
 			</div>
 
 			<div>
-				<input type="hidden" name="redirectTo" value={redirectTo} />
 				<button
 					type="submit"
 					class="w-full rounded-md bg-blue-600 px-4 py-3 font-bold text-white shadow-sm transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"

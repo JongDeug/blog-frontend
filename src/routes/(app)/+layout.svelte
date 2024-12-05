@@ -3,8 +3,8 @@
 	import { fly } from 'svelte/transition';
 	import type { PageData } from './$types';
 	import type { Snippet } from 'svelte';
-	import '../../app.css';
 	import { page } from '$app/stores';
+	import '../../app.css';
 
 	let { children }: { children: Snippet; data: PageData } = $props(); // { slot, export let data }
 </script>

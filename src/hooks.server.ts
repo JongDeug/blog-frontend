@@ -30,7 +30,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-// [동작 방식
+// [동작 방식]
 // => Sveltekit Server fetch
 // => Catch fetch in handleFetch
 // => return response to the SvelteKit Server
@@ -41,13 +41,17 @@ export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
 	saveJwtInCookie(response, event);
 
 	// 1. 토큰 만료(401)
-	if (response.status === 401 && request.url !== `${PUBLIC_API_URL}/auth/logout`) {
+	if (
+		response.status === 401 &&
+		request.url !== `${PUBLIC_API_URL}/auth/logout` &&
+		request.url !== `${PUBLIC_API_URL}/auth/login`
+	) {
 		// 2. refresh 요청
 		const res = await AuthFetch.refresh(fetch);
 
 		if (!res.ok) {
 			const data = await res.json();
-			console.log(data);
+			console.error('[Hooks Server handleFetch] :', data);
 			throwError(data.statusCode, data.message);
 		}
 

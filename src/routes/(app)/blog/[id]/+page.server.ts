@@ -2,8 +2,7 @@ import { CommentFetch, PostFetch } from '$lib';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-// +page.ts => 쿠키 전달 때문에 +page.server.ts 사용
-export const load: PageServerLoad = async ({ params, fetch, cookies }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	const getPost = await PostFetch.getPost(fetch, params.id);
 
 	if (getPost?.statusCode) {
@@ -23,6 +22,15 @@ export const actions = {
 		}
 
 		redirect(302, '/blog/');
+	},
+
+	postLike: async ({ fetch, params }) => {
+		const response = await PostFetch.postLike(fetch, params.id);
+		const data = await response.json();
+
+		if (!response.ok) {
+			return fail(data.statusCode, { message: data.message });
+		}
 	},
 
 	createCommentByUser: async ({ fetch, request, params }) => {
