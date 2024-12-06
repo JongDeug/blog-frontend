@@ -85,7 +85,7 @@
 							<div class="mr-5">
 								<a
 									href={`/category/${category.id}`}
-									class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
+									class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 								>
 									{category.name}
 								</a>

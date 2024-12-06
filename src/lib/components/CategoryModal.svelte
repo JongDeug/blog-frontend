@@ -47,7 +47,7 @@
 	tabindex="0"
 >
 	<div
-		class="w-full max-w-[90%] rounded-lg border bg-white p-4 shadow-lg sm:max-w-md sm:p-6 dark:bg-gray-800"
+		class="w-full max-w-[90%] rounded-lg border bg-white p-4 shadow-lg dark:bg-gray-800 sm:max-w-md sm:p-6"
 	>
 		<h2 class="mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">카테고리 관리</h2>
 

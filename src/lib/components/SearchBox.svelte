@@ -10,7 +10,7 @@
 		aria-label="Search posts"
 		type="text"
 		placeholder="Search posts"
-		class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
+		class="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
 	/>
 	<svg
 		class="absolute right-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-300"

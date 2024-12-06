@@ -160,7 +160,7 @@
 			<!-- 대댓글 작성 -->
 			<button
 				onclick={() => showForm(comment.id, 'create')}
-				class="text-primary-500 text-sm hover:underline">대댓글 달기</button
+				class="text-sm text-primary-500 hover:underline">대댓글 달기</button
 			>
 			{#if formId === `${comment.id}:create`}
 				<CommentForm parentCommentId={comment.id} method="POST" />

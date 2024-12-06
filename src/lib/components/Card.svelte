@@ -44,7 +44,7 @@
 					href={card.href}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-base font-medium leading-6"
+					class="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 					aria-label={`Link to ${card.title}`}
 				>
 					Learn more &rarr;

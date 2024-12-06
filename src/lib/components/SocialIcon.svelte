@@ -12,7 +12,7 @@
 
 {#if url}
 	<a
-		class="hover:text-primary-600 flex gap-x-2 text-gray-500 transition"
+		class="flex gap-x-2 text-gray-500 transition hover:text-primary-600"
 		href={url || '#'}
 		target={popup ? '_blank' : ''}
 		rel="noreferrer"

@@ -16,13 +16,13 @@
 				<SocialIcon icon="github" url={config.github.url} />
 			</div>
 		</div>
-		<div class="dark:prose-dark prose max-w-none pb-8 pt-8 xl:col-span-2">
+		<div class="prose max-w-none pb-8 pt-8 dark:prose-dark xl:col-span-2">
 			{@html config.about}
 		</div>
 	</div>
 	<div class="space-y-2 py-8 md:space-y-5">
 		<Title h2 title="Goals" />
-		<div class="dark:prose-dark prose grid gap-5">
+		<div class="prose grid gap-5 dark:prose-dark">
 			{#each config.goals as goal}
 				<div class="flex-row space-x-3 lg:flex">
 					{goal}

@@ -30,15 +30,14 @@
 		}
 	},
 	"peerDependencies": {
-		"svelte": "^5.0.0"
+		"svelte": "^5.0.0",
+		"@sveltejs/kit": "^2.8.5"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-node": "^5.2.9",
-		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
-		"@types/cookie": "^1.0.0",
 		"@types/node": "^22.10.1",
 		"@types/prismjs": "^1.26.5",
 		"@types/set-cookie-parser": "^2.4.10",
