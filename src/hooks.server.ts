@@ -1,7 +1,6 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 import { AuthFetch, saveJwtInCookie } from '$lib';
 import {
-	fail,
 	error as throwError,
 	type Handle,
 	type HandleFetch,
@@ -35,7 +34,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 // => Catch fetch in handleFetch
 // => return response to the SvelteKit Server
 export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
-	let cloneRequest = await request.clone();
+	let cloneRequest = request.clone();
 	let response = await fetch(request);
 
 	saveJwtInCookie(response, event);
