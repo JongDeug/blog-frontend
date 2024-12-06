@@ -9,16 +9,13 @@ export const getPosts = (fetch: Fetch, query?: GetPostsQuery) => {
 };
 
 export const getPost = (fetch: Fetch, id: string) => {
-	return fetch(`${PUBLIC_API_URL}/post/${id}`, { credentials: 'include' }).then((res) =>
-		res.json()
-	);
+	return fetch(`${PUBLIC_API_URL}/post/${id}`).then((res) => res.json());
 };
 
 export const createPost = async (fetch: Fetch, data: Object) => {
 	return fetch(`${PUBLIC_API_URL}/post`, {
 		method: 'POST',
 		headers: new Headers({ 'Content-Type': 'application/json' }),
-		credentials: 'include',
 		body: JSON.stringify({ ...data })
 	});
 };
@@ -27,20 +24,18 @@ export const updatePost = async (fetch: Fetch, postId: string, data: Object) => 
 	return fetch(`${PUBLIC_API_URL}/post/${postId}`, {
 		method: 'PATCH',
 		headers: new Headers({ 'Content-Type': 'application/json' }),
-		credentials: 'include',
 		body: JSON.stringify({ ...data })
 	});
 };
 
 export const deletePost = async (fetch: Fetch, postId: string) => {
 	return fetch(`${PUBLIC_API_URL}/post/${postId}`, {
-		method: 'DELETE',
-		credentials: 'include'
+		method: 'DELETE'
 	});
 };
 
 export const postLike = async (fetch: Fetch, postId: string) => {
-	return fetch(`${PUBLIC_API_URL}/post/like/${postId}`, { credentials: 'include' });
+	return fetch(`${PUBLIC_API_URL}/post/like/${postId}`);
 };
 
 const transformValuesToString = (obj: Object) => {

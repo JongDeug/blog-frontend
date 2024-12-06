@@ -15,9 +15,9 @@ export const login = (fetch: Fetch, formData: FormData) => {
 };
 
 export const logout = (fetch: Fetch) => {
-	return fetch(`${PUBLIC_API_URL}/auth/logout`, { credentials: 'include' });
+	return fetch(`${PUBLIC_API_URL}/auth/logout`);
 };
 
 export const refresh = (fetch: Fetch) => {
-	return fetch(`${PUBLIC_API_URL}/auth/token/refresh`, { credentials: 'include' });
+	return fetch(`${PUBLIC_API_URL}/auth/token/refresh`);
 };
