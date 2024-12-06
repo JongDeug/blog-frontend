@@ -75,7 +75,7 @@
 			{/each}
 			{#if $page.data.isLogin}
 				<div class="px-12 py-4">
-					<form method="POST" action="/logout?/logout" class="inline">
+					<form method="POST" action="/auth?/logout" class="inline">
 						<button class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
 							>Logout</button
 						>
@@ -84,7 +84,7 @@
 			{:else}
 				<div class="px-12 py-4">
 					<a
-						href="/login"
+						href="/auth?redirectTo={$page.url.pathname}"
 						onclick={toggleDarkMode}
 						class="text-2xl font-bold tracking-widest text-gray-900
 					dark:text-gray-100">Login</a
