@@ -6,7 +6,6 @@ import {
 	type HandleFetch,
 	type HandleServerError
 } from '@sveltejs/kit';
-import { v4 as uuidv4 } from 'uuid';
 
 // event : 브라우저 요청
 export const handle: Handle = async ({ event, resolve }) => {
@@ -15,16 +14,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.isLogin = isLogin ? JSON.parse(isLogin) : false;
 	const loginInfo = event.cookies.get('loginInfo');
 	event.locals.loginInfo = loginInfo ? JSON.parse(loginInfo) : null;
-
-	// 게스트 uuid 발급, 기간 무제한
-	let guestId = event.cookies.get('guestId');
-	if (!guestId) guestId = uuidv4();
-	event.cookies.set('guestId', guestId, {
-		path: '/',
-		maxAge: 365 * 24 * 60 * 60,
-		httpOnly: true
-	});
-	event.locals.guestId = guestId;
+  const guestId = event.cookies.get('guestId');
+	event.locals.guestId = guestId ? guestId : undefined;
 
 	return resolve(event);
 };

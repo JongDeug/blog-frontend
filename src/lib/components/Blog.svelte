@@ -28,26 +28,26 @@
 		posts = getPosts.posts;
 	};
 
-	const sortPosts = async () => {
-		let getPosts;
-		if (sortOption === 'oldest') {
-			const order = ['createdAt_asc'];
-			const queryString = new URLSearchParams();
-			order.map((x) => queryString.append('order[]', x));
-			queryString.append('take', '50');
-
-			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-		} else if (sortOption === 'newest') {
-			const order = ['createdAt_desc'];
-			const queryString = new URLSearchParams();
-			order.map((x) => queryString.append('order[]', x));
-			queryString.append('take', '50');
-
-			getPosts = await fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
-		}
-
-		posts = getPosts.posts;
-	};
+	// const sortPosts = async () => {
+	// 	let getPosts;
+	// 	if (sortOption === 'oldest') {
+	// 		const order = ['createdAt_asc'];
+	// 		const queryString = new URLSearchParams();
+	// 		order.map((x) => queryString.append('order[]', x));
+	// 		queryString.append('take', '50');
+	//
+	// 		getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+	// 	} else if (sortOption === 'newest') {
+	// 		const order = ['createdAt_desc'];
+	// 		const queryString = new URLSearchParams();
+	// 		order.map((x) => queryString.append('order[]', x));
+	// 		queryString.append('take', '50');
+	//
+	// 		getPosts = await fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
+	// 	}
+	//
+	// 	posts = getPosts.posts;
+	// };
 
 	const toggleModal = () => {
 		isModalOpen = !isModalOpen;
@@ -56,12 +56,14 @@
 	$effect(() => {
 		// '' 가 아닐 때
 		// delay 적용 해야함
-		searchPosts();
+    if(search) {
+		  searchPosts();
+    }
 	});
 
-	$effect(() => {
-		sortPosts();
-	});
+	// $effect(() => {
+	// 	sortPosts();
+	// });
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
