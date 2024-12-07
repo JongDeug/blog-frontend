@@ -25,7 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 // => Catch fetch in handleFetch
 // => return response to the SvelteKit Server
 export const handleFetch: HandleFetch = async ({ fetch, request, event }) => {
-	let cloneRequest = request.clone();
+	const cloneRequest = request.clone();
 	let response = await fetch(request);
 
 	saveJwtInCookie(response, event);

@@ -36,6 +36,9 @@
 			order.map((x) => queryString.append('order[]', x));
 			queryString.append('take', '50');
 			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+		} else if (sortOption === 'draft') {
+			const queryString = new URLSearchParams({ draft: 'true', take: '50' });
+			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		}
 		posts = getPosts.posts;
 	};

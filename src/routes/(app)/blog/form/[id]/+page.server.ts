@@ -2,7 +2,7 @@ import { CategoryFetch, PostFetch } from '$lib';
 import type { PageServerLoad } from '../$types';
 import { fail, redirect } from '@sveltejs/kit';
 
-export let ssr = false;
+export const ssr = false;
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
 	// @ts-ignore // params.id 자꾸 타입 에러남

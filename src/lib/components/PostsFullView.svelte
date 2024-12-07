@@ -23,6 +23,9 @@
 					<option value="newest">최신순</option>
 					<option value="oldest">오래된순</option>
 					<option value="popular">인기순</option>
+					{#if $page.data.isLogin}
+						<option value="draft">임시 저장</option>
+					{/if}
 				</select>
 			</li>
 		</div>
