@@ -1,14 +1,9 @@
 <script lang="ts">
-	import { Head } from '$lib';
-	import Blog from '$lib/components/Blog.svelte';
-	import type { PageData } from './$types';
+	import { BlogOverview, Head } from '$lib';
 
-	// [isLogin]: hooks.server.ts => layout.server.ts => layout.ts => layout.svelte => page.svelte
-	// [initPosts]: page.ts => page.svelte
-	const { data }: { data: PageData } = $props();
+	const { data } = $props();
 	const { initPosts } = data;
 </script>
 
 <Head title="Home" />
-
-<Blog {initPosts} isHome={true} />
+<BlogOverview title="꾸벅" {initPosts} />

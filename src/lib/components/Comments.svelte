@@ -50,7 +50,7 @@
 <!-- 댓글 목록 -->
 <div class="border-t pb-6 pt-6 text-gray-700 dark:text-gray-300">
 	{#each $page.data.initPost.comments as comment (comment.id)}
-		<div class="mb-4 rounded-xl border p-4">
+		<div class="mb-4 rounded-xl border border-gray-500 p-4">
 			<div class="flex justify-between">
 				<p
 					class="mb-2 text-lg text-gray-900 dark:text-gray-100"

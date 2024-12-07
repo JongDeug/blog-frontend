@@ -4,8 +4,6 @@
 	import { page } from '$app/stores';
 	import { Author, config, formatDate, Comments } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	// Viewer를 할지 그냥 HTML로 할지 고민
-	// import Viewer from './Viewer.svelte';
 
 	const {
 		initPost

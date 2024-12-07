@@ -2,10 +2,10 @@
 	import { page } from '$app/stores';
 	import { formatDate } from '$lib';
 
-	let { initPosts = $bindable(), sortOption = $bindable(), isHome } = $props();
+	const { initPosts } = $props();
 </script>
 
-{#if initPosts.length === 0}
+{#if !initPosts}
 	<div class="py-6 pr-3">
 		{#if $page.data.isLogin}
 			<p class="text-right">
@@ -21,7 +21,7 @@
 {:else}
 	<ul>
 		{#if $page.data.isLogin}
-			<div class="flex items-center justify-between pt-3">
+			<div class="flex items-center justify-end pt-3">
 				<li class="block">
 					<a
 						href="/blog/form"
@@ -29,41 +29,11 @@
 						>게시글 작성</a
 					>
 				</li>
-				<li>
-					<select
-						id="sort"
-						name="sort"
-						bind:value={sortOption}
-						class="rounded-md border bg-gray-100 px-6 py-2 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-					>
-						<option value="newest">최신순</option>
-						<option value="oldest">오래된순</option>
-						<option value="popular">인기순</option>
-					</select>
-				</li>
-			</div>
-		{:else}
-			<div class="flex items-center justify-between pt-3">
-				{#if !isHome}
-					<li></li>
-					<li>
-						<select
-							id="sort"
-							name="sort"
-							bind:value={sortOption}
-							class="rounded-md border bg-gray-100 px-8 py-2 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-						>
-							<option value="newest">최신순</option>
-							<option value="oldest">오래된순</option>
-							<option value="popular">인기순</option>
-						</select>
-					</li>
-				{/if}
 			</div>
 		{/if}
 
 		{#each initPosts as post}
-			<li class="py-12">
+			<li class="py-8">
 				<article>
 					<div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
 						<dl class="whitespace-nowrap text-sm font-medium leading-5">

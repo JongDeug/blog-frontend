@@ -1,86 +1,66 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
-	import { Title, SearchBox, CategoryModal, Posts, config } from '$lib';
+	import { Title, SearchBox, CategoryModal, PostsFullView } from '$lib';
 
 	let {
-		initPosts = [],
 		initCategories = [],
-		title,
-		searchBox = false,
-		isHome = false
+		title
 	}: {
-		initPosts: Post[];
 		initCategories?: Category[];
 		title?: string;
-		searchBox?: boolean;
-		isHome?: boolean;
 	} = $props();
 
-	let search = $state('');
-	let sortOption = $state('newest');
-	let posts = $state(initPosts);
+	let search = $state(); // 1빠따
+	let sortOption = $state('newest'); // 2빠따
+	let posts = $state([]);
 	let isModalOpen = $state(false);
 
 	const searchPosts = async () => {
-		const queryString = new URLSearchParams({ search }).toString();
+		// console.log('search');
+		const queryString = new URLSearchParams({ search: search as string }).toString();
 		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		posts = getPosts.posts;
 	};
 
-	// const sortPosts = async () => {
-	// 	let getPosts;
-	// 	if (sortOption === 'oldest') {
-	// 		const order = ['createdAt_asc'];
-	// 		const queryString = new URLSearchParams();
-	// 		order.map((x) => queryString.append('order[]', x));
-	// 		queryString.append('take', '50');
-	//
-	// 		getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-	// 	} else if (sortOption === 'newest') {
-	// 		const order = ['createdAt_desc'];
-	// 		const queryString = new URLSearchParams();
-	// 		order.map((x) => queryString.append('order[]', x));
-	// 		queryString.append('take', '50');
-	//
-	// 		getPosts = await fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
-	// 	}
-	//
-	// 	posts = getPosts.posts;
-	// };
+	const sortPosts = async () => {
+		let getPosts;
+		if (sortOption === 'newest') {
+			// console.log('sort newest');
+			const queryString = new URLSearchParams({ take: '50' });
+			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+		} else if (sortOption === 'oldest') {
+			// console.log('sort oldest');
+			const order = ['createdAt_asc'];
+			const queryString = new URLSearchParams();
+			order.map((x) => queryString.append('order[]', x));
+			queryString.append('take', '50');
+			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+		}
+		posts = getPosts.posts;
+	};
 
 	const toggleModal = () => {
 		isModalOpen = !isModalOpen;
 	};
 
+	// 처음은 최신순으로 GET
 	$effect(() => {
-		// '' 가 아닐 때
-		// delay 적용 해야함
-    if(search) {
-		  searchPosts();
-    }
+		if (search) {
+			searchPosts();
+		} else {
+			sortPosts();
+		}
 	});
-
-	// $effect(() => {
-	// 	sortPosts();
-	// });
 </script>
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
 	<div class="space-y-2 pb-8 pt-6 md:space-y-5">
-		{#if isHome}
-			<Title title="꾸벅" />
-			<p class="prose-xl text-xl text-gray-800 dark:text-gray-400">
-				{@html config.intro}
-			</p>
-		{/if}
 		<div class="grid gap-4 lg:grid-cols-2">
-			{#if !isHome}
-				<div>
-					<Title {title} h2={false} />
-				</div>
-			{/if}
-			<div class:border-l-2={searchBox} class="pl-4">
+			<div>
+				<Title {title} h2={false} />
+			</div>
+			<div class="border-l-2 pl-4">
 				{#if initCategories.length}
 					<div class="flex flex-wrap">
 						{#each $page.data.initCategories as category}
@@ -107,18 +87,24 @@
 								onclick={() => toggleModal()}
 								>카테고리 관리
 							</button>
+
+							<p class="inline-block">
+								<a
+									href="/blog/form"
+									class="mr-2 rounded-md border border-rose-500 p-1 text-sm font-medium text-rose-500 hover:font-extrabold"
+									>게시글 작성</a
+								>
+							</p>
 						</div>
 					{/if}
 				{/if}
 
-				{#if searchBox}
-					<SearchBox bind:value={search} />
-				{/if}
+				<SearchBox bind:value={search} />
 			</div>
 		</div>
 	</div>
 
-	<Posts bind:initPosts={posts} bind:sortOption {isHome} />
+	<PostsFullView bind:posts bind:sortOption />
 </div>
 
 {#if isModalOpen}

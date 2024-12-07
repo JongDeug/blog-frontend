@@ -3,13 +3,9 @@ import { fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types.js';
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	const query: GetPostsQuery = {
-		take: 50
-	};
-	const { posts, _ } = await PostFetch.getPosts(fetch, query);
 	const categories = await CategoryFetch.getCategories(fetch);
 
-	return { initPosts: posts, initCategories: categories };
+	return { initCategories: categories };
 };
 
 // 카테고리 관리가 /blog에 붙어있음

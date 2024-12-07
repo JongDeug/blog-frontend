@@ -49,7 +49,6 @@
 					});
 					const data = await response.json();
 
-					// 에러
 					if (!response.ok) {
 						return alert(`${data.message}`);
 					}
