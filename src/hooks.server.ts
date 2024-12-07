@@ -14,8 +14,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.isLogin = isLogin ? JSON.parse(isLogin) : false;
 	const loginInfo = event.cookies.get('loginInfo');
 	event.locals.loginInfo = loginInfo ? JSON.parse(loginInfo) : null;
-  const guestId = event.cookies.get('guestId');
-	event.locals.guestId = guestId ? guestId : undefined;
+	const guestId = event.cookies.get('guestId');
+	event.locals.guestId = guestId ? guestId : null;
 
 	return resolve(event);
 };
