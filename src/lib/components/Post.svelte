@@ -4,15 +4,12 @@
 	import { page } from '$app/stores';
 	import { Author, config, formatDate, Comments } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import DOMPurify from 'dompurify';
 
 	const {
 		initPost
 	}: {
 		initPost: Post;
 	} = $props();
-
-	const cleanContent = DOMPurify.sanitize(initPost.content);
 
 	const deletePost: SubmitFunction = async ({ cancel }) => {
 		if (confirm('정말로 삭제하시겠습니까?')) {
@@ -92,7 +89,7 @@
 				</dl>
 				<div class="prose p-10 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
 					<!-- <Viewer content={initPost.content} /> -->
-					{@html cleanContent}
+					{@html initPost.content}
 				</div>
 				<div
 					class="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y"

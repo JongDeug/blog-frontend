@@ -1,8 +1,5 @@
 <script>
 	import { Head, SocialIcon, Title, config } from '$lib';
-	import DOMPurify from 'dompurify';
-
-	const cleanContent = DOMPurify.sanitize(config.about);
 </script>
 
 <Head title="About" />
@@ -20,7 +17,7 @@
 			</div>
 		</div>
 		<div class="prose max-w-none pb-8 pt-8 dark:prose-dark xl:col-span-2">
-			{@html cleanContent}
+			{@html config.about}
 		</div>
 	</div>
 	<div class="space-y-2 py-8 md:space-y-5">
