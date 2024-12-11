@@ -9,7 +9,7 @@ import {
 
 // event : 브라우저 요청
 export const handle: Handle = async ({ event, resolve }) => {
-	// 로그인
+	// 브라우저 쿠키에서 값 가져온 뒤 locals에 저장
 	const isLogin = event.cookies.get('isLogin');
 	event.locals.isLogin = isLogin ? JSON.parse(isLogin) : false;
 	const loginInfo = event.cookies.get('loginInfo');
