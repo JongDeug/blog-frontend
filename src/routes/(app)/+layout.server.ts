@@ -2,6 +2,7 @@ import type { LayoutServerLoad } from './$types';
 import { v4 as uuidv4 } from 'uuid';
 
 export const load: LayoutServerLoad = async ({ url: { pathname }, locals, cookies }) => {
+	const { isLogin, loginInfo } = locals;
 	let { guestId } = locals;
 
 	// hooks.server.ts, handle 함수에서 요청 헤더를 바꿨을 때 immutable error 발생
@@ -12,5 +13,5 @@ export const load: LayoutServerLoad = async ({ url: { pathname }, locals, cookie
 		httpOnly: true
 	});
 
-	return { pathname, guestId };
+	return { pathname, isLogin, loginInfo, guestId };
 };
