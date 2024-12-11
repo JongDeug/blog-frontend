@@ -5,6 +5,7 @@
 	import { Author, config, formatDate, Comments } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
+	console.log($page.data);
 	const {
 		initPost
 	}: {
