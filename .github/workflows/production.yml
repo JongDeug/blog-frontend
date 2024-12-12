@@ -1,4 +1,4 @@
-name: Production CI/CD
+name: blog-frontend
 
 # main branch push 시
 on:
