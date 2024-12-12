@@ -209,6 +209,12 @@
 
 					<div class="mt-3">
 						<p class="">
+							<span class="font-bold">프로젝트 링크:</span>
+							<a class="text-blue-500" href="https://jongdeug.port0.org/"
+								>https://jongdeug.port0.org/</a
+							>
+						</p>
+						<p class="">
 							<span class="font-bold">Github 링크:</span>
 							<a class="text-blue-500" href="https://github.com/JongDeug/blog-backend"
 								>https://github.com/JongDeug/blog-backend</a
