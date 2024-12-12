@@ -21,6 +21,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # pm2 정지 및 삭제
             pm2 stop blog-frontend
             pm2 delete blog-frontend
 
