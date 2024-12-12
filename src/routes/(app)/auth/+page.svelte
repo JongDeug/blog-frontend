@@ -7,8 +7,6 @@
 	const redirectTo = $page.url.searchParams.get('redirectTo');
 
 	const login: SubmitFunction = ({ formData }) => {
-		formData.append('redirectTo', redirectTo ?? '/');
-
 		return async ({ result }) => {
 			if (result.type === 'redirect') {
 				goto(redirectTo ?? result.location);
