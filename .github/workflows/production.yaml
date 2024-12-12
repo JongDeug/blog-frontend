@@ -1,4 +1,4 @@
-name: test
+name: Production CI/CD
 
 # main branch push 시
 on:
