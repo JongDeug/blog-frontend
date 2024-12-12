@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { Title, SearchBox, CategoryModal, PostsFullView } from '$lib';
+	import { onMount } from 'svelte';
 
 	let {
 		initCategories = [],
@@ -11,51 +12,107 @@
 		title?: string;
 	} = $props();
 
-	let search = $state(); // 1빠따
-	let sortOption = $state('newest'); // 2빠따
-	let posts = $state([]);
+	let posts = $state([] as Post[]);
+	let cursor = $state('');
+	let search = $state(undefined);
+	let draft = $state('false');
+	let order = $state([] as string[]);
+	let queryString = $state(new URLSearchParams());
+	let sortOption = $state('newest');
+
+	let scrollY = $state(0);
+	let innerHeight = $state(0);
+
 	let isModalOpen = $state(false);
 
-	const searchPosts = async () => {
-		// console.log('search');
-		const queryString = new URLSearchParams({ search: search as string }).toString();
-		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-		posts = getPosts.posts;
+	$effect(() => {
+		const scrollPosition = scrollY + innerHeight;
+		const documentHeight = document.documentElement.scrollHeight;
+		// 스크롤이 바닥을 찍었을 때 실행
+		if (Math.ceil(scrollPosition) >= documentHeight) {
+			applyCursorPagination();
+		}
+	});
+
+	const applyCursorPagination = async () => {
+		if (cursor) {
+			queryString.set('cursor', cursor);
+			queryString.set('take', '2');
+			queryString.set('search', search ?? '');
+			queryString.set('draft', draft);
+			order.forEach((value, index) => {
+				queryString.set(`order[${index}]`, value);
+			});
+			const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) =>
+				res.json()
+			);
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			posts = [...posts, ...getPosts.posts];
+			cursor = getPosts.cursor;
+		}
 	};
 
-	const sortPosts = async () => {
-		let getPosts;
-		if (sortOption === 'newest') {
-			// console.log('sort newest');
-			const queryString = new URLSearchParams({ take: '50' });
-			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-		} else if (sortOption === 'oldest') {
-			// console.log('sort oldest');
-			const order = ['createdAt_asc'];
-			const queryString = new URLSearchParams();
-			order.map((x) => queryString.append('order[]', x));
-			queryString.append('take', '50');
-			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-		} else if (sortOption === 'draft') {
-			const queryString = new URLSearchParams({ draft: 'true', take: '50' });
-			getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+	$effect(() => {
+		if (search !== undefined) {
+			searchPosts();
 		}
+	});
+
+	const searchPosts = async () => {
+		console.log('search');
+		const queryString = new URLSearchParams({ search: search ?? '' }).toString();
+		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		posts = getPosts.posts;
+		cursor = getPosts.cursor;
+	};
+
+	$effect(() => {
+		if (sortOption === 'newest') getNewest();
+		else if (sortOption === 'oldest') getOldest();
+		else if (sortOption === 'draft') getDraft();
+	});
+
+	const getNewest = async () => {
+		console.log('newest');
+		const queryString = new URLSearchParams({});
+		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+		posts = getPosts.posts;
+		cursor = getPosts.cursor;
+		search = undefined;
+		draft = 'false';
+		order = [];
+	};
+
+	const getOldest = async () => {
+		const newOrder = ['id_asc'];
+		const queryString = new URLSearchParams();
+		newOrder.map((x) => queryString.append('order[]', x));
+		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+
+		posts = getPosts.posts;
+		cursor = getPosts.cursor;
+		search = undefined;
+		draft = 'false';
+		order = newOrder;
+	};
+
+	const getDraft = async () => {
+		const queryString = new URLSearchParams({ draft: 'true' });
+		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
+
+		posts = getPosts.posts;
+		cursor = getPosts.cursor;
+		draft = 'true';
+		search = undefined;
+		order = [];
 	};
 
 	const toggleModal = () => {
 		isModalOpen = !isModalOpen;
 	};
-
-	// 처음은 최신순으로 GET
-	$effect(() => {
-		if (search) {
-			searchPosts();
-		} else {
-			sortPosts();
-		}
-	});
 </script>
+
+<svelte:window bind:scrollY bind:innerHeight />
 
 <div class="divide-y divide-gray-200 dark:divide-gray-700">
 	<div class="space-y-2 pb-8 pt-6 md:space-y-5">
