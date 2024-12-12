@@ -52,12 +52,6 @@
 		}
 	};
 
-	$effect(() => {
-		if (search !== undefined) {
-			searchPosts();
-		}
-	});
-
 	const searchPosts = async () => {
 		console.log('search');
 		const queryString = new URLSearchParams({ search: search ?? '' }).toString();
@@ -159,7 +153,7 @@
 					{/if}
 				{/if}
 
-				<SearchBox bind:value={search} />
+				<SearchBox bind:value={search} {searchPosts} />
 			</div>
 		</div>
 	</div>

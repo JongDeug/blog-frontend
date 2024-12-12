@@ -1,10 +1,13 @@
 <script lang="ts">
-	let { value = $bindable() } = $props();
+	import debounce from 'lodash/debounce';
+
+	let { value = $bindable(), searchPosts } = $props();
 </script>
 
 <div class="relative mb-2 mt-2">
 	<input
 		bind:value
+		oninput={debounce(searchPosts, 400)}
 		id="search"
 		name="search"
 		aria-label="Search posts"
