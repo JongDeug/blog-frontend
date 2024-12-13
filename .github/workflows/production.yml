@@ -1,6 +1,5 @@
 name: blog-frontend
 
-# main branch push 시
 on:
   push:
     branches:
