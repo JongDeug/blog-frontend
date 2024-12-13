@@ -1,6 +1,5 @@
 name: blog-frontend
 
-# main push
 on:
   push:
     branches:
