@@ -8,7 +8,11 @@ export const getPosts = (fetch: Fetch, query?: GetPostsQuery) => {
 	return fetch(`${PUBLIC_API_URL}/post`).then((res) => res.json());
 };
 
-export const getPost = (fetch: Fetch, id: string) => {
+export const getPost = (fetch: Fetch, id: string, isEdit: boolean) => {
+	if (isEdit) {
+		const queryString = new URLSearchParams({ isEdit: 'true' }).toString();
+		return fetch(`${PUBLIC_API_URL}/post/${id}?${queryString}`).then((res) => res.json());
+	}
 	return fetch(`${PUBLIC_API_URL}/post/${id}`).then((res) => res.json());
 };
 

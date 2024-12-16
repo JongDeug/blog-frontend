@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
 	// @ts-ignore // params.id 자꾸 타입 에러남
-	const getPost = await PostFetch.getPost(fetch, params.id);
+	const getPost = await PostFetch.getPost(fetch, params.id, true);
 
 	const getCategories = await CategoryFetch.getCategories(fetch);
 
