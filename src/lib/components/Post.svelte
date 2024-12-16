@@ -92,7 +92,7 @@
 						</ul>
 					</dd>
 				</dl>
-				<div class="prose p-10 lg:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
+				<div class="prose p-10 xl:col-span-3 xl:row-span-2 xl:pb-0">
 					<!-- <Viewer content={initPost.content} /> -->
 					{@html initPost.content}
 				</div>
