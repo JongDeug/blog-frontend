@@ -3,7 +3,7 @@ name: blog-frontend
 on:
   push:
     branches:
-      - dev # 임시
+      - main
     paths-ignore:
       - 'README.md'
 
@@ -30,6 +30,6 @@ jobs:
             cd blog-frontend-v2
             git pull origin main
 
-            npm install
-            npm run build
+            pnpm install
+            pnpm run build
             pm2 start build/index.js --name blog-frontend
