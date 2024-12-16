@@ -7,12 +7,12 @@
 <div class="relative mb-2 mt-2">
 	<input
 		bind:value
-		oninput={debounce(searchPosts, 400)}
+		oninput={debounce(searchPosts, 500)}
 		id="search"
 		name="search"
 		aria-label="Search posts"
 		type="text"
-		placeholder="게시글 검색"
+		placeholder="게시글 검색 (정렬 적용되지 않음)"
 		class="block w-full rounded-md border-2 border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-100"
 	/>
 	<svg

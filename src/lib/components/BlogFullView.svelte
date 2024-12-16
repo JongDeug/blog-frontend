@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import { Title, SearchBox, CategoryModal, PostsFullView } from '$lib';
-	import { onMount } from 'svelte';
 
 	let {
 		initCategories = [],
@@ -35,6 +34,7 @@
 	});
 
 	const applyCursorPagination = async () => {
+		// cursor가 null이 아닐 경우
 		if (cursor) {
 			queryString.set('cursor', cursor);
 			queryString.set('take', '2');
@@ -53,7 +53,6 @@
 	};
 
 	const searchPosts = async () => {
-		console.log('search');
 		const queryString = new URLSearchParams({ search: search ?? '' }).toString();
 		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		posts = getPosts.posts;
@@ -61,44 +60,33 @@
 	};
 
 	$effect(() => {
-		if (sortOption === 'newest') getNewest();
-		else if (sortOption === 'oldest') getOldest();
-		else if (sortOption === 'draft') getDraft();
+		sort();
 	});
 
-	const getNewest = async () => {
-		console.log('newest');
+	const sort = async () => {
 		const queryString = new URLSearchParams({});
+		let newOrder: string[] = [];
+
+		if (sortOption === 'oldest') {
+			newOrder = ['id_asc'];
+			newOrder.map((x) => queryString.append('order[]', x));
+		} else if (sortOption === 'popular') {
+			newOrder = ['likes_desc', 'id_desc'];
+			newOrder.map((x) => queryString.append('order[]', x));
+		} else if (sortOption === 'mostViewed') {
+			newOrder = ['views_desc', 'id_desc'];
+			newOrder.map((x) => queryString.append('order[]', x));
+		} else if (sortOption === 'draft') {
+			queryString.append('draft', 'true');
+		}
 		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
 		posts = getPosts.posts;
 		cursor = getPosts.cursor;
-		search = undefined;
-		draft = 'false';
-		order = [];
-	};
 
-	const getOldest = async () => {
-		const newOrder = ['id_asc'];
-		const queryString = new URLSearchParams();
-		newOrder.map((x) => queryString.append('order[]', x));
-		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-
-		posts = getPosts.posts;
-		cursor = getPosts.cursor;
-		search = undefined;
 		draft = 'false';
+		search = undefined;
 		order = newOrder;
-	};
-
-	const getDraft = async () => {
-		const queryString = new URLSearchParams({ draft: 'true' });
-		const getPosts = await fetch(`${PUBLIC_API_URL}/post?${queryString}`).then((res) => res.json());
-
-		posts = getPosts.posts;
-		cursor = getPosts.cursor;
-		draft = 'true';
-		search = undefined;
-		order = [];
+		if (sortOption === 'draft') draft = 'true';
 	};
 
 	const toggleModal = () => {

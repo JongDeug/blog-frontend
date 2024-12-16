@@ -40,6 +40,51 @@
 							<dt class="sr-only">Published on</dt>
 							<dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
 								<time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+								<div class="mt-3 flex gap-2">
+									<div class="flex gap-1">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+											/>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.6 1.87-1.992 3.828-3.749 5.087C16.462 18.67 14.322 19 12 19c-2.322 0-4.462-.33-6.793-1.013C4.45 15.828 3.058 13.87 2.458 12z"
+											/>
+										</svg>
+										<span>{post.views}</span>
+									</div>
+
+									<div class="flex gap-1">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+											/>
+										</svg>
+										<span>{post.likes}</span>
+									</div>
+								</div>
 							</dd>
 						</dl>
 						<div class="space-y-5 xl:col-span-3">
