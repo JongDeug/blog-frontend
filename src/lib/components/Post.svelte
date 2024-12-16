@@ -93,7 +93,6 @@
 					</dd>
 				</dl>
 				<div class="prose pt-10 xl:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
-					<!-- <Viewer content={initPost.content} /> -->
 					{@html initPost.content}
 				</div>
 				<div
