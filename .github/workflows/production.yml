@@ -31,5 +31,6 @@ jobs:
             git pull origin main
 
             pnpm install
+            pnpm prepublishOnly
             pnpm run build
             pm2 start build/index.js --name blog-frontend
