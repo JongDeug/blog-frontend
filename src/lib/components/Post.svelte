@@ -4,8 +4,6 @@
 	import { page } from '$app/stores';
 	import { Author, config, formatDate, Comments } from '$lib';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import 'prismjs/themes/prism.css';
-	import 'prismjs/components/prism-c.js'; // 원하는 언어 추가
 
 	const {
 		initPost
@@ -36,6 +34,11 @@
 		};
 	};
 </script>
+
+<link
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/gh/hi098123/prism-for-tistory/prism.default.css"
+/>
 
 <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
 	<article>
