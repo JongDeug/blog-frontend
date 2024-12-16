@@ -57,7 +57,6 @@
 			}
 		});
 
-		// initial value가 아니고 여기서 초기화
 		editor.setHTML(content);
 	});
 
