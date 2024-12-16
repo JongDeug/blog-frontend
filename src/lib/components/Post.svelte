@@ -6,7 +6,6 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import 'prismjs/themes/prism.css';
 	import 'prismjs/components/prism-c.js'; // 원하는 언어 추가
-	import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 
 	const {
 		initPost
