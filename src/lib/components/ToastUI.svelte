@@ -34,7 +34,7 @@
 			el: document.querySelector('#editor'),
 			previewStyle: 'vertical',
 			height: '500px',
-			initialValue: content,
+			initialValue: content ?? '',
 			initialEditType: 'wysiwyg',
 			plugins: [colorSyntax, fontSize, [codeSyntaxHighlight, { highlighter: Prism }]],
 			hooks: {
