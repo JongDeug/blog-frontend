@@ -176,6 +176,7 @@
 					onclick={() => {
 						content = toastEditorRef.getContent();
 						images = extractImageFileName(content);
+						console.log(content);
 					}}
 					type="submit"
 					class="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
