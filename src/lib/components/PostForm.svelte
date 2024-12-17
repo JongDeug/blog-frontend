@@ -4,6 +4,7 @@
 	import { ToastUI } from '$lib';
 	import extractImageFileName from '$lib/utils/extractImageFilename';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { delay } from '$lib';
 
 	const {
 		title,
@@ -29,9 +30,11 @@
 	let summary = $state(initPost?.summary ?? '');
 	let content = $state(initPost?.content ?? '');
 
-	const createOrUpdatePost: SubmitFunction = ({ formData }) => {
+	const createOrUpdatePost: SubmitFunction = async ({ formData }) => {
 		// 편집기에 있는 내용을 content에 채워 form 요청
 		content = toastEditorRef.getContent();
+
+		await delay(100);
 
 		formData.append('content', content);
 		formData.append('images', JSON.stringify(extractImageFileName(content)));
