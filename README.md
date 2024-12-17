@@ -1,58 +1,18 @@
-# create-svelte
+# 🌐 blog-frontend
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## 📌 프로젝트 소개
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+**기간: (2024.06 ~ .)**
 
-## Creating a project
+#### 계기
 
-If you're seeing this, you've probably already done this step. Congrats!
+단순히 설계와 구현에만 집중하고 있었다는 사실을 깨닫고,
 
-```bash
-# create a new project in the current directory
-npx sv create
+지속적으로 **운영 및 유지 보수할 수 있는 프로젝트의 필요성**을 느꼈습니다.
 
-# create a new project in my-app
-npx sv create my-app
-```
+#### 목표
 
-## Developing
+1. 실제 서비스 운영에서 겪을 수 있는 문제들을 직접 경험해 보고 해결할 수 있도록 합니다.
+2. 지속적으로 코드 품질 개선합니다.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
-
-```bash
-npm run package
-```
-
-To create a production version of your showcase app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+## 📌 프로젝트 소개
