@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Author, config, formatDate, Comments } from '$lib';
+	import { isDarkMode } from '$lib/utils/theme';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const {
@@ -92,7 +94,7 @@
 						</ul>
 					</dd>
 				</dl>
-				<div class="prose pt-10 xl:prose-xl xl:col-span-3 xl:row-span-2 xl:pb-0">
+				<div class="prose py-10 dark:prose-dark xl:prose-xl xl:col-span-3 xl:row-span-2">
 					{@html initPost.content}
 				</div>
 				<div

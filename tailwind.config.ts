@@ -128,12 +128,12 @@ export default {
 						'h4,h5,h6': {
 							color: theme('colors.gray.100')
 						},
-						pre: {
-							backgroundColor: theme('colors.gray.800')
-						},
-						code: {
-							backgroundColor: theme('colors.gray.800')
-						},
+						// pre: {
+						// 	backgroundColor: theme('colors.gray.800')
+						// },
+						// code: {
+						// 	backgroundColor: theme('colors.gray.800')
+						// },
 						details: {
 							backgroundColor: theme('colors.gray.800')
 						},
