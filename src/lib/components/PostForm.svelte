@@ -28,9 +28,14 @@
 	let nextId = $state(initPost?.nextId ?? '');
 	let summary = $state(initPost?.summary ?? '');
 	let content = $state(initPost?.content ?? '');
-	let images = $state();
 
-	const createOrUpdatePost: SubmitFunction = () => {
+	const createOrUpdatePost: SubmitFunction = ({ formData }) => {
+		// 편집기에 있는 내용을 content에 채워 form 요청
+		content = toastEditorRef.getContent();
+
+		formData.append('content', content);
+		formData.append('images', JSON.stringify(extractImageFileName(content)));
+
 		return ({ result, update }) => {
 			if (result.type === 'redirect') {
 				goto(result.location);
@@ -168,17 +173,8 @@
 				>문서 편집</label
 			>
 			<ToastUI bind:this={toastEditorRef} {content} />
-			<input type="hidden" name="content" value={content} />
-			<input type="hidden" name="images" value={JSON.stringify(images)} />
 			<div class="mt-5 flex justify-end">
-				<!-- 버튼 클릭 시 편집기에 있는 내용을 content에 채워 form 요청 -->
-				<button
-					onclick={() => {
-						content = toastEditorRef.getContent();
-						images = extractImageFileName(content);
-					}}
-					type="submit"
-					class="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
+				<button type="submit" class="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
 					>확인
 				</button>
 			</div>

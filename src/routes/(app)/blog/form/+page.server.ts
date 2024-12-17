@@ -14,7 +14,6 @@ export const load: PageServerLoad = async ({ fetch }) => {
 export const actions = {
 	createPost: async ({ fetch, request }) => {
 		const formData = await request.formData();
-		formData.delete('postId');
 		const draft = formData.get('draft') ? true : false;
 		const tags = formData.get('tags')
 			? formData
