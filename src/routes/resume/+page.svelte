@@ -59,7 +59,7 @@
 		<div class="flex items-center justify-between gap-10">
 			<div>
 				<img
-					src="https://jongdeug.port0.org/api/uploads/id-photo.jpg"
+					src="https://jongdeug.port0.org/api/uploads/"
 					alt=""
 					class="rounded-3xl"
 					width="300"
