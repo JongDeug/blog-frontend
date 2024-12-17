@@ -275,7 +275,7 @@
 								<p>
 									<span class="font-bold">- 해결:</span> <br />
 									<span class="ml-4">- 이미지 업로드 API를 독립적으로 분리</span> <br />
-									<span class="ml-4">- Nginx로 정적 이미지 처리</span>
+									<span class="ml-4">- Nginx로 정적 이미지 처리</span> <br />
 									<span class="ml-4">- Task Scheduling으로 24시간 지난 임시 이미지를 삭제</span>
 								</p>
 								<p>
