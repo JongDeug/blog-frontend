@@ -7,6 +7,9 @@ const navItems = {
   "/blog": {
     name: "블로그",
   },
+  "/it": {
+    name: "기사",
+  },
   "/login": {
     name: "로그인",
   },
