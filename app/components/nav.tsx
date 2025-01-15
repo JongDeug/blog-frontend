@@ -10,7 +10,7 @@ const navItems = {
   "/it": {
     name: "기사",
   },
-  "/login": {
+  "/auth": {
     name: "로그인",
   },
 };
