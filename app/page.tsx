@@ -5,7 +5,7 @@ import logo from "./assets/icon.png";
 export default function Page() {
   return (
     <div className="flex flex-col gap-12">
-      <section className="flex gap-2 w-fit items-center cursor-pointer transition-all duration-200 hover:scale-105 hover:text-green-500">
+      <section className="flex gap-2 w-fit items-center cursor-pointer transition-all duration-200 hover:scale-110 hover:text-green-500">
         <Image src={logo} alt="" className="w-10 rounded-md" />
         <h1 className="text-3xl font-bold tracking-tighter">Jongdeug</h1>
       </section>

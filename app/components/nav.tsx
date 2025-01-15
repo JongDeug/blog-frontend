@@ -1,4 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import dark from "../assets/dark.png";
+import light from "../assets/light.png";
+import { useState } from "react";
 
 const navItems = {
   "/": {
@@ -16,11 +23,24 @@ const navItems = {
 };
 
 export function Navbar() {
+  const { setTheme } = useTheme();
+  const [themeColor, setThemeColor] = useState("light");
+
+  const toggleTheme = () => {
+    if (themeColor === "light") {
+      setTheme("dark");
+      setThemeColor("dark");
+    } else {
+      setTheme("light");
+      setThemeColor("light");
+    }
+  };
+
   return (
     <aside className="-ml-[8px] mb-8 tracking-tight">
       <div className="lg:sticky lg:top-20">
         <nav
-          className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
+          className="flex flex-row items-center justify-between relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
         >
           <div className="flex flex-row space-x-0 pr-10">
@@ -29,13 +49,23 @@ export function Navbar() {
                 <Link
                   key={path}
                   href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  className="hover:text-green-300 flex align-middle relative py-1 px-2 m-1"
                 >
                   {name}
                 </Link>
               );
             })}
           </div>
+          <button
+            onClick={toggleTheme}
+            className="w-fit border-0 cursor-pointer hover:ring mr-1"
+          >
+            {themeColor === "light" ? (
+              <Image src={dark} alt="" className="w-8" />
+            ) : (
+              <Image src={light} alt="" className="w-8" />
+            )}
+          </button>
         </nav>
       </div>
     </aside>
