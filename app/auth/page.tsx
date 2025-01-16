@@ -3,8 +3,8 @@ import logo from "../assets/icon.png";
 
 export default function Page() {
   return (
-    <section className="p-10 rounded-xl">
-      <section className="mb-10 flex justify-center gap-2 items-center cursor-pointer transition-all duration-200 hover:scale-105 hover:text-green-500">
+    <section className="px-4 py-10 md:px-20 md:py-10">
+      <section className="flex justify-center items-center gap-2 mb-8 cursor-pointer transition-all duration-200 hover:scale-105 hover:text-green-500">
         <Image src={logo} alt="" className="w-10 rounded-md" />
         <h1 className="text-3xl font-bold tracking-tighter">Jongdeug</h1>
       </section>

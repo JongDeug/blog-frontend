@@ -21,10 +21,13 @@ export default function Page() {
       <section>
         <h2 className="text-2xl font-semibold tracking-tighter mb-2">목표</h2>
         <p className="whitespace-pre-line">
-          {`프로그래밍은 가치를 만들어내는 도구라고 생각합니다. 도구를 활용해서 맛있는 피자 한 판을 만들어 팔 줄 아는 개발자가 되고 싶습니다.`}
+          {`프로그래밍은 가치를 만들어내는 도구라고 생각합니다. 도구를 활용해서 맛있는 피자 한 판을 만들어 팔 줄 아는 개발자가 되고 싶습니다.🔥`}
         </p>
       </section>
       <div>
+        <h2 className="text-xl font-semibold tracking-tighter mb-2">
+          인기 게시글
+        </h2>
         <BlogPosts />
       </div>
     </div>

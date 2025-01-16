@@ -3,9 +3,9 @@ name: blog-frontend
 on:
   push:
     branches:
-      - main
+      - temp
     paths-ignore:
-      - 'README.md'
+      - "README.md"
 
 jobs:
   deploy:

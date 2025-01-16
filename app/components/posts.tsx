@@ -18,14 +18,21 @@ export function BlogPosts() {
         .map((post) => (
           <Link
             key={post.slug}
-            className="flex flex-col space-y-1 mb-4"
+            className="flex flex-col mb-2"
             href={`/blog/${post.slug}`}
           >
-            <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
-              <p className="  w-[100px] tabular-nums">
-                {formatDate(post.metadata.publishedAt, false)}
-              </p>
-              <p className="tracking-tight">{post.metadata.title}</p>
+            <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-4 border-1 rounded p-2">
+              <div className="border p-10 bg-gray-300">Image</div>
+              <div className="flex flex-col justify-between">
+                <div>
+                  <p className="tracking-tight">{post.metadata.title}</p>
+                  <p className="tracking-tight">요약</p>
+                </div>
+                <p className="tabular-nums">
+                  조회수, 좋아요
+                  {formatDate(post.metadata.publishedAt, false)}
+                </p>
+              </div>
             </div>
           </Link>
         ))}

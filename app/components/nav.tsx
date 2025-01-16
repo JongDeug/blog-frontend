@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import dark from "../assets/dark.png";
-import light from "../assets/light.png";
+import dark from "../assets/dark-circle.png";
+import light from "../assets/light-circle.png";
 import { useState } from "react";
 
 const navItems = {
@@ -58,12 +58,12 @@ export function Navbar() {
           </div>
           <button
             onClick={toggleTheme}
-            className="w-fit border-0 cursor-pointer hover:ring mr-1"
+            className="w-fit border-1 rounded cursor-pointer mr-1"
           >
             {themeColor === "light" ? (
-              <Image src={dark} alt="" className="w-8" />
+              <Image src={dark} alt="" className="w-5" />
             ) : (
-              <Image src={light} alt="" className="w-8" />
+              <Image src={light} alt="" className="w-5" />
             )}
           </button>
         </nav>
