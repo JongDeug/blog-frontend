@@ -1,6 +1,6 @@
-import { BlogPosts } from "app/components/posts";
+import { BlogPosts } from "@/components/posts";
 import Image from "next/image";
-import logo from "./assets/icon.png";
+import logo from "@/assets/icon.png";
 
 export default function Page() {
   return (
