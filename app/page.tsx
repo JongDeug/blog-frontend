@@ -1,5 +1,6 @@
 import Image from "next/image";
 import logo from "@/assets/icon.png";
+import { BlogPosts } from "./components/posts";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       </section>
       <div>
         <h2 className="text-xl font-semibold mb-2">인기 게시글</h2>
+        <BlogPosts />
       </div>
     </div>
   );
