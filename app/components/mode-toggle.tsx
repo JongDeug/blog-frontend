@@ -5,14 +5,21 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+  const pathname = usePathname();
 
-  const onClick = () => {
-    const mode = localStorage.getItem("theme");
-    setTheme(mode === "light" ? "dark" : "light");
+  const onClick = async () => {
+    setTheme(theme === "light" ? "dark" : "light");
+
+    const arr = pathname.split("/blog/");
+    if (arr.length > 1) {
+      window.location.reload();
+    }
   };
+
   return (
     <Button
       variant="ghost"

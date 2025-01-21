@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { BlogPosts } from "@/components/posts";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // 임시 카테고리 데이터
 const categories = [
@@ -46,17 +48,25 @@ export default function Page() {
       </section>
 
       <section className="flex flex-col gap-2">
-        {/* 정렬 */}
-        <Select>
-          <SelectTrigger className="w-[100px] h-[30px] dark:border-neutral-600 border-neutral-400">
-            <SelectValue placeholder="최신순" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="lastest">최신순</SelectItem>
-            <SelectItem value="ordelest">오래된순</SelectItem>
-            <SelectItem value="like">좋아요순</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex justify-between items-center">
+          <Select>
+            <SelectTrigger className="w-[100px] h-[30px] dark:border-neutral-600 border-neutral-400">
+              <SelectValue placeholder="최신순" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="lastest">최신순</SelectItem>
+              <SelectItem value="ordelest">오래된순</SelectItem>
+              <SelectItem value="like">좋아요순</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Link
+            href="/blog/new"
+            className="w-[100px] h-[30px] border rounded flex items-center justify-center text-sm"
+          >
+            게시글 작성
+          </Link>
+        </div>
 
         {/* 포스트 */}
         <BlogPosts />

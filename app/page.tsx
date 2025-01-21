@@ -4,7 +4,7 @@ import { BlogPosts } from "./components/posts";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-12 tracking-tight">
+    <div className="flex flex-col gap-10 tracking-tight">
       <section className="flex gap-2 w-fit flex-none items-center transition-all duration-200 hover:scale-105 hover:text-green-500">
         <Image src={logo} alt="" className="w-10 rounded-md" />
         <h1 className="text-3xl font-bold">Jongdeug</h1>
@@ -25,7 +25,6 @@ export default function Home() {
         </p>
       </section>
       <div>
-        <h2 className="text-xl font-semibold mb-2">인기 게시글</h2>
         <BlogPosts />
       </div>
     </div>

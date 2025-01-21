@@ -51,7 +51,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="flex flex-col gap-3 items-center my-20">
       <section className="flex gap-2 w-fit items-center cursor-pointer transition-all duration-200 hover:scale-110 hover:text-green-500">
         <Image src={logo} alt="" className="w-10 rounded-md" />
         <h1 className="text-3xl font-bold tracking-tighter">Jongdeug</h1>
@@ -59,7 +59,7 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
+          className="min-w-[270px] md:w-2/3 space-y-6"
         >
           <FormField
             control={form.control}
