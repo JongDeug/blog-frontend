@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { BlogPosts } from "@/components/posts";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 // 임시 카테고리 데이터
@@ -50,7 +49,7 @@ export default function Page() {
       <section className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <Select>
-            <SelectTrigger className="w-[100px] h-[30px] dark:border-neutral-600 border-neutral-400">
+            <SelectTrigger className="w-[100px] h-[30px] dark:border-neutral-600 border-neutral-300">
               <SelectValue placeholder="최신순" />
             </SelectTrigger>
             <SelectContent>
@@ -62,7 +61,7 @@ export default function Page() {
 
           <Link
             href="/blog/new"
-            className="w-[100px] h-[30px] border rounded flex items-center justify-center text-sm"
+            className="w-[100px] h-[30px] border border-neutral-300 dark:border-neutral-600 rounded flex items-center justify-center text-sm"
           >
             게시글 작성
           </Link>

@@ -3,21 +3,37 @@
 import { Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import React from "react";
 import { useTheme } from "next-themes";
 
 export function useEditorRef() {
   const viewerRef = useRef<any>();
 
-  const toggleMode = () => {
+  useEffect(() => {
     const el = viewerRef.current.getRootElement();
-    if (el.classList.contains("toastui-editor-dark"))
-      el.classList.remove("toastui-editor-dark");
-    else el.classList.add("toastui-editor-dark");
-  };
+    const contents = el.querySelector(".toastui-editor-contents");
 
-  return { viewerRef, toggleMode };
+    if (contents) {
+      contents.style.fontSize = "16px";
+
+      const elements = {
+        p: "16px",
+        h1: "24px",
+        h2: "20px",
+        h3: "18px",
+        code: "14px",
+      };
+
+      Object.entries(elements).forEach(([tag, size]) => {
+        contents.querySelectorAll(tag).forEach((element: HTMLElement) => {
+          element.style.fontSize = size;
+        });
+      });
+    }
+  }, []);
+
+  return { viewerRef };
 }
 
 export default function ViewerWrapper({
@@ -25,12 +41,11 @@ export default function ViewerWrapper({
 }: {
   initialValue: string;
 }) {
-  const { viewerRef, toggleMode } = useEditorRef();
+  const { viewerRef } = useEditorRef();
   const { theme } = useTheme();
 
   return (
     <Viewer
-      height="600px"
       initialValue={initialValue}
       theme={theme as "light" | "dark"}
       ref={viewerRef}

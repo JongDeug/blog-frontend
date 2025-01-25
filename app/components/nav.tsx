@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/mode-toggle";
+import { ToggleMode } from "@/components/toggle-mode";
 import Link from "next/link";
 
 const navItems = {
@@ -32,7 +32,7 @@ export default function Navbar() {
           );
         })}
       </div>
-      <ModeToggle />
+      <ToggleMode />
     </nav>
   );
 }
