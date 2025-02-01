@@ -17,7 +17,7 @@ import ToastEditor from "@/components/editor";
 import type { EditorProps } from "@toast-ui/react-editor";
 import { Combobox } from "@/components/combobox";
 
-export function Form({ title }: { title: string }) {
+export function PostForm({ title }: { title: string }) {
   const editorProps: EditorProps = {
     initialValue: "hello next.js",
     previewStyle: "tab",

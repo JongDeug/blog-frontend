@@ -1,7 +1,9 @@
-export interface EditorProps {
-  initialValue: string;
-  previewStyle: string;
-  height: string;
-  initialEditType: string;
-  useCommandShortcut: boolean;
+export interface Comment {
+  id: string;
+  author: {
+    name: string;
+    image?: string;
+  };
+  content: string;
+  createdAt: Date;
 }

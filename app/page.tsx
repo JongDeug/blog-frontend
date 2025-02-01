@@ -1,6 +1,5 @@
 import Image from "next/image";
 import logo from "@/assets/icon.png";
-import { BlogPosts } from "./components/posts";
 
 export default function Home() {
   return (
@@ -13,8 +12,8 @@ export default function Home() {
       <section>
         <h2 className="text-2xl font-semibold mb-2">꾸벅 🙇‍♂️</h2>
         <p className="whitespace-pre-line">
-          {`안녕하세요! ✋ 이곳은 제가 학습한 내용들을 정리하고, 공유하기 위해 만든 공간입니다.
-도움이 될만한 글을 작성하려고 늘 노력하고 있습니다. 여러분의 소중한 피드백은 성장하는데 큰 도움이 됩니다.`}
+          {`안녕하세요! ✋ 이곳은 제가 학습한 내용들을 정리하고 공유하기 위해 만든 공간입니다.
+제 글이 저뿐만 아니라 함께 공부하는 분들에게도 도움이 됐으면 좋겠습니다. 여러분들의 소중한 피드백은 제가 성장하는 데 큰 힘이 됩니다.`}
         </p>
       </section>
 
@@ -24,9 +23,18 @@ export default function Home() {
           {`프로그래밍은 가치를 만들어내는 도구라고 생각합니다. 도구를 활용해서 맛있는 피자 한 판을 만들어 팔 줄 아는 개발자가 되고 싶습니다.🔥`}
         </p>
       </section>
-      <div>
-        <BlogPosts />
-      </div>
+      <section className="tracking-tighter text-neutral-500 text-sm">
+        <p>백엔드 개발자</p>
+        <p>
+          이메일:{" "}
+          <a
+            href="mailto:jongdeug2021@gmail.com"
+            className="text-green-500 hover:underline"
+          >
+            jongdeug2021@gmail.com
+          </a>
+        </p>
+      </section>
     </div>
   );
 }

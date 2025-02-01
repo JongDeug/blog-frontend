@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/nav";
 import Footer from "@/components/footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -11,7 +12,7 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "Jongdeug's Blog",
+  title: "종득 블로그",
   description: "개인 블로그 서비스",
 };
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

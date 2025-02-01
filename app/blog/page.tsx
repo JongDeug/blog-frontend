@@ -27,7 +27,7 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-12">
       <h1 className="font-semibold w-fit text-3xl tracking-tighter transition-all duration-200 hover:scale-110 hover:text-green-500">
-        Dev
+        개발
       </h1>
 
       {/* 카테고리 섹션 */}
@@ -61,7 +61,7 @@ export default function Page() {
 
           <Link
             href="/blog/new"
-            className="w-[100px] h-[30px] border border-neutral-300 dark:border-neutral-600 rounded flex items-center justify-center text-sm"
+            className="w-[90px] h-[30px] shadow-sm border border-neutral-300 dark:border-neutral-600 rounded flex items-center justify-center text-sm"
           >
             게시글 작성
           </Link>

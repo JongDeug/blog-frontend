@@ -26,7 +26,7 @@ export function BlogPosts() {
       {mockBlogs.map((post) => (
         <Link
           key={post.slug}
-          className="flex flex-col mb-2 border rounded tracking-tight border-neutral-300 dark:border-neutral-600"
+          className="block border-b tracking-tight border-neutral-300 dark:border-neutral-600"
           href={`/blog/${post.slug}`}
         >
           <div className="flex flex-col md:flex-row space-x-0 md:space-x-3 p-2">

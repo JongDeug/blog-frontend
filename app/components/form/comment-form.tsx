@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,7 +30,7 @@ const FormSchema = z.object({
   password: z.string().min(2, { message: "....." }),
 });
 
-export function TextareaForm() {
+export default function CommentForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -59,7 +58,7 @@ export function TextareaForm() {
               <FormControl>
                 <Textarea
                   placeholder="여기에 댓글을 작성해주세요."
-                  className="resize-none"
+                  className="resize-none dark:border-neutral-600"
                   {...field}
                 />
               </FormControl>

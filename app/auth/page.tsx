@@ -18,6 +18,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -29,6 +31,8 @@ const FormSchema = z.object({
 });
 
 export default function Page() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -37,17 +41,24 @@ export default function Page() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      callbackUrl: "/",
+      redirect: false,
+    });
 
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
+    console.log(result);
+
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
 
   return (
@@ -87,6 +98,7 @@ export default function Page() {
                 <FormControl>
                   <Input
                     placeholder="password"
+                    type="password"
                     {...field}
                     className="dark:border-neutral-600"
                   />
@@ -95,19 +107,21 @@ export default function Page() {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="w-full bg-green-500 font-bold hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
-          >
-            로그인
-          </Button>
-          <Button
-            type="button"
-            className="w-full font-bold bg-white text-black hover:bg-gray-200 border border-gray-200"
-          >
-            <FcGoogle />
-            구글로 로그인
-          </Button>
+          <div className="space-y-3">
+            <Button
+              type="submit"
+              className="w-full bg-green-500 font-bold hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
+            >
+              로그인
+            </Button>
+            <Button
+              type="button"
+              className="w-full font-bold bg-white text-black hover:bg-gray-200 border border-gray-200"
+            >
+              <FcGoogle />
+              구글로 로그인
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
