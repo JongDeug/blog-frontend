@@ -12,6 +12,7 @@ import { ko } from "date-fns/locale";
 import PostMenu from "@/components/post-menu";
 import Link from "next/link";
 import PostLike from "@/components/ui/post-like";
+import UserCommentForm from "../../../components/form/user-comment.form";
 
 export default async function Page({
   params,
@@ -26,6 +27,7 @@ export default async function Page({
     headers: {
       Cookie: `${guestId?.name}=${guestId?.value};`,
     },
+    next: { tags: ["post"] },
   });
   const post: Post = await response.json();
 
@@ -80,8 +82,9 @@ export default async function Page({
         <div className="flex justify-center">
           <PostLike likes={post.likes} postId={slug} />
         </div>
-        <Comments />
-        <CommentForm />
+        <Comments comments={post.comments} />
+        <UserCommentForm postId={slug} />
+        {/* <CommentForm /> */}
       </section>
     </div>
   );
