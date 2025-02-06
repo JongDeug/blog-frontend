@@ -1,34 +1,17 @@
 "use server";
+
 import { cookies } from "next/headers";
 import { FormSchema } from "../blog/new/schema";
 import { env } from "@/const/env";
 import { revalidateTag } from "next/cache";
-
-interface PostData {
-  title: string;
-  summary: string;
-  category: string;
-  content: string;
-  prevId: number;
-  nextId: number;
-  draft?: boolean;
-}
-
-async function update(postId: string, accessToken: string, data: PostData) {
-  return fetch(`${env.API_URL}/post/${postId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({ ...data }),
-  });
-}
+import { delay } from "@/lib/delay";
 
 export async function postAction(_: any, formData: FormData) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const postId = formData.get("postId")?.toString();
+
+  await delay(3000);
 
   const parse = FormSchema.safeParse({
     title: formData.get("title"),
@@ -50,7 +33,7 @@ export async function postAction(_: any, formData: FormData) {
 
   const data = parse.data;
 
-  // 수정 요청
+  // 백엔드 수정 요청
   if (postId) {
     const response = await fetch(`${env.API_URL}/post/${postId}`, {
       method: "PATCH",
@@ -69,7 +52,7 @@ export async function postAction(_: any, formData: FormData) {
       };
     }
   }
-  // 생성 요청
+  // 백엔드 생성 요청
   else {
     const response = await fetch(`${env.API_URL}/post`, {
       method: "POST",

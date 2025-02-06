@@ -42,9 +42,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { FormEvent, useEffect, useRef } from "react";
+import {
+  FormEvent,
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+} from "react";
 import { FormSchema } from "@/app/blog/new/schema";
-import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "../hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
@@ -78,29 +83,29 @@ export function PostForm({
   method: "create" | "update";
   postId?: string;
 }) {
-  const { pending } = useFormStatus();
   const router = useRouter();
   const editorRef = useRef<Editor>(null);
+  const [state, formAction, isPending] = useActionState(postAction, null);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: initialValues,
   });
 
-  const [state, formAction] = useFormState(postAction, null);
-
   useEffect(() => {
-    if (state) {
-      if (state.status) {
-        if (method === "create") router.replace("/blog");
-        if (method === "update") router.replace(`/blog/${postId}`);
-      } else {
-        console.log(state?.errors);
-        toast({
-          variant: "destructive",
-          title: "게시글 작성 실패",
-          description: `${state?.error}.`,
-        });
-      }
+    if (state && state.status) {
+      method === "create"
+        ? router.replace("/blog")
+        : router.replace(`/blog/${postId}`); // update
+    }
+
+    if (state && !state.status) {
+      console.log(state?.errors);
+      toast({
+        variant: "destructive",
+        title: "게시글 작성 실패",
+        description: `${state?.error}.`,
+      });
     }
   }, [state]);
 
@@ -121,12 +126,16 @@ export function PostForm({
       formData.append("postId", `${postId}`);
     }
 
-    formAction(formData);
+    // "An async function was passed to useActionState, but it was dispatched outside of an action context"
+    // 오류 해결
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   return (
     <Form {...form}>
-      <form action={formAction} onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>{title}</CardTitle>
@@ -301,7 +310,7 @@ export function PostForm({
             />
             <Button
               type="submit"
-              disabled={pending}
+              disabled={isPending}
               className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
             >
               완료

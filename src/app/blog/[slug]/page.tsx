@@ -5,7 +5,7 @@ import CommentForm from "@/components/form/comment-form";
 
 import Comments from "@/components/comments";
 import { env } from "@/const/env";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Post } from "@/types";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -27,9 +27,12 @@ export default async function Page({
       Cookie: `${guestId?.name}=${guestId?.value};`,
     },
   });
-
   const post: Post = await response.json();
-  if (!response.ok) return <div>오류가 발생했습니다 ...</div>;
+
+  if (!response.ok) {
+    console.error(post);
+    return <div>오류가 발생했습니다 ...</div>;
+  }
   // if (response.ok) notFound();
 
   return (

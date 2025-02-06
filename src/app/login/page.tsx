@@ -4,11 +4,11 @@ import Image from "next/image";
 import logo from "@/assets/icon.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { FcGoogle } from "react-icons/fc";
 
-import { toast } from "../../components/hooks/use-toast";
-import { Button } from "../../components/ui/button";
+import { toast } from "@/components/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,28 +16,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { Input } from "../../components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/components/hooks/use-session";
-
-const FormSchema = z.object({
-  email: z.string().email({
-    message: "정확한 이메일을 입력해주세요.",
-  }),
-  password: z
-    .string()
-    .min(4, {
-      message: "비밀번호는 최소 4자리 이상이어야 합니다.",
-    })
-    .max(14, {
-      message: "비밀번호는 최대 14자리 이하이어야 합니다.",
-    }),
-});
+import { FormSchema } from "./schema";
+import { loginAction } from "../actions/login.action";
+import { useActionState, useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
   const { setIsLogin } = useSession();
+  const [state, formAction, isPending] = useActionState(loginAction, null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -47,25 +37,21 @@ export default function Page() {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: data.email, password: data.password }),
-    });
-
-    if (response && !response.ok) {
-      const error = await response.json();
-      return toast({
-        variant: "destructive",
-        title: "로그인 실패",
-        description: `${error.message}.`,
-      });
+  useEffect(() => {
+    if (state && state?.status) {
+      setIsLogin(true);
+      router.back();
     }
 
-    setIsLogin(true);
-    router.back();
-  }
+    if (state && !state?.status) {
+      console.log(state?.errors);
+      toast({
+        variant: "destructive",
+        title: "로그인 실패",
+        description: `${state?.error}.`,
+      });
+    }
+  }, [state]);
 
   return (
     <div className="flex flex-col gap-3 items-center my-20">
@@ -74,10 +60,7 @@ export default function Page() {
         <h1 className="text-3xl font-bold tracking-tighter">Jongdeug</h1>
       </section>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="min-w-[250px] md:w-2/3 space-y-6"
-        >
+        <form action={formAction} className="min-w-[250px] md:w-2/3 space-y-6">
           <FormField
             control={form.control}
             name="email"
@@ -91,6 +74,7 @@ export default function Page() {
                     className="dark:border-neutral-600"
                   />
                 </FormControl>
+                <FormMessage>{state?.errors?.email}</FormMessage>
                 <FormMessage />
               </FormItem>
             )}
@@ -109,13 +93,14 @@ export default function Page() {
                     className="dark:border-neutral-600"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage>{state?.errors?.password}</FormMessage>
               </FormItem>
             )}
           />
           <div className="space-y-3">
             <Button
               type="submit"
+              disabled={isPending}
               className="w-full bg-green-500 font-bold hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
             >
               로그인

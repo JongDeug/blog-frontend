@@ -36,7 +36,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       localStorage.setItem("guestId", guestId);
     }
     setCookie("guestId", guestId, {
-      sameSite: "strict",
+      // sameSite: "strict",
+      sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24,
     });
