@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import type { Editor, EditorProps } from "@toast-ui/react-editor";
-import { useCallback, useRef } from "react";
 
 const EditorWrapper = dynamic<EditorProps>(
   () => import("./editor-wrapper").then((mod) => mod.default as any),

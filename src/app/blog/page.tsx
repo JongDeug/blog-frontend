@@ -63,10 +63,8 @@ export default async function Page({
         <h1 className="text-3xl font-bold">기록 보관소</h1>
       </section>
 
-      <Categories />
-
-      <section className="flex flex-col gap-2">
-        <Breadcrumb className="pb-2 mb-2 ">
+      <section>
+        <Breadcrumb className="pb-2 mb-2">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/blog">블로그</BreadcrumbLink>
@@ -90,7 +88,10 @@ export default async function Page({
             )}
           </BreadcrumbList>
         </Breadcrumb>
+        <Categories />
+      </section>
 
+      <section className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <Select>
             <SelectTrigger className="w-[100px] h-[30px] dark:border-neutral-600 border-neutral-300">

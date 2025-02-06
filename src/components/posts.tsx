@@ -17,7 +17,8 @@ export function BlogPosts({ posts }: { posts: Post[] }) {
         >
           <div className="flex flex-col md:flex-row space-x-0 md:space-x-3 p-2 hover:bg-green-50 hover:text-black rounded transition-all h-[120px]">
             {/* <Image src={} alt="" width={110}></Image> */}
-            <div className="border p-10 bg-gray-200">Image</div>
+            {/* md 이하일 때 hidden */}
+            <div className="border p-10 bg-gray-200 hidden md:block">Image</div>
 
             <div className="flex flex-col flex-1 justify-between">
               <div>
