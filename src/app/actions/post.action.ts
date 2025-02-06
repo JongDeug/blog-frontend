@@ -4,14 +4,11 @@ import { cookies } from "next/headers";
 import { FormSchema } from "../blog/new/schema";
 import { env } from "@/const/env";
 import { revalidateTag } from "next/cache";
-import { delay } from "@/lib/delay";
 
 export async function postAction(_: any, formData: FormData) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const postId = formData.get("postId")?.toString();
-
-  await delay(3000);
 
   const parse = FormSchema.safeParse({
     title: formData.get("title"),
@@ -20,7 +17,8 @@ export async function postAction(_: any, formData: FormData) {
     content: formData.get("content"),
     prevId: formData.get("prevId"),
     nextId: formData.get("nextId"),
-    draft: formData.get("draft") === "true",
+    draft: formData.get("draft"),
+    images: formData.get("images") ?? undefined,
   });
 
   if (!parse.success) {

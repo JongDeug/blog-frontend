@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import icon from "@/assets/icon.png";
 import { Post } from "@/types";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -15,10 +14,21 @@ export function BlogPosts({ posts }: { posts: Post[] }) {
           className="block border-b tracking-tight border-neutral-300 dark:border-neutral-600"
           href={`/blog/${post.id}`}
         >
-          <div className="flex flex-col md:flex-row space-x-0 md:space-x-3 p-2 hover:bg-green-50 hover:text-black rounded transition-all h-[120px]">
-            {/* <Image src={} alt="" width={110}></Image> */}
+          <div className="flex flex-col md:flex-row space-x-0 md:space-x-3 p-2 hover:bg-neutral-50 hover:text-black rounded transition-all h-[120px]">
             {/* md 이하일 때 hidden */}
-            <div className="border p-10 bg-gray-200 hidden md:block">Image</div>
+            {post.images.length ? (
+              <Image
+                src={post.images[0].url}
+                alt="게시글 이미지"
+                height={110}
+                width={130}
+                className="hidden md:block rounded"
+              ></Image>
+            ) : (
+              <div className="hidden md:flex border rounded bg-green-50 w-[130px] justify-center items-center">
+                <span className="text-neutral-500 text-sm">이미지</span>
+              </div>
+            )}
 
             <div className="flex flex-col flex-1 justify-between">
               <div>

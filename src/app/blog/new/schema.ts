@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// form => formData (string) => parse form => data => body
+
 export const FormSchema = z.object({
   title: z.string().min(1, "제목을 입력하세요."),
   summary: z.string().min(1, "요약을 입력하세요."),
@@ -9,5 +11,9 @@ export const FormSchema = z.object({
   content: z.string().min(1, "내용을 입력하세요."),
   prevId: z.coerce.number().nonnegative("음수는 입력할 수 없습니다."),
   nextId: z.coerce.number().nonnegative("음수는 입력할 수 없습니다."),
-  draft: z.boolean().default(false).optional(),
+  draft: z.string().transform((val) => val === "true"),
+  images: z
+    .string()
+    .transform((val) => JSON.parse(val))
+    .optional(),
 });

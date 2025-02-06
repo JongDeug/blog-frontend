@@ -38,7 +38,10 @@ export interface Post {
     id: number;
     name: string;
   };
-  // images
+  images: {
+    id: number;
+    url: string;
+  }[];
   author: {
     id: number;
     name: string;

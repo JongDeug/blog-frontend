@@ -41,7 +41,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, extractImages } from "@/lib/utils";
 import {
   FormEvent,
   startTransition,
@@ -119,7 +119,11 @@ export function PostForm({
     const content = editorInstance.getMarkdown();
     formData.append("content", content);
 
-    const draft = form.watch("draft");
+    const images = extractImages(content);
+    if (images.length) formData.append("images", JSON.stringify(images));
+
+    // draft는 담기지 않아서 직접 처리
+    const draft = form.watch("draft"); // true or false
     formData.append("draft", `${draft}`);
 
     if (method === "update" && postId) {

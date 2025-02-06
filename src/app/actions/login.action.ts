@@ -3,6 +3,7 @@
 import { env } from "@/const/env";
 import { FormSchema } from "../login/schema";
 import { cookies } from "next/headers";
+import cookieOptions from "@/lib/cookie-options";
 
 export async function loginAction(_: any, formData: FormData) {
   const parse = FormSchema.safeParse({
@@ -44,19 +45,8 @@ export async function loginAction(_: any, formData: FormData) {
   const { accessToken, refreshToken, info } = tokensOrError;
   const cookieStore = await cookies();
 
-  cookieStore.set("accessToken", accessToken, {
-    httpOnly: true, // O
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-  });
-
-  cookieStore.set("refreshToken", refreshToken, {
-    httpOnly: true, // O
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-  });
+  cookieStore.set("accessToken", accessToken, cookieOptions);
+  cookieStore.set("refreshToken", refreshToken, cookieOptions);
 
   cookieStore.set("info", JSON.stringify(info), {
     secure: process.env.NODE_ENV === "production",
