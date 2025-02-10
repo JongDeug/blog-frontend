@@ -21,16 +21,11 @@ export default async function Page() {
     return <div>오류가 발생했습니다 ...</div>;
   }
 
-  const categories = categoriesOrError.map(({ name }) => ({
-    value: name,
-    label: name,
-  }));
-
   return (
     <PostForm
       title="게시글 작성"
       initialValues={initialValues}
-      categories={categories}
+      categories={categoriesOrError}
       method="create"
     />
   );

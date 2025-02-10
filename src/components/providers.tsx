@@ -5,11 +5,19 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { getCookie, setCookie } from "cookies-next/client";
 import { v4 as uuidv4 } from "uuid";
 
+interface UserInfo {
+  name: string;
+  email: string;
+  role: string;
+}
+
 export const SessionContext = createContext<{
   isLogin: boolean;
+  userInfo: UserInfo | null;
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isLogin: false,
+  userInfo: null,
   setIsLogin: () => {},
 });
 
@@ -22,12 +30,18 @@ export function ThemeProvider({
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     // 로그인 info 설정 (cookie)
     const info = getCookie("info");
-    if (info) setIsLogin(true);
-    else setIsLogin(false);
+    if (info) {
+      setIsLogin(true);
+      setUserInfo(JSON.parse(info));
+    } else {
+      setIsLogin(false);
+      setUserInfo(null);
+    }
 
     // guestId 설정 (localStorage => cookie)
     let guestId = localStorage.getItem("guestId");
@@ -41,7 +55,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       path: "/",
       maxAge: 60 * 60 * 24,
     });
-  });
+  }, [isLogin]);
 
   return (
     <ThemeProvider
@@ -49,7 +63,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       defaultTheme="light"
       disableTransitionOnChange
     >
-      <SessionContext.Provider value={{ isLogin, setIsLogin }}>
+      <SessionContext.Provider value={{ isLogin, userInfo, setIsLogin }}>
         {children}
       </SessionContext.Provider>
     </ThemeProvider>

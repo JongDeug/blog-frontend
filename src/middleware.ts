@@ -49,7 +49,7 @@ export async function middleware(req: NextRequest) {
       return response;
     }
   } catch (err) {
-    console.error(err);
+    console.log((err as Error).message);
   }
 
   return NextResponse.next();

@@ -49,11 +49,12 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { FormSchema } from "@/app/blog/new/schema";
+import { PostFormSchema } from "@/lib/schema";
 import { toast } from "../hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
-import { postAction } from "@/app/actions/post.action";
+import { postCreateAction, postUpdateAction } from "@/app/actions/post.action";
+import { Category } from "@/types";
 
 interface InitialValues {
   title: string;
@@ -63,11 +64,6 @@ interface InitialValues {
   prevId: number;
   nextId: number;
   draft: boolean;
-}
-
-interface Category {
-  value: string;
-  label: string;
 }
 
 export function PostForm({
@@ -85,19 +81,18 @@ export function PostForm({
 }) {
   const router = useRouter();
   const editorRef = useRef<Editor>(null);
-  const [state, formAction, isPending] = useActionState(postAction, null);
+  const [state, formAction, isPending] = useActionState(
+    method === "create" ? postCreateAction : postUpdateAction,
+    null
+  );
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof PostFormSchema>>({
+    resolver: zodResolver(PostFormSchema),
     defaultValues: initialValues,
   });
 
   useEffect(() => {
-    if (state && state.status) {
-      method === "create"
-        ? router.replace("/blog")
-        : router.replace(`/blog/${postId}`); // update
-    }
+    if (state && state.status) router.replace(`/blog/${state.postId}`);
 
     if (state && !state.status) {
       console.log(state?.errors);
@@ -201,8 +196,8 @@ export function PostForm({
                           >
                             {field.value
                               ? categories.find(
-                                  (category) => category.value === field.value
-                                )?.label
+                                  (category) => category.name === field.value
+                                )?.name
                               : "카테고리 선택"}
                             <ChevronsUpDown className="opacity-50" />
                           </Button>
@@ -210,26 +205,23 @@ export function PostForm({
                       </PopoverTrigger>
                       <PopoverContent className="w-[200px] p-0">
                         <Command>
-                          <CommandInput
-                            placeholder="Search framework..."
-                            className="h-9"
-                          />
+                          <CommandInput placeholder="검색" className="h-9" />
                           <CommandList>
                             <CommandEmpty>찾을 수 없습니다.</CommandEmpty>
                             <CommandGroup>
                               {categories.map((category) => (
                                 <CommandItem
-                                  value={category.label}
-                                  key={category.value}
+                                  value={category.name}
+                                  key={category.name}
                                   onSelect={() => {
-                                    form.setValue("category", category.value);
+                                    form.setValue("category", category.name);
                                   }}
                                 >
-                                  {category.label}
+                                  {category.name}
                                   <Check
                                     className={cn(
                                       "ml-auto",
-                                      category.value === field.value
+                                      category.name === field.value
                                         ? "opacity-100"
                                         : "opacity-0"
                                     )}

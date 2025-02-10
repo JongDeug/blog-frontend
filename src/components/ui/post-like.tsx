@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 export default function PostLike({
   likes,
   postId,
+  isLiked,
 }: {
   likes: number;
   postId: string;
+  isLiked: boolean;
 }) {
   const router = useRouter();
 
@@ -34,9 +36,18 @@ export default function PostLike({
   };
 
   return (
-    <Button variant="outline" onClick={onClick}>
-      <ThumbsUp />
-      <p>{likes}</p>
-    </Button>
+    <div>
+      {isLiked ? (
+        <Button variant="destructive" onClick={onClick}>
+          <ThumbsUp />
+          <p>{likes}</p>
+        </Button>
+      ) : (
+        <Button variant="outline" onClick={onClick}>
+          <ThumbsUp />
+          <p>{likes}</p>
+        </Button>
+      )}
+    </div>
   );
 }

@@ -4,6 +4,9 @@ import { ToggleMode } from "./toggle-mode";
 import Link from "next/link";
 import LogoutBtn from "./logout-btn";
 import { useSession } from "./hooks/use-session";
+import { CommandMenu } from "./command";
+import { Button } from "./ui/button";
+import { Command } from "lucide-react";
 
 const navItems = {
   "/": {
@@ -20,10 +23,6 @@ const navItems = {
 export default function Navbar() {
   const { isLogin } = useSession();
 
-  // useEffect(() => {
-  //   console.log({ isLogin });
-  // }, [isLogin]);
-
   return (
     <nav className="-ml-[8px] mb-8 tracking-tight flex items-center justify-between">
       <div>
@@ -39,6 +38,8 @@ export default function Navbar() {
           );
         })}
 
+        <CommandMenu />
+
         {isLogin ? (
           <LogoutBtn />
         ) : (
@@ -51,7 +52,12 @@ export default function Navbar() {
           </Link>
         )}
       </div>
-      <ToggleMode />
+      <div>
+        <Button variant="secondary">
+          검색 <Command /> K
+        </Button>
+        <ToggleMode />
+      </div>
     </nav>
   );
 }

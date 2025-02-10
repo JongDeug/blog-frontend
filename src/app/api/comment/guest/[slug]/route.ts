@@ -7,14 +7,17 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { slug: string } }
 ) {
+  const data = await req.json();
+  const guestId = req.cookies.get("guestId")?.value;
   const { slug } = await params;
-  const accessToken = req.cookies.get("accessToken")?.value;
 
-  const response = await fetch(`${env.API_URL}/post/${slug}`, {
+  const response = await fetch(`${env.API_URL}/post/comment/guest/${slug}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      Cookie: `guestId=${guestId};`,
     },
+    body: JSON.stringify({ ...data }),
   });
 
   if (!response.ok) {
@@ -25,7 +28,7 @@ export async function DELETE(
     );
   }
 
-  revalidateTag("posts");
+  revalidateTag("post");
 
   return NextResponse.json({ message: "성공" });
 }

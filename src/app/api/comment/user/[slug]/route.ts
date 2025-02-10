@@ -1,16 +1,15 @@
 import { env } from "@/const/env";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { slug: string } }
 ) {
-  const { slug } = await params;
   const accessToken = req.cookies.get("accessToken")?.value;
+  const { slug } = await params;
 
-  const response = await fetch(`${env.API_URL}/post/${slug}`, {
+  const response = await fetch(`${env.API_URL}/post/comment/user/${slug}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -25,7 +24,7 @@ export async function DELETE(
     );
   }
 
-  revalidateTag("posts");
+  revalidateTag("post");
 
   return NextResponse.json({ message: "성공" });
 }

@@ -1,18 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ThumbsUp } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ToastViewer from "@/components/viewer";
-import CommentForm from "@/components/form/comment-form";
-
 import Comments from "@/components/comments";
 import { env } from "@/const/env";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { Post } from "@/types";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import PostMenu from "@/components/post-menu";
 import Link from "next/link";
 import PostLike from "@/components/ui/post-like";
-import UserCommentForm from "../../../components/form/user-comment.form";
+import UserCommentForm from "@/components/form/user-comment.form";
+import GuestCommentForm from "@/components/form/guest-comment.form";
 
 export default async function Page({
   params,
@@ -21,11 +19,12 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const cookieStore = await cookies();
-  const guestId = cookieStore.get("guestId");
+  const guestId = cookieStore.get("guestId")?.value;
+  const info = cookieStore.get("info");
 
   const response = await fetch(`${env.API_URL}/post/${slug}`, {
     headers: {
-      Cookie: `${guestId?.name}=${guestId?.value};`,
+      Cookie: `guestId=${guestId};`,
     },
     next: { tags: ["post"] },
   });
@@ -80,11 +79,25 @@ export default async function Page({
 
       <section className="space-y-5">
         <div className="flex justify-center">
-          <PostLike likes={post.likes} postId={slug} />
+          <PostLike likes={post.likes} postId={slug} isLiked={post.isLiked} />
         </div>
-        <Comments comments={post.comments} />
-        <UserCommentForm postId={slug} />
-        {/* <CommentForm /> */}
+        <Comments comments={post.comments} guestId={guestId} />
+        {info ? (
+          <UserCommentForm
+            initialValues={{ content: "", postId: slug }}
+            method="create"
+          />
+        ) : (
+          <GuestCommentForm
+            initialValues={{
+              content: "",
+              email: "",
+              password: "",
+              postId: slug,
+            }}
+            method="create"
+          />
+        )}
       </section>
     </div>
   );

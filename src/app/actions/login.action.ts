@@ -1,12 +1,12 @@
 "use server";
 
 import { env } from "@/const/env";
-import { FormSchema } from "../login/schema";
 import { cookies } from "next/headers";
 import cookieOptions from "@/lib/cookie-options";
+import { LoginFormSchema } from "@/lib/schema";
 
 export async function loginAction(_: any, formData: FormData) {
-  const parse = FormSchema.safeParse({
+  const parse = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   });

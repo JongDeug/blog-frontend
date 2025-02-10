@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { toast } from "../hooks/use-toast";
 import { Button } from "../ui/button";
@@ -15,18 +14,21 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
-import { userCommentAction } from "@/app/actions/comment.action";
 import { Input } from "../ui/input";
-import { UserCommentFormSchema } from "@/lib/schema";
+import { GuestCommentFormSchema } from "@/lib/schema";
+import { z } from "zod";
+import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
+import { guestCommentAction } from "@/app/actions/comment.action";
 
 interface InitialValues {
+  email: string;
+  password: string;
   content: string;
   postId: string;
   parentCommentId?: string;
 }
 
-export default function UserCommentForm({
+export default function GuestCommentForm({
   initialValues,
   method,
   commentId,
@@ -38,11 +40,12 @@ export default function UserCommentForm({
   setEdit?: Dispatch<SetStateAction<number | null>>;
 }) {
   const [state, formAction, isPending] = useActionState(
-    userCommentAction,
+    guestCommentAction,
     null
   );
-  const form = useForm<z.infer<typeof UserCommentFormSchema>>({
-    resolver: zodResolver(UserCommentFormSchema),
+
+  const form = useForm<z.infer<typeof GuestCommentFormSchema>>({
+    resolver: zodResolver(GuestCommentFormSchema),
     defaultValues: initialValues,
   });
 
@@ -96,7 +99,45 @@ export default function UserCommentForm({
             </FormItem>
           )}
         />
-
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>이메일</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={method === "update"}
+                    type="email"
+                    placeholder="알림에 사용됩니다."
+                    {...field}
+                    className="dark:border-neutral-600"
+                  />
+                </FormControl>
+                <FormMessage>{state?.errors?.email}</FormMessage>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>비밀번호</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요."
+                    {...field}
+                    className="dark:border-neutral-600"
+                  />
+                </FormControl>
+                <FormMessage>{state?.errors?.password}</FormMessage>
+              </FormItem>
+            )}
+          />
+        </div>
         <Button type="submit" disabled={isPending}>
           확인
         </Button>

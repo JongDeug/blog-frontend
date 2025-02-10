@@ -62,13 +62,18 @@ export interface Comment {
     id: number;
     name: string;
     email: string;
-  };
-  // guest
+  } | null;
+  guest: {
+    id: number;
+    nickName: string;
+    email: string;
+    guestId: string;
+  } | null;
 }
 
 export interface ChildComment {
   id: number;
-  content: number;
+  content: string;
   createdAt: string;
   parentCommentId: number;
   postId: number;
@@ -79,7 +84,12 @@ export interface ChildComment {
     name: string;
     email: string;
   };
-  // guest: null
+  guest: {
+    id: number;
+    nickName: string;
+    email: string;
+    guestId: string;
+  } | null;
 }
 
 // export interface Comment {

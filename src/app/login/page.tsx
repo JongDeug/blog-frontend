@@ -4,9 +4,8 @@ import Image from "next/image";
 import logo from "@/assets/icon.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 import { FcGoogle } from "react-icons/fc";
-
 import { toast } from "@/components/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,17 +19,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/components/hooks/use-session";
-import { FormSchema } from "./schema";
 import { loginAction } from "../actions/login.action";
 import { useActionState, useEffect } from "react";
+import { LoginFormSchema } from "@/lib/schema";
 
 export default function Page() {
   const router = useRouter();
   const { setIsLogin } = useSession();
   const [state, formAction, isPending] = useActionState(loginAction, null);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -44,7 +43,6 @@ export default function Page() {
     }
 
     if (state && !state?.status) {
-      console.log(state?.errors);
       toast({
         variant: "destructive",
         title: "로그인 실패",
