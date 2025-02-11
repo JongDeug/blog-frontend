@@ -27,7 +27,7 @@ export default async function Page({
     <div>
       <section>
         <div className="flex justify-between items-center">
-          <h1 className="title font-semibold text-2xl tracking-tighter">
+          <h1 className="title font-semibold text-3xl tracking-tighter">
             {post.title}
           </h1>
 
