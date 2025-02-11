@@ -21,7 +21,9 @@ export default function PostMenu({ slug }: { slug: string }) {
   const onClickDelete = async () => {
     const confirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (confirmed) {
-      const response = await fetch(`/api/post/${slug}`, { method: "DELETE" });
+      const response = await fetch(`/api/next/post/${slug}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         const error = await response.json();

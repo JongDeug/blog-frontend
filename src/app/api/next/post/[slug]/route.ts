@@ -1,6 +1,5 @@
 import { env } from "@/const/env";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(

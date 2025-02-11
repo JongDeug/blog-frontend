@@ -252,7 +252,7 @@ function DeleteUserCommentBtn({ commentId }: { commentId: string }) {
   const onClickDeleteUserComment = async (id: string) => {
     const isConfirmed = confirm("정말 삭제하시겠습니까?");
     if (isConfirmed) {
-      const response = await fetch(`/api/comment/user/${id}`, {
+      const response = await fetch(`/api/next/comment/user/${id}`, {
         method: "DELETE",
       });
 
@@ -287,7 +287,7 @@ function DeleteGuestComment({ commentId }: { commentId: string }) {
 
   const onClickDeleteGuestComment = async (id: string) => {
     if (password) {
-      const response = await fetch(`/api/comment/guest/${id}`, {
+      const response = await fetch(`/api/next/comment/guest/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -42,7 +42,7 @@ export default function EditorWrapper({
           formData.append("image", blob);
 
           // 이미지 업로드 => next => nest
-          const response = await fetch("/api/image", {
+          const response = await fetch("/api/next/image", {
             method: "POST",
             body: formData,
           });

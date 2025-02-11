@@ -9,7 +9,7 @@ export default function LogoutBtn() {
   const router = useRouter();
 
   const onClick = async () => {
-    const response = await fetch("/api/auth/logout");
+    const response = await fetch("/api/next/auth/logout");
     if (response.ok) {
       setIsLogin(false);
       toast({
