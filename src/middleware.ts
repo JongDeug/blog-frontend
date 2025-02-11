@@ -49,10 +49,9 @@ export async function middleware(req: NextRequest) {
       return response;
     }
   } catch (err) {
-    console.log((err as Error).message);
+    // console.log((err as Error).message);
+    return NextResponse.next();
   }
-
-  return NextResponse.next();
 }
 
 // 모든 경로에 미들웨어 적용
