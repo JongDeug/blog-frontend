@@ -23,8 +23,8 @@ export function useEditorRef() {
 
       const elements = {
         p: "16px",
-        h1: "22px",
-        h2: "20px",
+        h1: "26px",
+        h2: "24px",
         h3: "18px",
         code: "14px",
       };
