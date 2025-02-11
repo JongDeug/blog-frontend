@@ -49,7 +49,7 @@ export default function PostMenu({ slug }: { slug: string }) {
             </MenubarTrigger>
 
             <MenubarContent>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href={`/blog/${slug}/edit`}>게시글 수정</Link>
               </MenubarItem>
               <MenubarSeparator />
