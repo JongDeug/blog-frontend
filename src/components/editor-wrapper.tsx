@@ -5,15 +5,16 @@ import { Editor } from "@toast-ui/react-editor";
 import { useTheme } from "next-themes";
 import { toast } from "./hooks/use-toast";
 
-// 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
-// import Prism from "prismjs";
-// import "prismjs/themes/prism.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
-// import '@toast-ui/editor/dist/toastui-editor.css';
-// import { Viewer } from '@toast-ui/react-editor';
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 
-// import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
-// import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import Prism from "prismjs";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+
+import "prismjs/components/prism-typescript.js";
+import "prismjs/components/prism-clike.js";
 
 interface EditorWrapperProps {
   editorRef: React.RefObject<Editor>;
@@ -30,6 +31,7 @@ export default function EditorWrapper({
     <Editor
       ref={editorRef}
       initialValue={initialValue}
+      plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
       previewStyle="tab"
       height="600px"
       initialEditType="markdown"

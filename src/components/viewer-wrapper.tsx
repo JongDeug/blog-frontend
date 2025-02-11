@@ -3,8 +3,18 @@
 import { Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+
+import Prism from "prismjs";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+
+// https://github.com/PrismJS/prism/tree/master/components
+import "prismjs/components/prism-typescript.js";
+import "prismjs/components/prism-clike.js";
+
 import { useEffect, useRef } from "react";
-import React from "react";
 import { useTheme } from "next-themes";
 
 export function useEditorRef() {
@@ -62,6 +72,7 @@ export default function ViewerWrapper({
       initialValue={initialValue}
       theme={theme as "light" | "dark"}
       ref={viewerRef}
+      plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
     />
   );
 }
