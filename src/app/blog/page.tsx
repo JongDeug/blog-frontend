@@ -1,32 +1,5 @@
 import Blog from "@/components/blog";
-import { env } from "../../const/env";
-import { Category, Posts } from "@/types";
-
-export async function getPosts(query: string): Promise<Posts> {
-  const response = await fetch(`${env.API_URL}/post?${query}`, {
-    next: { tags: ["posts"], revalidate: 20 },
-  });
-  const resOrError = await response.json();
-
-  if (!response.ok) {
-    throw new Error(resOrError.message);
-  }
-
-  return resOrError;
-}
-
-async function getCategories(): Promise<Category[]> {
-  const response = await fetch(`${env.API_URL}/category`, {
-    next: { tags: ["category"] },
-  });
-  const resOrError = await response.json();
-
-  if (!response.ok) {
-    throw new Error(resOrError.message);
-  }
-
-  return resOrError;
-}
+import { getCategories, getPosts } from "@/lib/fetch";
 
 export default async function Page({
   searchParams,

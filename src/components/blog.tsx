@@ -8,8 +8,8 @@ import { Category, Posts } from "@/types";
 import BreadCrumb from "./breadcrumb";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import { getPosts } from "@/app/blog/page";
 import { delay } from "@/lib/utils";
+import { getPosts } from "@/lib/fetch";
 
 export default function Blog({
   postsData,
@@ -32,7 +32,8 @@ export default function Blog({
       const cursorPagination = async () => {
         const queryString = new URLSearchParams();
         queryString.append("cursor", blog.cursor);
-        queryString.append("take", "3");
+        queryString.append("take", "5");
+        if (category) queryString.append("category", category);
         await delay(100);
         const data = await getPosts(queryString.toString());
         setBlog({ posts: [...blog.posts, ...data.posts], cursor: data.cursor });

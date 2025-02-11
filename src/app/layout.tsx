@@ -5,6 +5,7 @@ import Navbar from "../components/nav";
 import Footer from "../components/footer";
 import { Toaster } from "../components/ui/toaster";
 import { Providers } from "../components/providers";
+import { env } from "@/const/env";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -13,7 +14,23 @@ const notoSansKr = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: "종득 블로그",
-  description: "개인 블로그 서비스",
+  description: "웹 개발 관련 글을 다루는 개인 블로그 서비스입니다.",
+  keywords: ["블로그", "Next.js", "Nest.js", "개발"],
+  openGraph: {
+    title: "종득 블로그",
+    description: "웹 개발 관련 글을 다루는 개인 블로그 서비스입니다.",
+    url: `${env.URL}`,
+    siteName: "종득 블로그",
+    // images: [
+    //   {
+    //     url: "https://example.com/og-image.jpg",
+    //     width: 1200,
+    //     height: 630,
+    //     alt: "블로그 대표 이미지",
+    //   },
+    // ],
+    type: "website",
+  },
 };
 
 export default async function RootLayout({

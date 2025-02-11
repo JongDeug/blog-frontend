@@ -67,7 +67,9 @@ export default function Categories({ categories }: { categories: Category[] }) {
           key={category.name}
           variant="secondary"
           className="hover:bg-green-100 dark:hover:bg-green-100 dark:hover:text-black cursor-pointer"
-          onClick={() => router.push(`/blog?category=${category.name}`)}
+          onClick={() =>
+            router.push(`/blog?category=${category.name}`, { scroll: false })
+          }
         >
           {`${category.name} (${category._count.posts})`}
         </Badge>

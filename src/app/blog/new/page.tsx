@@ -1,6 +1,5 @@
-import { env } from "@/const/env";
 import { PostForm } from "../../../components/form/post-form";
-import { Category } from "@/types";
+import { getCategories } from "@/lib/fetch";
 
 export default async function Page() {
   const initialValues = {
@@ -13,19 +12,13 @@ export default async function Page() {
     draft: false,
   };
 
-  const response = await fetch(`${env.API_URL}/category`);
-  const categoriesOrError: Category[] = await response.json();
-
-  if (!response.ok) {
-    console.error(categoriesOrError);
-    return <div>오류가 발생했습니다 ...</div>;
-  }
+  const categories = await getCategories();
 
   return (
     <PostForm
       title="게시글 작성"
       initialValues={initialValues}
-      categories={categoriesOrError}
+      categories={categories}
       method="create"
     />
   );

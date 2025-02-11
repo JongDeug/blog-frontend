@@ -22,7 +22,7 @@ export function ToggleMode() {
 
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       size="icon"
       onClick={onClick}
       className="hover:bg-green-100 dark:hover:bg-green-100 dark:hover:text-black"

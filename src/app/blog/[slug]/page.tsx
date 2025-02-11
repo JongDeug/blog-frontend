@@ -1,9 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ToastViewer from "@/components/viewer";
 import Comments from "@/components/comments";
-import { env } from "@/const/env";
 import { cookies } from "next/headers";
-import { Post } from "@/types";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import PostMenu from "@/components/post-menu";
@@ -11,6 +9,7 @@ import Link from "next/link";
 import PostLike from "@/components/ui/post-like";
 import UserCommentForm from "@/components/form/user-comment.form";
 import GuestCommentForm from "@/components/form/guest-comment.form";
+import { getPost } from "@/lib/fetch";
 
 export default async function Page({
   params,
@@ -22,19 +21,7 @@ export default async function Page({
   const guestId = cookieStore.get("guestId")?.value;
   const info = cookieStore.get("info");
 
-  const response = await fetch(`${env.API_URL}/post/${slug}`, {
-    headers: {
-      Cookie: `guestId=${guestId};`,
-    },
-    next: { tags: ["post"] },
-  });
-  const post: Post = await response.json();
-
-  if (!response.ok) {
-    console.error(post);
-    return <div>오류가 발생했습니다 ...</div>;
-  }
-  // if (response.ok) notFound();
+  const post = await getPost(slug, guestId);
 
   return (
     <div>

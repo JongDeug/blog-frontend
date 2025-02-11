@@ -1,11 +1,11 @@
 import { env } from "@/const/env";
+import { ReceiptPoundSterling } from "lucide-react";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const data = await req.json();
   const guestId = req.cookies.get("guestId")?.value;
