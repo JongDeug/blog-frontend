@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { getPosts } from "@/lib/fetch";
+import { DialogDescription, DialogTitle } from "./ui/dialog";
 
 export function SearchBar() {
   const [open, setOpen] = useState(false);
@@ -57,6 +58,8 @@ export function SearchBar() {
         </span>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
+        <DialogTitle hidden />
+        <DialogDescription hidden />
         <CommandInput
           placeholder="제목 및 내용을 검색해보세요..."
           value={searchQuery}
