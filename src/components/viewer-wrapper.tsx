@@ -23,9 +23,9 @@ export function useEditorRef() {
 
       const elements = {
         p: "16px",
-        h1: "20px",
-        h2: "18px",
-        h3: "15px",
+        h1: "22px",
+        h2: "20px",
+        h3: "18px",
         code: "14px",
       };
 
