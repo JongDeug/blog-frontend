@@ -16,14 +16,21 @@ export async function getPosts(query: string): Promise<Posts> {
 
 export async function getPost(
   slug: string,
-  guestId: string | undefined
+  guestId: string | undefined,
+  isEdit: boolean = false
 ): Promise<Post> {
-  const response = await fetch(`${env.API_URL}/post/${slug}`, {
-    headers: {
-      Cookie: `guestId=${guestId};`,
-    },
-    next: { tags: ["post"] },
-  });
+  const queryString = new URLSearchParams();
+  queryString.append("isEdit", isEdit ? "true" : "false");
+
+  const response = await fetch(
+    `${env.API_URL}/post/${slug}?${queryString.toString()}`,
+    {
+      headers: {
+        Cookie: `guestId=${guestId};`,
+      },
+      next: { tags: ["post"] },
+    }
+  );
   const resOrError = await response.json();
 
   if (!response.ok) {

@@ -11,7 +11,7 @@ export default async function Page({
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guestId")?.value;
 
-  const post = await getPost(slug, guestId);
+  const post = await getPost(slug, guestId, true);
   const categories = await getCategories();
 
   const initialValues = {
