@@ -71,25 +71,6 @@ export default async function Page({
           )}
         </div>
       </section>
-      {/* <section className="flex justify-between py-3 border-t my-2 items-center">
-        {post.prevId ? (
-          <Link
-            href={`/blog/${post.prevId}`}
-            className="flex items-center p-2 text-sm"
-          >
-            <ChevronLeft width={20} height={20} /> 이전
-          </Link>
-        ) : null}
-
-        {post.nextId ? (
-          <Link
-            href={`/blog/${post.nextId}`}
-            className="flex items-center p-2 text-sm"
-          >
-            다음 <ChevronRight width={20} height={20} />
-          </Link>
-        ) : null}
-      </section> */}
 
       <section className="space-y-5">
         <div className="flex justify-center">
