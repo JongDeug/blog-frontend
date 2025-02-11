@@ -45,6 +45,33 @@ export default async function Page({
       </section>
 
       <section className="flex justify-between py-3 border-t my-2 items-center">
+        <div className="flex-1">
+          {post.prevId ? (
+            <Link
+              href={`/blog/${post.prevId}`}
+              className="flex items-center p-2 text-sm"
+            >
+              <ChevronLeft width={20} height={20} /> 이전
+            </Link>
+          ) : (
+            <div></div>
+          )}
+        </div>
+
+        <div className="flex-1 flex justify-end">
+          {post.nextId ? (
+            <Link
+              href={`/blog/${post.nextId}`}
+              className="flex items-center p-2 text-sm"
+            >
+              다음 <ChevronRight width={20} height={20} />
+            </Link>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      </section>
+      {/* <section className="flex justify-between py-3 border-t my-2 items-center">
         {post.prevId ? (
           <Link
             href={`/blog/${post.prevId}`}
@@ -62,7 +89,7 @@ export default async function Page({
             다음 <ChevronRight width={20} height={20} />
           </Link>
         ) : null}
-      </section>
+      </section> */}
 
       <section className="space-y-5">
         <div className="flex justify-center">
