@@ -4,9 +4,9 @@ const nextConfig = {
     images: {
         domains: ["jongdeug.port0.org", "localhost"]
     },
-    experimental: {
-        optimizeCss: true,
-    }
+    // experimental: {
+    //     optimizeCss: true,
+    // }
 };
 
 export default nextConfig;
