@@ -13,7 +13,7 @@ const navItems = {
   "/blog": {
     name: "블로그",
   },
-  "/rss": {
+  "/subscribe": {
     name: "구독",
   },
 };

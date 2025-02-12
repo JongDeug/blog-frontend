@@ -4,9 +4,16 @@ import { ko } from "date-fns/locale";
 import Link from "next/link";
 
 async function getRSSPosts() {
-  const response = await fetch(`/api/next/rss`);
-  if (!response.ok) throw new Error("Failed to fetch RSS feed");
-  return response.json();
+  const response = await fetch(`${env.URL}/api/next/rss`, {
+    cache: "no-store",
+  });
+  const resOrError = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resOrError.error);
+  }
+
+  return resOrError;
 }
 
 export default async function RSSFeed() {
