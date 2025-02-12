@@ -25,11 +25,11 @@ export async function generateMetadata({
     title: `${post.title} - 종득 블로그`,
     description: `${post.summary}`,
     openGraph: {
-      title: `${post.title}`,
+      title: `${post.title} - 종득 블로그`,
       description: `${post.summary}`,
       url: `${env.URL}/blog/${slug}`,
       siteName: "종득 블로그",
-      type: "website",
+      type: "article",
     },
   };
 }

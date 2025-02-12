@@ -13,9 +13,9 @@ const navItems = {
   "/blog": {
     name: "블로그",
   },
-  // "/article": {
-  //   name: "아티클",
-  // },
+  "/rss": {
+    name: "구독",
+  },
 };
 
 export default function Navbar() {

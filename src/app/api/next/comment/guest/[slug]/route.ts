@@ -1,5 +1,4 @@
 import { env } from "@/const/env";
-import { ReceiptPoundSterling } from "lucide-react";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
