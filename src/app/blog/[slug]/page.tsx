@@ -10,6 +10,7 @@ import PostLike from "@/components/ui/post-like";
 import UserCommentForm from "@/components/form/user-comment.form";
 import GuestCommentForm from "@/components/form/guest-comment.form";
 import { getPost } from "@/lib/fetch";
+import { env } from "@/const/env";
 
 export async function generateMetadata({
   params,
@@ -23,6 +24,13 @@ export async function generateMetadata({
   return {
     title: `${post.title} - 종득 블로그`,
     description: `${post.summary}`,
+    openGraph: {
+      title: `${post.title}`,
+      description: `${post.summary}`,
+      url: `${env.URL}/blog/${slug}`,
+      siteName: "종득 블로그",
+      type: "website",
+    },
   };
 }
 
