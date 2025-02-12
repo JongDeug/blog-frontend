@@ -52,8 +52,6 @@ export async function middleware(req: NextRequest) {
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
         await refreshTokens(refreshToken);
 
-      console.log({ accessToken, newAccessToken });
-
       // 새 요청 및 쿠키 설정, 쿠키는 바로 반영되지 않음
       const response = NextResponse.next();
       response.cookies.set("accessToken", newAccessToken, cookieOptions);
@@ -65,7 +63,7 @@ export async function middleware(req: NextRequest) {
       return response;
     }
   } catch (err) {
-    console.log((err as Error).message);
+    // console.log((err as Error).message);
     return NextResponse.next();
   }
 }

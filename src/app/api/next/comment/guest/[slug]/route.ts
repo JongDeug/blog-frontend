@@ -6,9 +6,9 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params;
   const data = await req.json();
   const guestId = req.cookies.get("guestId")?.value;
-  const { slug } = await params;
 
   const response = await fetch(`${env.API_URL}/post/comment/guest/${slug}`, {
     method: "DELETE",
