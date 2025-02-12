@@ -47,7 +47,6 @@ export async function loginAction(_: any, formData: FormData) {
 
   cookieStore.set("accessToken", accessToken, cookieOptions);
   cookieStore.set("refreshToken", refreshToken, cookieOptions);
-
   cookieStore.set("info", JSON.stringify(info), {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",

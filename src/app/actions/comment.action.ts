@@ -23,7 +23,6 @@ export async function userCommentAction(_: any, formData: FormData) {
   }
 
   const data = parse.data;
-
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
 

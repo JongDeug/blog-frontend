@@ -57,8 +57,6 @@ export async function postCreateAction(_: any, formData: FormData) {
 }
 
 export async function postUpdateAction(_: any, formData: FormData) {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
   const postId = formData.get("postId")?.toString();
 
   const parse = PostFormSchema.safeParse({
@@ -81,6 +79,8 @@ export async function postUpdateAction(_: any, formData: FormData) {
   }
 
   const data = parse.data;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
 
   // 백엔드 요청
   const response = await fetch(`${env.API_URL}/post/${postId}`, {
