@@ -11,6 +11,21 @@ import UserCommentForm from "@/components/form/user-comment.form";
 import GuestCommentForm from "@/components/form/guest-comment.form";
 import { getPost } from "@/lib/fetch";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const post = await getPost(slug, "mock-guestId", true);
+
+  return {
+    title: `${post.title} - 종득 블로그`,
+    description: `${post.summary}`,
+  };
+}
+
 export default async function Page({
   params,
 }: {
