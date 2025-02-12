@@ -19,7 +19,7 @@ const navItems = {
 };
 
 export default function Navbar() {
-  const { isLogin } = useSession();
+  const { loginInfo } = useSession();
 
   return (
     <nav className="-ml-[8px] mb-8 tracking-tight flex flex-col md:flex-row md:items-center gap-4 justify-between">
@@ -36,7 +36,7 @@ export default function Navbar() {
           );
         })}
 
-        {isLogin ? (
+        {loginInfo?.isLogin ? (
           <LogoutBtn />
         ) : (
           <Link

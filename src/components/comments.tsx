@@ -27,7 +27,7 @@ export default function Comments({
 }) {
   const [reply, setReply] = useState<number | null>(null);
   const [edit, setEdit] = useState<number | null>(null);
-  const { userInfo, isLogin } = useSession();
+  const { loginInfo } = useSession();
 
   return (
     <div className="space-y-6 pb-6">
@@ -56,8 +56,8 @@ export default function Comments({
               </div>
 
               {/* 댓글 수정 삭제 버튼 */}
-              {(userInfo && userInfo.role === "ADMIN") ||
-              (userInfo && userInfo.email === comment.author?.email) ||
+              {(loginInfo && loginInfo.role === "ADMIN") ||
+              (loginInfo && loginInfo.email === comment.author?.email) ||
               (guestId && guestId === comment.guest?.guestId) ? (
                 <div className="flex gap-2">
                   <Button
@@ -70,7 +70,7 @@ export default function Comments({
                     수정
                   </Button>
 
-                  {isLogin ? (
+                  {loginInfo?.isLogin ? (
                     <DeleteUserCommentBtn commentId={String(comment.id)} />
                   ) : (
                     <DeleteGuestComment commentId={String(comment.id)} />
@@ -85,7 +85,7 @@ export default function Comments({
 
             {/* 댓글 수정 폼 렌더링 */}
             {edit === comment.id &&
-              (isLogin ? (
+              (loginInfo?.isLogin ? (
                 <UserCommentForm
                   initialValues={{
                     content: comment.content,
@@ -141,9 +141,9 @@ export default function Comments({
                       </div>
 
                       {/* 대댓글 수정 삭제 버튼 */}
-                      {(userInfo && userInfo.role === "ADMIN") ||
-                      (userInfo &&
-                        userInfo.email === childComment.author?.email) ||
+                      {(loginInfo && loginInfo.role === "ADMIN") ||
+                      (loginInfo &&
+                        loginInfo.email === childComment.author?.email) ||
                       (guestId && guestId === childComment.guest?.guestId) ? (
                         <div className="flex gap-2">
                           <Button
@@ -160,7 +160,7 @@ export default function Comments({
                             수정
                           </Button>
 
-                          {isLogin ? (
+                          {loginInfo?.isLogin ? (
                             <DeleteUserCommentBtn
                               commentId={String(childComment.id)}
                             />
@@ -179,7 +179,7 @@ export default function Comments({
 
                     {/* 대댓글 수정 폼 렌더링 */}
                     {edit === childComment.id &&
-                      (isLogin ? (
+                      (loginInfo?.isLogin ? (
                         <UserCommentForm
                           initialValues={{
                             content: childComment.content,
@@ -218,7 +218,7 @@ export default function Comments({
 
             {/* 대댓글 답글 폼 렌더링 */}
             {reply === comment.id &&
-              (isLogin ? (
+              (loginInfo?.isLogin ? (
                 <UserCommentForm
                   initialValues={{
                     content: "",

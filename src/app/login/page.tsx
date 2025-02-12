@@ -25,7 +25,7 @@ import { LoginFormSchema } from "@/lib/schema";
 
 export default function Page() {
   const router = useRouter();
-  const { setIsLogin } = useSession();
+  const { setLoginInfo } = useSession();
   const [state, formAction, isPending] = useActionState(loginAction, null);
 
   const form = useForm<z.infer<typeof LoginFormSchema>>({
@@ -38,7 +38,8 @@ export default function Page() {
 
   useEffect(() => {
     if (state && state?.status) {
-      setIsLogin(true);
+      // isLogin=true 주면 provider에서 알아서 설정
+      setLoginInfo({ isLogin: true, role: "", email: "" });
       router.back();
     }
 

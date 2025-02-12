@@ -56,7 +56,7 @@ import {
 import { toast } from "./hooks/use-toast";
 
 export default function Categories({ categories }: { categories: Category[] }) {
-  const { isLogin } = useSession();
+  const { loginInfo } = useSession();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -74,7 +74,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
           {`${category.name} (${category._count.posts})`}
         </Badge>
       ))}
-      {isLogin ? (
+      {loginInfo?.isLogin ? (
         <Dialog modal={false} open={open} onOpenChange={setOpen}>
           <DialogTrigger className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors dark:border-neutral-800 dark:focus:ring-neutral-300 border-transparent bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80 hover:bg-green-300">
             +

@@ -15,7 +15,7 @@ import { toast } from "./hooks/use-toast";
 import Link from "next/link";
 
 export default function PostMenu({ slug }: { slug: string }) {
-  const { isLogin } = useSession();
+  const { loginInfo } = useSession();
   const router = useRouter();
 
   const onClickDelete = async () => {
@@ -41,7 +41,7 @@ export default function PostMenu({ slug }: { slug: string }) {
 
   return (
     <div>
-      {isLogin ? (
+      {loginInfo?.isLogin ? (
         <Menubar className="border-0 shadow-none p-0">
           <MenubarMenu>
             <MenubarTrigger>

@@ -7,10 +7,9 @@ import { ko } from "date-fns/locale";
 import PostMenu from "@/components/post-menu";
 import Link from "next/link";
 import PostLike from "@/components/ui/post-like";
-import UserCommentForm from "@/components/form/user-comment.form";
-import GuestCommentForm from "@/components/form/guest-comment.form";
 import { getPost } from "@/lib/fetch";
 import { env } from "@/const/env";
+import { CommentForm } from "@/components/form/comment-form";
 
 export async function generateMetadata({
   params,
@@ -42,7 +41,6 @@ export default async function Page({
   const { slug } = await params;
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guestId")?.value;
-  const info = cookieStore.get("info");
 
   const post = await getPost(slug, guestId);
 
@@ -100,22 +98,7 @@ export default async function Page({
           <PostLike likes={post.likes} postId={slug} isLiked={post.isLiked} />
         </div>
         <Comments comments={post.comments} guestId={guestId} />
-        {info ? (
-          <UserCommentForm
-            initialValues={{ content: "", postId: slug }}
-            method="create"
-          />
-        ) : (
-          <GuestCommentForm
-            initialValues={{
-              content: "",
-              email: "",
-              password: "",
-              postId: slug,
-            }}
-            method="create"
-          />
-        )}
+        <CommentForm slug={slug} />
       </section>
     </div>
   );

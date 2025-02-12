@@ -40,25 +40,23 @@ export async function middleware(req: NextRequest) {
   );
 
   // session 나중에 합치기
-  const accessToken = req.cookies.get("accessToken")?.value;
-  const refreshToken = req.cookies.get("refreshToken")?.value;
+  const cookie = req.cookies.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
-  if (isProtectedRoute && !accessToken) {
+  if (isProtectedRoute && !session?.accessToken) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
   try {
-    if (accessToken && isTokenExpired(accessToken) && refreshToken) {
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-        await refreshTokens(refreshToken);
+    if (session?.accessToken && isTokenExpired(session?.accessToken)) {
+      const newTokens = await refreshTokens(session?.refreshToken);
 
       // 새 요청 및 쿠키 설정, 쿠키는 바로 반영되지 않음
       const response = NextResponse.next();
-      response.cookies.set("accessToken", newAccessToken, cookieOptions);
-      response.cookies.set("refreshToken", newRefreshToken, cookieOptions);
+      response.cookies.set("session", JSON.stringify(newTokens), cookieOptions);
 
       // 다음 요청에 사용할 accessToken
-      response.headers.set("x-new-access-token", newAccessToken);
+      response.headers.set("x-new-access-token", newTokens.accessToken);
 
       return response;
     }
@@ -71,6 +69,4 @@ export async function middleware(req: NextRequest) {
 // 특정 경로에 미들웨어 적용
 export const config = {
   matcher: ["/((?!_next/static|_next/image|.*\\.png$).*)"],
-  // matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-  // matcher: "/:path*",
 };

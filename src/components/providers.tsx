@@ -1,24 +1,28 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { getCookie, setCookie } from "cookies-next/client";
 import { v4 as uuidv4 } from "uuid";
 
-interface UserInfo {
-  name: string;
-  email: string;
+interface LoginInfo {
+  isLogin: boolean;
   role: string;
+  email: string;
 }
 
 export const SessionContext = createContext<{
-  isLogin: boolean;
-  userInfo: UserInfo | null;
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  loginInfo: LoginInfo | null;
+  setLoginInfo: Dispatch<SetStateAction<LoginInfo | null>>;
 }>({
-  isLogin: false,
-  userInfo: null,
-  setIsLogin: () => {},
+  loginInfo: null,
+  setLoginInfo: () => {},
 });
 
 export function ThemeProvider({
@@ -29,18 +33,28 @@ export function ThemeProvider({
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [loginInfo, setLoginInfo] = useState<{
+    isLogin: boolean;
+    role: string;
+    email: string;
+  } | null>(null);
 
   useEffect(() => {
-    // 로그인 info 설정 (cookie)
-    const info = getCookie("info");
-    if (info) {
-      setIsLogin(true);
-      setUserInfo(JSON.parse(info));
+    const cookie = getCookie("userInfo") ?? "null";
+    const userInfo = JSON.parse(cookie);
+
+    if (userInfo) {
+      setLoginInfo({
+        isLogin: true,
+        role: userInfo.role,
+        email: userInfo.email,
+      });
     } else {
-      setIsLogin(false);
-      setUserInfo(null);
+      setLoginInfo({
+        isLogin: false,
+        role: "",
+        email: "",
+      });
     }
 
     // guestId 설정 (localStorage => cookie)
@@ -55,7 +69,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       path: "/",
       maxAge: 60 * 60 * 24,
     });
-  }, [isLogin]);
+  }, [loginInfo?.isLogin]);
 
   return (
     <ThemeProvider
@@ -63,7 +77,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       defaultTheme="light"
       disableTransitionOnChange
     >
-      <SessionContext.Provider value={{ isLogin, userInfo, setIsLogin }}>
+      <SessionContext.Provider value={{ loginInfo, setLoginInfo }}>
         {children}
       </SessionContext.Provider>
     </ThemeProvider>

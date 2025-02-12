@@ -5,13 +5,13 @@ import { useSession } from "./hooks/use-session";
 import { toast } from "./hooks/use-toast";
 
 export default function LogoutBtn() {
-  const { setIsLogin } = useSession();
+  const { setLoginInfo } = useSession();
   const router = useRouter();
 
   const onClick = async () => {
     const response = await fetch("/api/next/auth/logout");
     if (response.ok) {
-      setIsLogin(false);
+      setLoginInfo({ isLogin: false, role: "", email: "" });
       toast({
         variant: "default",
         title: "로그아웃 완료",

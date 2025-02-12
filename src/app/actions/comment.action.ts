@@ -24,7 +24,8 @@ export async function userCommentAction(_: any, formData: FormData) {
 
   const data = parse.data;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const cookie = cookieStore.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 백엔드 수정 요청
   if (commentId) {
@@ -34,7 +35,7 @@ export async function userCommentAction(_: any, formData: FormData) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         body: JSON.stringify({ content: data.content }),
       }
@@ -54,7 +55,7 @@ export async function userCommentAction(_: any, formData: FormData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${session?.accessToken}`,
       },
       body: JSON.stringify({ ...data }),
     });

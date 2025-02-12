@@ -27,14 +27,15 @@ export async function postCreateAction(_: any, formData: FormData) {
 
   const data = parse.data;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const cookie = cookieStore.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 백엔드 요청
   const response = await fetch(`${env.API_URL}/post`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${session?.accessToken}`,
     },
     body: JSON.stringify({ ...data }),
   });
@@ -80,14 +81,15 @@ export async function postUpdateAction(_: any, formData: FormData) {
 
   const data = parse.data;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const cookie = cookieStore.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 백엔드 요청
   const response = await fetch(`${env.API_URL}/post/${postId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${session?.accessToken}`,
     },
     body: JSON.stringify({ ...data }),
   });

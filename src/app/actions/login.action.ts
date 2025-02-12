@@ -4,6 +4,7 @@ import { env } from "@/const/env";
 import { cookies } from "next/headers";
 import cookieOptions from "@/lib/cookie-options";
 import { LoginFormSchema } from "@/lib/schema";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function loginAction(_: any, formData: FormData) {
   const parse = LoginFormSchema.safeParse({
@@ -42,16 +43,14 @@ export async function loginAction(_: any, formData: FormData) {
     };
 
   // 성공 시 쿠키에 저장
-  const { accessToken, refreshToken, info } = tokensOrError;
+  const decoded = jwt.decode(tokensOrError.accessToken) as JwtPayload;
   const cookieStore = await cookies();
 
-  cookieStore.set("accessToken", accessToken, cookieOptions);
-  cookieStore.set("refreshToken", refreshToken, cookieOptions);
-  cookieStore.set("info", JSON.stringify(info), {
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-  });
+  cookieStore.set("session", JSON.stringify(tokensOrError), cookieOptions);
+  cookieStore.set(
+    "userInfo",
+    JSON.stringify({ role: decoded.role, email: decoded.email })
+  );
 
   return {
     status: true,

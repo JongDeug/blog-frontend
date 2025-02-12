@@ -3,18 +3,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
-  let accessToken = req.cookies.get("accessToken")?.value;
+  const cookie = req.cookies.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 재발급된 토큰 활용, 쿠키가 바로 반영되지 않는 api route에만 적용
   const newAccessToken = req.headers.get("x-new-access-token");
   if (newAccessToken) {
-    accessToken = newAccessToken;
+    session.accessToken = newAccessToken;
   }
 
   const response = await fetch(`${env.API_URL}/common/image`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${session?.accessToken}`,
     },
     body: formData,
   });
