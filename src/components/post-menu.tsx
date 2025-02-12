@@ -50,7 +50,7 @@ export default function PostMenu({ slug }: { slug: string }) {
 
             <MenubarContent>
               <MenubarItem asChild>
-                <Link href={`/blog/${slug}/edit`}>게시글 수정</Link>
+                <Link href={`/blog/edit/${slug}`}>게시글 수정</Link>
               </MenubarItem>
               <MenubarSeparator />
               <MenubarItem className="text-red-400" onClick={onClickDelete}>

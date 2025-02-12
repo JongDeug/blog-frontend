@@ -11,10 +11,8 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
-
 import ToastEditor from "../editor";
-
-import type { Editor, EditorProps } from "@toast-ui/react-editor";
+import type { Editor } from "@toast-ui/react-editor";
 import {
   Form,
   FormField,
@@ -22,14 +20,12 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

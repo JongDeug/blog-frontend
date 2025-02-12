@@ -1,5 +1,6 @@
 import { env } from "@/const/env";
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
@@ -7,7 +8,14 @@ export async function DELETE(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const accessToken = req.cookies.get("accessToken")?.value;
+  let accessToken = req.cookies.get("accessToken")?.value;
+
+  const newAccessToken = req.headers.get("x-new-access-token");
+  if (newAccessToken) {
+    accessToken = newAccessToken;
+  }
+
+  console.log({ accessToken });
 
   const response = await fetch(`${env.API_URL}/post/${slug}`, {
     method: "DELETE",
