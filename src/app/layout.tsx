@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     description: "웹 개발 및 개인 블로그 서비스입니다.",
     url: `${env.URL}`,
     siteName: "종득 블로그",
-    // images: [
-    //   {
-    //     url: "https://example.com/og-image.jpg",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "블로그 대표 이미지",
-    //   },
-    // ],
+    images: [
+      {
+        url: `${env.URL}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "블로그 대표 이미지",
+      },
+    ],
     type: "website",
   },
 };

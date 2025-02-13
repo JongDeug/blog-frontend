@@ -28,7 +28,7 @@ export function useEditorRef() {
     if (contents) {
       contents.style.fontSize = "16px";
       contents.style.lineHeight = "1.8"; // 줄 간격 조정
-      // contents.style.letterSpacing = "0.5px"; // 글자 간격 조정
+      contents.style.letterSpacing = "0.3px"; // 글자 간격 조정
       // contents.style.wordSpacing = "1px"; // 단어 간격 조정
 
       const elements = {

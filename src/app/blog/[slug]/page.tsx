@@ -28,6 +28,14 @@ export async function generateMetadata({
       description: `${post.summary}`,
       url: `${env.URL}/blog/${slug}`,
       siteName: "종득 블로그",
+      images: [
+        {
+          url: `${env.URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "블로그 대표 이미지",
+        },
+      ],
       type: "article",
     },
   };
