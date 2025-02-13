@@ -1,16 +1,34 @@
+import SubScriptions from "@/components/subscriptions";
 import { env } from "@/const/env";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import Link from "next/link";
-import RSSBadges from "@/components/rss-badges";
-import { rssList } from "@/lib/rss-list";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
-async function getRSSPosts(queryString: string) {
-  const response = await fetch(`${env.API_URL}/common/feed?${queryString}`);
+async function getFeeds(queryString: string) {
+  const response = await fetch(`${env.API_URL}/common/rss/feed?${queryString}`);
   const resOrError = await response.json();
 
   if (!response.ok) {
-    throw new Error(resOrError.error);
+    throw new Error(resOrError.message);
+  }
+
+  return resOrError;
+}
+
+async function getSubscriptions(): Promise<{ url: string; name: string }[]> {
+  const response = await fetch(`${env.API_URL}/common/rss/subscriptions`);
+  const resOrError = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resOrError.message);
   }
 
   return resOrError;
@@ -19,15 +37,17 @@ async function getRSSPosts(queryString: string) {
 export default async function RSSFeed({
   searchParams,
 }: {
-  searchParams: Promise<{ url: string }>;
+  searchParams: Promise<{ url: string; name: string }>;
 }) {
-  let { url } = await searchParams;
-  if (!url) url = rssList[0]?.url;
+  let { url, name } = await searchParams;
+
+  const subScriptionList = await getSubscriptions();
 
   const queryString = new URLSearchParams();
-  queryString.append("url", url);
+  if (url) queryString.append("url", url);
+  else queryString.append("url", subScriptionList[0].url);
 
-  const posts = await getRSSPosts(queryString.toString());
+  const posts = await getFeeds(queryString.toString());
 
   return (
     <div className="flex flex-col gap-10">
@@ -35,7 +55,29 @@ export default async function RSSFeed({
         <h1 className="text-3xl font-bold">RSS 구독</h1>
       </section>
 
-      <RSSBadges />
+      <section>
+        <Breadcrumb className="pb-2 mb-2">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/subscribe">구독</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+
+            {name ? (
+              <>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{name}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            ) : (
+              <BreadcrumbItem>
+                <BreadcrumbPage>{subScriptionList[0].name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            )}
+          </BreadcrumbList>
+        </Breadcrumb>
+        <SubScriptions subScriptionList={subScriptionList} />
+      </section>
 
       <section>
         <ul className="space-y-4">
