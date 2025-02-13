@@ -39,7 +39,7 @@ export default async function RSSFeed({
 }: {
   searchParams: Promise<{ url: string; name: string }>;
 }) {
-  let { url, name } = await searchParams;
+  const { url, name } = await searchParams;
 
   const subScriptionList = await getSubscriptions();
 
