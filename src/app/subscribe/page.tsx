@@ -28,6 +28,7 @@ export default async function RSSFeed({
   queryString.append("url", url);
 
   const posts = await getRSSPosts(queryString.toString());
+
   return (
     <div className="flex flex-col gap-10">
       <section className="flex gap-2 w-fit tracking-tighter items-center transition-all duration-200 hover:scale-105 hover:text-green-500">
