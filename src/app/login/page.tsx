@@ -109,7 +109,8 @@ export default function Page() {
               type="button"
               className="w-full font-bold bg-white text-black hover:bg-gray-200 border border-gray-200"
               onClick={() => {
-                router.push(`${env.API_URL}/auth/to-google`);
+                window.location.href = `${env.API_URL}/auth/to-google`;
+                // router.push(`${env.API_URL}/auth/to-google`);
               }}
             >
               <FcGoogle />

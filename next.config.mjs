@@ -2,6 +2,12 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
+        // remotePatterns: [
+        //     {
+        //         protocol: 'https',
+        //         hostname: 'jongdeug.ddns.net',
+        //     },
+        // ],
         remotePatterns: process.env.NODE_ENV === "production" ?
             [
                 {
