@@ -11,35 +11,35 @@ import { getPost } from "@/lib/fetch";
 import { env } from "@/const/env";
 import { CommentForm } from "@/components/form/comment-form";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: Promise<{ slug: string }>;
+// }) {
+//   const { slug } = await params;
 
-  const post = await getPost(slug, "mock-guestId", true);
+//   const post = await getPost(slug, "mock-guestId", true);
 
-  return {
-    title: `${post.title} - 종득 블로그`,
-    description: `${post.summary}`,
-    openGraph: {
-      title: `${post.title} - 종득 블로그`,
-      description: `${post.summary}`,
-      url: `${env.URL}/blog/${slug}`,
-      siteName: "종득 블로그",
-      images: [
-        {
-          url: `${env.URL}/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: "블로그 대표 이미지",
-        },
-      ],
-      type: "article",
-    },
-  };
-}
+//   return {
+//     title: `${post.title} - 종득 블로그`,
+//     description: `${post.summary}`,
+//     openGraph: {
+//       title: `${post.title} - 종득 블로그`,
+//       description: `${post.summary}`,
+//       url: `${env.URL}/blog/${slug}`,
+//       siteName: "종득 블로그",
+//       images: [
+//         {
+//           url: `${env.URL}/og-image.png`,
+//           width: 1200,
+//           height: 630,
+//           alt: "블로그 대표 이미지",
+//         },
+//       ],
+//       type: "article",
+//     },
+//   };
+// }
 
 export default async function Page({
   params,
