@@ -53,7 +53,6 @@ export default function UserCommentForm({
     }
 
     if (state && !state.status) {
-      console.log(state?.errors);
       toast({
         variant: "destructive",
         title: `${method === "create" ? "댓글 작성" : "댓글 수정"} 실패`,

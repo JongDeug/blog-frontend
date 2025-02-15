@@ -22,6 +22,7 @@ import { useSession } from "@/components/hooks/use-session";
 import { loginAction } from "../actions/login.action";
 import { useActionState, useEffect } from "react";
 import { LoginFormSchema } from "@/lib/schema";
+import { env } from "@/const/env";
 
 export default function Page() {
   const router = useRouter();
@@ -107,6 +108,9 @@ export default function Page() {
             <Button
               type="button"
               className="w-full font-bold bg-white text-black hover:bg-gray-200 border border-gray-200"
+              onClick={() => {
+                router.push(`${env.API_URL}/auth/to-google`);
+              }}
             >
               <FcGoogle />
               구글로 로그인

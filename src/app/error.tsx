@@ -15,6 +15,7 @@ export default function Error({
 
   useEffect(() => {
     console.error("에러 발생:", error);
+    console.error("에러 발생:", error.digest);
   }, [error]);
 
   return (
