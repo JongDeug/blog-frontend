@@ -2,7 +2,6 @@ import { env } from "@/const/env";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-// logout
 export async function GET(req: NextRequest) {
   const cookie = req.cookies.get("session")?.value ?? "null";
   const session = JSON.parse(cookie);
