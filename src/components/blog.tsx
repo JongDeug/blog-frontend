@@ -20,23 +20,26 @@ export default function Blog({
   categories: Category[];
   category: string;
 }) {
-  const [blog, setBlog] = useState(postsData);
+  const [data, setData] = useState(postsData);
   const [ref, inView] = useInView();
 
   useEffect(() => {
-    setBlog(postsData);
+    setData(postsData);
   }, [postsData]);
 
   useEffect(() => {
-    if (inView && blog.cursor) {
+    if (inView && data.cursor) {
       const cursorPagination = async () => {
         const queryString = new URLSearchParams();
-        queryString.append("cursor", blog.cursor);
+        queryString.append("cursor", data.cursor);
         queryString.append("take", "5");
         if (category) queryString.append("category", category);
         await delay(100);
-        const data = await getPosts(queryString.toString());
-        setBlog({ posts: [...blog.posts, ...data.posts], cursor: data.cursor });
+        const response = await getPosts(queryString.toString());
+        setData({
+          posts: [...data.posts, ...response.posts],
+          cursor: response.cursor,
+        });
       };
 
       cursorPagination();
@@ -60,7 +63,7 @@ export default function Blog({
           <CreatePostBtn />
         </div>
 
-        <BlogPosts posts={blog.posts} />
+        <BlogPosts posts={data.posts} />
       </section>
 
       <div ref={ref}></div>

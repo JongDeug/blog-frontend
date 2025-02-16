@@ -14,20 +14,21 @@ export function BlogPosts({ posts }: { posts: Post[] }) {
           className="block border-b tracking-tight border-neutral-300 dark:border-neutral-600"
           href={`/blog/${post.id}`}
         >
-          <div className="flex flex-col md:flex-row space-x-0 md:space-x-3 p-2 hover:bg-neutral-50 hover:text-black rounded transition-all h-[120px]">
-            {/* md 이하일 때 hidden */}
+          <div className="flex flex-col md:flex-row md:h-[120px] space-x-0 md:space-x-3 p-2 hover:bg-neutral-50 hover:text-black rounded transition-all ">
+            {/* 이미지 */}
             {post.images.length ? (
-              <div className="relative w-[130px] h-auto">
+              <div className="relative w-full aspect-[16/9] md:w-[130px]">
                 <Image
                   src={post.images[0].url}
                   alt="게시글 이미지"
-                  fill
+                  width={0}
+                  height={0}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="hidden md:block rounded"
+                  className="w-full h-full object-fill rounded"
                 ></Image>
               </div>
             ) : (
-              <div className="hidden md:flex border rounded bg-green-50 w-[130px] justify-center items-center">
+              <div className="relative w-full aspect-[16/9] md:w-[130px] flex border rounded bg-green-50 justify-center items-center">
                 <span className="text-neutral-500 text-sm">이미지</span>
               </div>
             )}

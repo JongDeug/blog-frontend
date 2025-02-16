@@ -109,12 +109,23 @@ export default function Page() {
               type="button"
               className="w-full font-bold bg-white text-black hover:bg-gray-200 border border-gray-200"
               onClick={() => {
-                window.location.href = `${env.API_URL}/auth/to-google?redirect=hihellow`;
-                // router.push(`${env.API_URL}/auth/to-google`);
+                window.location.href = `${env.API_URL}/auth/to-google`;
+
+                // 창으로 띄우기
+                // const width = 500;
+                // const height = 600;
+                // const left = window.screen.width / 2 - width / 2;
+                // const top = window.screen.height / 2 - height / 2;
+
+                // window.open(
+                //   `${env.API_URL}/auth/to-google`,
+                //   "Google Login",
+                //   `width=${width},height=${height},left=${left},top=${top}`
+                // );
               }}
             >
               <FcGoogle />
-              구글로 로그인
+              구글로 계속하기
             </Button>
           </div>
         </form>
