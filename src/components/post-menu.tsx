@@ -41,7 +41,7 @@ export default function PostMenu({ slug }: { slug: string }) {
 
   return (
     <div>
-      {loginInfo?.isLogin ? (
+      {loginInfo?.isLogin && loginInfo?.role === "ADMIN" ? (
         <Menubar className="border-0 shadow-none p-0">
           <MenubarMenu>
             <MenubarTrigger>

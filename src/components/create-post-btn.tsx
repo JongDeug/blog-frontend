@@ -7,7 +7,7 @@ export default function CreatePostBtn() {
   const { loginInfo } = useSession();
   return (
     <div>
-      {loginInfo?.isLogin ? (
+      {loginInfo?.isLogin && loginInfo.role === "ADMIN" ? (
         <Link
           href="/blog/new"
           className="w-[90px] h-[30px] shadow-sm border border-neutral-300 dark:border-neutral-600 rounded flex items-center justify-center text-sm"
