@@ -15,10 +15,12 @@ export default function Blog({
   postsData,
   categories,
   category,
+  draft,
 }: {
   postsData: Posts;
   categories: Category[];
   category: string;
+  draft: boolean;
 }) {
   const [data, setData] = useState(postsData);
   const [ref, inView] = useInView();
@@ -34,7 +36,9 @@ export default function Blog({
         queryString.append("cursor", data.cursor);
         queryString.append("take", "5");
         if (category) queryString.append("category", category);
+        if (draft) queryString.append("draft", "true");
         await delay(100);
+
         const response = await getPosts(queryString.toString());
         setData({
           posts: [...data.posts, ...response.posts],

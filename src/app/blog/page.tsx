@@ -14,15 +14,22 @@ export default async function Page({
   if (sort) {
     if (sort === "oldest") queryString.append("order[]", "id_asc");
     else if (sort === "latest") queryString.append("order[]", "id_desc");
-    else if (sort === "like")
+    else if (sort === "likes")
       ["likes_desc", "id_desc"].map((v) => queryString.append("order[]", v));
-    else ["views_desc", "id_desc"].map((v) => queryString.append("order[]", v));
+    else if (sort === "views")
+      ["views_desc", "id_desc"].map((v) => queryString.append("order[]", v));
+    else queryString.append("draft", "true");
   }
 
   const postsData = await getPosts(queryString.toString());
   const categories = await getCategories();
 
   return (
-    <Blog postsData={postsData} categories={categories} category={category} />
+    <Blog
+      postsData={postsData}
+      categories={categories}
+      category={category}
+      draft={sort === "draft"}
+    />
   );
 }

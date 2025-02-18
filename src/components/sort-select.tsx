@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "./hooks/use-session";
 
 export function SortSelect() {
   const [value, setValue] = useState("latest");
+  const { loginInfo } = useSession();
   const router = useRouter();
 
   const handleChange = (value: string) => {
@@ -29,8 +31,11 @@ export function SortSelect() {
       <SelectContent>
         <SelectItem value="latest">최신순</SelectItem>
         <SelectItem value="oldest">오래된순</SelectItem>
-        <SelectItem value="like">좋아요순</SelectItem>
+        <SelectItem value="likes">좋아요순</SelectItem>
         <SelectItem value="views">조회순</SelectItem>
+        {loginInfo?.isLogin && loginInfo.role === "ADMIN" ? (
+          <SelectItem value="draft">임시저장</SelectItem>
+        ) : null}
       </SelectContent>
     </Select>
   );
