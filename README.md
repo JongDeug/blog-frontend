@@ -1,5 +1,5 @@
 # 🌐 blog-frontend
-## UI
+## 📌 UI
 #### 메인 화면
 ![메인](https://github.com/user-attachments/assets/90e51c54-c23a-45a3-8c8a-33b26ffd7369)
 
