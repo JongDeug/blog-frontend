@@ -18,5 +18,5 @@ export async function GET(req: NextRequest) {
     JSON.stringify({ role: decoded.role, email: decoded.email })
   );
 
-  return NextResponse.redirect(`${env.URL}`);
+  return NextResponse.redirect(`${env.URL}/blog`);
 }

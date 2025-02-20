@@ -65,14 +65,15 @@ export async function updateCategoryAction(_: any, formData: FormData) {
 
   const data = parse.data;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const cookie = cookieStore.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 백엔드 요청
   const response = await fetch(`${env.API_URL}/category/${data.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${session?.accessToken}`,
     },
     body: JSON.stringify({ name: data.name }),
   });
@@ -108,14 +109,15 @@ export async function deleteCategoryAction(_: any, formData: FormData) {
 
   const data = parse.data;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const cookie = cookieStore.get("session")?.value ?? "null";
+  const session = JSON.parse(cookie);
 
   // 백엔드 요청
   const response = await fetch(`${env.API_URL}/category/${data.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${session?.accessToken}`,
     },
   });
 

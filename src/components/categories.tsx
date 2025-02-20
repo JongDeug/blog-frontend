@@ -234,8 +234,8 @@ function UpdateCategory({
                         <CommandGroup>
                           {categories.map((category) => (
                             <CommandItem
-                              value={String(category.id)}
-                              key={String(category.id)}
+                              value={String(category.name)}
+                              key={String(category.name)}
                               onSelect={() => {
                                 form.setValue("id", String(category.id));
                               }}
@@ -356,8 +356,8 @@ function DeleteCategory({
                         <CommandGroup>
                           {categories.map((category) => (
                             <CommandItem
-                              value={String(category.id)}
-                              key={String(category.id)}
+                              value={String(category.name)}
+                              key={String(category.name)}
                               onSelect={() => {
                                 form.setValue("id", String(category.id));
                               }}
