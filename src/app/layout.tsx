@@ -6,6 +6,7 @@ import Footer from "../components/footer";
 import { Toaster } from "../components/ui/toaster";
 import { Providers } from "../components/providers";
 import { env } from "@/const/env";
+import Script from "next/script";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -40,6 +41,27 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
+      <head>
+        {/* 구글 애널리틱스 */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-C5V72WWWE0"
+        ></Script>
+
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+             window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-C5V72WWWE0');
+            `,
+          }}
+        ></Script>
+      </head>
+
       <body className={`${notoSansKr.className} antialiased`}>
         <Providers>
           <main className="max-w-xl mx-4 mt-8 px-2 md:px-0 md:mx-auto">
