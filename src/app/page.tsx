@@ -19,7 +19,7 @@ export default function Home() {
       <section>
         <h2 className="text-2xl font-semibold mb-2">목표</h2>
         <p className="whitespace-pre-line">
-          {`프로그래밍은 가치를 만들어내는 도구라고 생각합니다. 도구를 잘 활용해서 가치를 만들어낼줄 아는 개발자가 될 것 입니다! 🔥`}
+          {`프로그래밍은 가치를 만들어내는 도구라고 생각합니다. 도구를 잘 활용해서 가치를 만들어낼줄 아는 개발자가 될 것 입니다. Roll with the punches! 🔥`}
         </p>
       </section>
       <section className="tracking-tighter text-neutral-500 text-sm">

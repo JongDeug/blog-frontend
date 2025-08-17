@@ -27,8 +27,8 @@ jobs:
             pm2 stop blog-frontend
             pm2 delete blog-frontend
 
-            mkdir -p blog-frontend-v3
-            cd blog-frontend-v3
+            mkdir -p blog-frontend
+            cd blog-frontend
             git pull origin main
 
             pnpm install
